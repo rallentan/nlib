@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\NLib.Common\BitReader.cs">
@@ -56,11 +58,11 @@
     <Compile Include="..\NLib.Common\RandomExtensions.cs">
       <Link>RandomExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\NLib.Common\Range_NET3-.cs">
-      <Link>Range_NET3-.cs</Link>
+    <Compile Include="..\NLib.Common\Range.cs">
+      <Link>Range.cs</Link>
     </Compile>
-    <Compile Include="..\NLib.Common\StringExtensions_NET3-.cs">
-      <Link>StringExtensions_NET3-.cs</Link>
+    <Compile Include="..\NLib.Common\StringExtensions.cs">
+      <Link>StringExtensions.cs</Link>
     </Compile>
     <Compile Include="..\NLib.Common\UsingObject.cs">
       <Link>UsingObject.cs</Link>

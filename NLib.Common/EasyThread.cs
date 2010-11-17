@@ -10,14 +10,41 @@ namespace NLib
     {
         //--- Public Static Methods ---
 
+        /// <summary>
+        ///     Executes the specified delegate asynchronously on a thread
+        ///     from the threadpool.
+        /// </summary>
+        /// <param name="method">
+        ///     A delegate to a method that takes no parameters.
+        /// </param>
+        /// <remarks>
+        ///     The delegate is called asynchronously, and this method returns immediately.
+        ///     If the DisableThreading property is set to true. No thread is created,
+        ///     the delegate is synchronously, and this method returns after the delegate
+        ///     returns. This can be useful for debugging when multiple threads interfere
+        ///     with the debugging process.
+        /// </remarks>
         public static void BeginInvoke(EasyThreadDelegate method)
         {
-#if DISABLE_THREADING
-            method();
-#else
-            method.BeginInvoke(new AsyncCallback(ThreadCallback), null);
-#endif
+            if (DisableThreading)
+                method();
+            else
+                method.BeginInvoke(new AsyncCallback(ThreadCallback), null);
         }
+
+
+        //--- Public Static Properties ---
+
+        /// <summary>
+        /// Gets or sets a value indicating whether calls to other methods in this class
+        /// should be executed synchronously, and should not create other threads.
+        /// </summary>
+        /// <remarks>
+        /// If this property is set to true, this class will not create other threads, and all
+        /// methods will be executed synchronously. This can be useful for debugging when
+        /// multiple threads interfere with the debugging process. The default value is false.
+        /// </remarks>
+        public static bool DisableThreading { get; set; }
 
 
         //--- Private Static Methods ---

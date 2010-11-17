@@ -8,6 +8,20 @@ namespace NLib
 {
     public partial class OperationQueueThread : IDisposable
     {
+        //--- Public Static Properties ---
+
+        /// <summary>
+        /// Gets or sets a value indicating whether calls to other methods in this class
+        /// should be executed synchronously, and should not create other threads.
+        /// </summary>
+        /// <remarks>
+        /// If this property is set to true, this class will not create other threads, and all
+        /// methods will be executed synchronously. This can be useful for debugging when
+        /// multiple threads interfere with the debugging process. The default value is false.
+        /// </remarks>
+        public static bool DisableThreading { get; set; }
+        
+        
         //--- Fields ---
 
         Queue _operationQueue = new Queue();
@@ -17,8 +31,11 @@ namespace NLib
         object _operationCompleted_SyncLock = new object();
 
 
-        //--- Constructors ---
+        //--- Constructors / Destructor ---
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OperationQueueThread"/>.
+        /// </summary>
         public OperationQueueThread() { }
 
         ~OperationQueueThread() { Dispose(); }
@@ -26,6 +43,19 @@ namespace NLib
 
         //--- Public Methods ---
 
+        /// <summary>
+        /// Removes all pending operations from the operation queue, and returns immediately.
+        /// </summary>
+        /// <remarks>
+        /// This method removes all operations that have not begun processing from the operation
+        /// queue, and returns immediately. If an operation has already been dequeued from the
+        /// operation queue to be processed, it will not be interrupted. To remove all operations
+        /// from the operation queue, and wait for the currently running operation to complete,
+        /// use the ClearWait method of this class.
+        /// </remarks>
+        /// <exception cref="ObjectDisposedException">
+        /// The <see cref="OperationQueueThread"/> has been disposed.
+        /// </exception>
         public void Clear()
         {
             if (IsDisposed)
@@ -34,7 +64,21 @@ namespace NLib
             lock (_queue_SyncLock)
                 _operationQueue.Clear();
         }
-        
+
+        /// <summary>
+        /// Removes all pending operations from the operation queue, and waits for the current
+        /// operation to complete before returning.
+        /// </summary>
+        /// <remarks>
+        /// This method removes all operations that have not begun processing from the operation
+        /// queue, and waits for the currently running operation to complete before returning.
+        /// While this method is waiting for the operation thread to become idle, no new operations
+        /// can be enqueued. If EnqueueOperation or EnqueueOperationWait is called while this method
+        /// is waiting, it will be blocked until this method returns.
+        /// </remarks>
+        /// <exception cref="ObjectDisposedException">
+        /// The <see cref="OperationQueueThread"/> has been disposed.
+        /// </exception>
         public void ClearWait()
         {
             if (IsDisposed)
@@ -42,7 +86,26 @@ namespace NLib
 
             ClearWait(Timeout.Infinite);
         }
-        
+
+        /// <summary>
+        ///     Removes all pending operations from the operation queue, and waits for the current
+        ///     operation to complete before returning. A parameter specifies a timeout.
+        /// </summary>
+        /// <returns>
+        ///     true if the current operation completed before the specified time elapsed; false
+        ///     if the current operation did not complete before the specified time elapsed.
+        /// </returns>
+        /// <remarks>
+        ///     This method removes all operations that have not begun processing from the operation
+        ///     queue, and waits for the currently running operation to complete before returning, or
+        ///     for the specified timeout to lapse, whichever comes first. 
+        ///     While this method is waiting for the operation thread to become idle, no new operations
+        ///     can be enqueued. If EnqueueOperation or EnqueueOperationWait is called while this method
+        ///     is waiting, it will be blocked until this method returns.
+        /// </remarks>
+        /// <exception cref="ObjectDisposedException">
+        /// The <see cref="OperationQueueThread"/> has been disposed.
+        /// </exception>
         public bool ClearWait(int millisecondsTimeout)
         {
             if (IsDisposed)
@@ -51,14 +114,28 @@ namespace NLib
             lock (_queue_SyncLock)
             {
                 Clear();
-#if DISABLE_THREADING
+                if (DisableThreading)
                     return true;
-#else
-                return Monitor.Wait(_queue_SyncLock, millisecondsTimeout);  // Wait for operation iterator to go to sleep.
-#endif
+                else
+                    return Monitor.Wait(_queue_SyncLock, millisecondsTimeout);  // Wait for operation iterator to go to sleep.
             }
         }
 
+        /// <summary>
+        /// Clears the operation queue, waits for any current operation to complete,
+        /// and releases the resources used by the <see cref="OperationQueueThread"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method clears the operation queue, and waits for any currently running
+        /// operations to complete. Then, it releases the resources used by this instance,
+        /// and returns. While this method is waiting for the operation thread to become idle,
+        /// no new operations can be enqueued. If EnqueueOperation or EnqueueOperationWait
+        /// is called while this method is waiting, it will be blocked until this method returns,
+        /// and then will throw an <see cref="ObjectDisposedException"/>.
+        /// This method will block indefinitely until any currently running operations
+        /// complete. If an operation has frozen and does not return, this method will
+        /// not return either.
+        /// </remarks>
         public void Dispose()
         {
             if (IsDisposed)
@@ -69,69 +146,109 @@ namespace NLib
                 _operationQueue.Clear();
                 _operationQueue = null;
                 IsDisposed = true;
-#if !DISABLE_THREADING
-                Monitor.Pulse(_queue_SyncLock);
-#endif
+                if (!DisableThreading)
+                    Monitor.Pulse(_queue_SyncLock);
             }
 
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Adds an operation to the operation queue, and returns immediately.
+        /// </summary>
+        /// <param name="method">
+        /// The operation delegate to invoke.
+        /// </param>
+        /// <remarks>
+        /// This method adds the specified delegate to the operation queue,
+        /// and returns immediately.
+        /// The operation queue is a first-in first-out (FIFO) buffer. The
+        /// delegates added to the queue are executed synchronously and
+        /// consecutively until the queue is empty. When more operations are
+        /// added to the queue, they will be processed like-wise.
+        /// </remarks>
+        /// <exception cref="ObjectDisposedException">
+        /// The <see cref="OperationQueueThread"/> has been disposed.
+        /// </exception>
         public void EnqueueOperation(OperationQueueDelegate method)
         {
             if (IsDisposed)
                 throw new ObjectDisposedException(this.GetType().Name);
 
-#if DISABLE_THREADING
-            method();
-#else
-            if (Thread.CurrentThread.ManagedThreadId == _queueThreadId)
-                throw new InvalidOperationException("Attempted to enqueue an operation from within the operation queue thread. This can cause a deadlock.");
-            
-            Operation operation;
-
-            lock (_queue_SyncLock)
+            if (DisableThreading)
+                method();
+            else
             {
-                TryStartOperationQueueThread();
+                if (Thread.CurrentThread.ManagedThreadId == _queueThreadId)
+                    throw new InvalidOperationException("Attempted to enqueue an operation from within the operation queue thread. This can cause a deadlock.");
 
-                operation = new Operation(method);
-                _operationQueue.Enqueue(operation);
-                Monitor.Pulse(_queue_SyncLock);  // Wake up operation iterator.
+                Operation operation;
+
+                lock (_queue_SyncLock)
+                {
+                    TryStartOperationQueueThread();
+
+                    operation = new Operation(method);
+                    _operationQueue.Enqueue(operation);
+                    Monitor.Pulse(_queue_SyncLock);  // Wake up operation iterator.
+                }
             }
-#endif
         }
 
+        /// <summary>
+        /// Adds an operation to the operation queue, and waits for the operation
+        /// to finish before returning.
+        /// </summary>
+        /// <param name="method">
+        /// The operation delegate to invoke.
+        /// </param>
+        /// <remarks>
+        /// This method adds the specified delegate to the operation queue,
+        /// and waits for the operation to be dequeued and complete before
+        /// returning. If the operation does not complete, this method will
+        /// not return.
+        /// The operation queue is a first-in first-out (FIFO) buffer. The
+        /// delegates added to the queue are executed synchronously and
+        /// consecutively until the queue is empty. When more operations are
+        /// added to the queue, they will be processed like-wise.
+        /// </remarks>
+        /// <exception cref="ObjectDisposedException">
+        /// The <see cref="OperationQueueThread"/> has been disposed.
+        /// </exception>
         public void EnqueueOperationWait(OperationQueueDelegate method)
         {
             if (IsDisposed)
                 throw new ObjectDisposedException(this.GetType().Name);
 
-#if DISABLE_THREADING
+            if (DisableThreading)
                 method();
-#else
-            if (Thread.CurrentThread.ManagedThreadId == _queueThreadId)
-                throw new InvalidOperationException("Attempted to enqueue an operation from within the operation queue thread. This can cause a deadlock.");
-            
-            Operation operation = new Operation(method);
-            lock (operation)
+            else
             {
-                lock (_queue_SyncLock)
+                if (Thread.CurrentThread.ManagedThreadId == _queueThreadId)
+                    throw new InvalidOperationException("Attempted to enqueue an operation from within the operation queue thread. This can cause a deadlock.");
+
+                Operation operation = new Operation(method);
+                lock (operation)
                 {
-                    TryStartOperationQueueThread();
+                    lock (_queue_SyncLock)
+                    {
+                        TryStartOperationQueueThread();
 
-                    _operationQueue.Enqueue(operation);
-                    Monitor.Pulse(_queue_SyncLock);  // Wake up operation iterator
+                        _operationQueue.Enqueue(operation);
+                        Monitor.Pulse(_queue_SyncLock);  // Wake up operation iterator
+                    }
+
+                    Monitor.Wait(operation);  // Wait for operation to complete
                 }
-
-                Monitor.Wait(operation);  // Wait for operation to complete
             }
-
-#endif
         }
 
 
         //--- Public Properties ---
 
+        /// <summary>
+        /// Gets a value indicating whether the <see cref="OperationQueueThread"/> has been disposed.
+        /// </summary>
         public bool IsDisposed { get; private set; }
 
 
@@ -139,6 +256,9 @@ namespace NLib
         
         private bool TryStartOperationQueueThread()
         {
+            if (IsDisposed)
+                throw new ObjectDisposedException(this.GetType().Name);
+            
             if (_threadAsyncResult != null)
                 return false;
 
