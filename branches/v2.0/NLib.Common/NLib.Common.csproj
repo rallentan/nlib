@@ -40,8 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BitReader.cs" />
-    <Compile Include="BitWriter.cs" />
     <Compile Include="ByteExtensions.cs" />
     <Compile Include="Range_NET3-.cs" />
     <Compile Include="EasyThread.cs" />
@@ -52,7 +50,6 @@
     <Compile Include="RandomExtensions.cs" />
     <Compile Include="Range_NET35CP+.cs" />
     <Compile Include="StringExtensions_NET3-.cs" />
-    <Compile Include="UsingObject.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
