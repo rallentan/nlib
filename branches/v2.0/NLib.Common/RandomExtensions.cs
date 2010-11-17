@@ -8,6 +8,15 @@ namespace NLib
     {
         //--- Public Static Methods ---
 
+        /// <summary>
+        ///     Returns a <see cref="Boolean"/> value.
+        /// </summary>
+        /// <param name="random">
+        ///     An instance a <see cref="Random"/> object.
+        /// </param>
+        /// <returns>
+        ///     Returns a <see cref="Boolean"/> value.
+        /// </returns>
         public static bool NextBool(this Random random)
         {
             bool result = false;
