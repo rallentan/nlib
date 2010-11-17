@@ -23,20 +23,20 @@ namespace NLib
             return n & 0x0f;
         }
 
-        public static int RotateRight(this int n, int count)
+        public static byte RotateRight(this byte n, int count)
         {
             if (count > _bitSize || count < 0)
                 throw new ArgumentOutOfRangeException("count", count, string.Empty);
 
-            return (n >> count) | (n << (_bitSize - count));
+            return (byte)((n >> count) | (n << (_bitSize - count)));
         }
 
-        public static int RotateLeft(this int n, int count)
+        public static byte RotateLeft(this byte n, int count)
         {
             if (count > _bitSize || count < 0)
                 throw new ArgumentOutOfRangeException("count", count, string.Empty);
 
-            return (n << count) | (n >> (_bitSize - count));
+            return (byte)((n << count) | (n >> (_bitSize - count)));
         }
 
     }

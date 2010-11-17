@@ -35,12 +35,6 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\NLib.Common\BitReader.cs">
-      <Link>BitReader.cs</Link>
-    </Compile>
-    <Compile Include="..\NLib.Common\BitWriter.cs">
-      <Link>BitWriter.cs</Link>
-    </Compile>
     <Compile Include="..\NLib.Common\ByteExtensions.cs">
       <Link>ByteExtensions.cs</Link>
     </Compile>
@@ -58,9 +52,6 @@
     </Compile>
     <Compile Include="..\NLib.Common\Range_NET35CP+.cs">
       <Link>Range_NET35CP+.cs</Link>
-    </Compile>
-    <Compile Include="..\NLib.Common\UsingObject.cs">
-      <Link>UsingObject.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
