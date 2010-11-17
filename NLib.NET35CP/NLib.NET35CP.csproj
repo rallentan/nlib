@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{772F3EC8-4BE3-4E99-AADC-CED45359CC64}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NLib</RootNamespace>
+    <AssemblyName>NLib</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\NLib.Common\BitReader.cs">
+      <Link>BitReader.cs</Link>
+    </Compile>
+    <Compile Include="..\NLib.Common\BitWriter.cs">
+      <Link>BitWriter.cs</Link>
+    </Compile>
+    <Compile Include="..\NLib.Common\ByteExtensions.cs">
+      <Link>ByteExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\NLib.Common\EasyThread.cs">
+      <Link>EasyThread.cs</Link>
+    </Compile>
+    <Compile Include="..\NLib.Common\Int32Extensions.cs">
+      <Link>Int32Extensions.cs</Link>
+    </Compile>
+    <Compile Include="..\NLib.Common\OperationQueueThread.cs">
+      <Link>OperationQueueThread.cs</Link>
+    </Compile>
+    <Compile Include="..\NLib.Common\RandomExtensions.cs">
+      <Link>RandomExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\NLib.Common\Range_NET35CP+.cs">
+      <Link>Range_NET35CP+.cs</Link>
+    </Compile>
+    <Compile Include="..\NLib.Common\UsingObject.cs">
+      <Link>UsingObject.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
