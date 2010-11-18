@@ -4,7 +4,7 @@ using System.Text;
 using NUnit.Framework;
 using NLib;
 
-namespace NUnitTests
+namespace NUnitTests.Common
 {
     [TestFixture]
     public class UInt32ExtensionsTests

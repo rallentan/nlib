@@ -41,8 +41,14 @@
     <Compile Include="..\NLib.Common\EasyThread.cs">
       <Link>EasyThread.cs</Link>
     </Compile>
+    <Compile Include="..\NLib.Common\Int16Extensions.cs">
+      <Link>Int16Extensions.cs</Link>
+    </Compile>
     <Compile Include="..\NLib.Common\Int32Extensions.cs">
       <Link>Int32Extensions.cs</Link>
+    </Compile>
+    <Compile Include="..\NLib.Common\Int64Extensions.cs">
+      <Link>Int64Extensions.cs</Link>
     </Compile>
     <Compile Include="..\NLib.Common\OperationQueueThread.cs">
       <Link>OperationQueueThread.cs</Link>
@@ -55,6 +61,15 @@
     </Compile>
     <Compile Include="..\NLib.Common\StringExtensions.cs">
       <Link>StringExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\NLib.Common\UInt16Extensions.cs">
+      <Link>UInt16Extensions.cs</Link>
+    </Compile>
+    <Compile Include="..\NLib.Common\UInt32Extensions.cs">
+      <Link>UInt32Extensions.cs</Link>
+    </Compile>
+    <Compile Include="..\NLib.Common\UInt64Extensions.cs">
+      <Link>UInt64Extensions.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
