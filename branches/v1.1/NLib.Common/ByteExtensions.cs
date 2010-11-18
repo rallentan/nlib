@@ -8,7 +8,7 @@ namespace NLib
     {
         //--- Constants ---
 
-        const int _bitSize = 8;
+        const int BIT_SIZE = 8;
 
 
         //--- Public Static Methods ---
@@ -60,10 +60,10 @@ namespace NLib
         /// </exception>
         public static byte RotateRight(this byte n, int count)
         {
-            if (count > _bitSize || count < 0)
+            if (count > BIT_SIZE || count < 0)
                 throw new ArgumentOutOfRangeException("count", count, string.Empty);
 
-            return (byte)((n >> count) | (n << (_bitSize - count)));
+            return (byte)((n >> count) | (n << (BIT_SIZE - count)));
         }
 
         /// <summary>
@@ -85,10 +85,10 @@ namespace NLib
         /// </exception>
         public static byte RotateLeft(this byte n, int count)
         {
-            if (count > _bitSize || count < 0)
+            if (count > BIT_SIZE || count < 0)
                 throw new ArgumentOutOfRangeException("count", count, string.Empty);
 
-            return (byte)((n << count) | (n >> (_bitSize - count)));
+            return (byte)((n << count) | (n >> (BIT_SIZE - count)));
         }
     }
 }

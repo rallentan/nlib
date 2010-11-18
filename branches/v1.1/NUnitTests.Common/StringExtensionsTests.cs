@@ -20,7 +20,7 @@ namespace NUnitTests.Common
     public class StringExtensionsTests
     {
         [Test]
-        public void CompareTo_P1_DiffCaseThan_P2()
+        public void CompareTo()
         {
             Assert.AreNotEqual(StringExtensions.CompareTo("aaaa", "AAAA", StringComparison.Ordinal), 0);
             Assert.AreNotEqual(StringExtensions.CompareTo("aaaa", "AAAA", StringComparison.CurrentCulture), 0);
@@ -29,11 +29,8 @@ namespace NUnitTests.Common
             Assert.AreEqual(StringExtensions.CompareTo("aaaa", "AAAA", StringComparison.OrdinalIgnoreCase), 0);
             Assert.AreEqual(StringExtensions.CompareTo("aaaa", "AAAA", StringComparison.InvariantCultureIgnoreCase), 0);
             Assert.AreEqual(StringExtensions.CompareTo("aaaa", "AAAA", StringComparison.CurrentCultureIgnoreCase), 0);
-        }
 
-        [Test]
-        public void CompareTo_P1_Equals_P2()
-        {
+            
             Assert.AreEqual(StringExtensions.CompareTo("aaaa", "aaaa", StringComparison.Ordinal), 0);
             Assert.AreEqual(StringExtensions.CompareTo("aaaa", "aaaa", StringComparison.CurrentCulture), 0);
             Assert.AreEqual(StringExtensions.CompareTo("aaaa", "aaaa", StringComparison.InvariantCulture), 0);
@@ -41,11 +38,8 @@ namespace NUnitTests.Common
             Assert.AreEqual(StringExtensions.CompareTo("aaaa", "aaaa", StringComparison.OrdinalIgnoreCase), 0);
             Assert.AreEqual(StringExtensions.CompareTo("aaaa", "aaaa", StringComparison.CurrentCultureIgnoreCase), 0);
             Assert.AreEqual(StringExtensions.CompareTo("aaaa", "aaaa", StringComparison.InvariantCultureIgnoreCase), 0);
-        }
 
-        [Test]
-        public void CompareTo_P1_GreaterThan_P2()
-        {
+            
             Assert.Greater(StringExtensions.CompareTo("bbbb", "aaaa", StringComparison.Ordinal), 0);
             Assert.Greater(StringExtensions.CompareTo("bbbb", "aaaa", StringComparison.CurrentCulture), 0);
             Assert.Greater(StringExtensions.CompareTo("bbbb", "aaaa", StringComparison.InvariantCulture), 0);
@@ -53,29 +47,17 @@ namespace NUnitTests.Common
             Assert.Greater(StringExtensions.CompareTo("bbbb", "aaaa", StringComparison.OrdinalIgnoreCase), 0);
             Assert.Greater(StringExtensions.CompareTo("bbbb", "aaaa", StringComparison.CurrentCultureIgnoreCase), 0);
             Assert.Greater(StringExtensions.CompareTo("bbbb", "aaaa", StringComparison.InvariantCultureIgnoreCase), 0);
-        }
 
-        [Test]
-        public void CompareTo_P1_IsEmptyString()
-        {
+            
             Assert.Less(StringExtensions.CompareTo(string.Empty, "aaaa", StringComparison.Ordinal), 0);
-        }
 
-        [Test]
-        public void CompareTo_P1_IsEmptyString_P2_IsEmptyString()
-        {
+            
             Assert.AreEqual(StringExtensions.CompareTo(string.Empty, string.Empty, StringComparison.Ordinal), 0);
-        }
 
-        [Test]
-        public void CompareTo_P1_IsNull()
-        {
+            
             Assert.Less(StringExtensions.CompareTo(null, "aaaa", StringComparison.Ordinal), 0);
-        }
 
-        [Test]
-        public void CompareTo_P1_LessThan_P2()
-        {
+            
             Assert.Less(StringExtensions.CompareTo("aaaa", "bbbb", StringComparison.Ordinal), 0);
             Assert.Less(StringExtensions.CompareTo("aaaa", "bbbb", StringComparison.CurrentCulture), 0);
             Assert.Less(StringExtensions.CompareTo("aaaa", "bbbb", StringComparison.InvariantCulture), 0);
@@ -83,90 +65,91 @@ namespace NUnitTests.Common
             Assert.Less(StringExtensions.CompareTo("aaaa", "bbbb", StringComparison.OrdinalIgnoreCase), 0);
             Assert.Less(StringExtensions.CompareTo("aaaa", "bbbb", StringComparison.CurrentCultureIgnoreCase), 0);
             Assert.Less(StringExtensions.CompareTo("aaaa", "bbbb", StringComparison.InvariantCultureIgnoreCase), 0);
-        }
 
-        [Test]
-        public void CompareTo_P2_IsEmptyString()
-        {
+            
             Assert.Greater(StringExtensions.CompareTo("aaaa", string.Empty, StringComparison.Ordinal), 0);
-        }
 
-        [Test]
-        public void CompareTo_P2_IsNull()
-        {
+            
             Assert.Greater(StringExtensions.CompareTo("aaaa", null, StringComparison.Ordinal), 0);
         }
 
         [Test]
-        public void Contains_P1_Contains_P2()
+        public void Contains_Char()
         {
-            Assert.IsTrue(StringExtensions.Contains("aaaabbbb", "aabb", StringComparison.Ordinal));
-            Assert.IsTrue(StringExtensions.Contains("aaaabbbb", "aabb", StringComparison.CurrentCulture));
-            Assert.IsTrue(StringExtensions.Contains("aaaabbbb", "aabb", StringComparison.InvariantCulture));
+            Assert.Throws<ArgumentNullException>(() => { StringExtensions.Contains(null, 'a'); });
 
-            Assert.IsTrue(StringExtensions.Contains("aaaabbbb", "aabb", StringComparison.OrdinalIgnoreCase));
-            Assert.IsTrue(StringExtensions.Contains("aaaabbbb", "aabb", StringComparison.CurrentCultureIgnoreCase));
-            Assert.IsTrue(StringExtensions.Contains("aaaabbbb", "aabb", StringComparison.InvariantCultureIgnoreCase));
+            Assert.False(StringExtensions.Contains(string.Empty, 'a'));
+
+            Assert.True(StringExtensions.Contains("aaaabbbb", 'b'));
+
+            Assert.False(StringExtensions.Contains("aaaabbbb", 'B'));
+
+            Assert.False(StringExtensions.Contains("aaaabbbb", 'c'));
         }
 
         [Test]
-        public void Contains_P1_Contains_P2_WithDiffCase()
+        public void Contains_Char_StringComparison()
         {
-            Assert.IsFalse(StringExtensions.Contains("aaaabbbb", "AABB", StringComparison.Ordinal));
-            Assert.IsFalse(StringExtensions.Contains("aaaabbbb", "AABB", StringComparison.CurrentCulture));
-            Assert.IsFalse(StringExtensions.Contains("aaaabbbb", "AABB", StringComparison.InvariantCulture));
+            Assert.Throws<ArgumentNullException>(() => { StringExtensions.Contains(null, 'a', StringComparison.Ordinal); });
 
-            Assert.IsTrue(StringExtensions.Contains("aaaabbbb", "AABB", StringComparison.OrdinalIgnoreCase));
-            Assert.IsTrue(StringExtensions.Contains("aaaabbbb", "AABB", StringComparison.CurrentCultureIgnoreCase));
-            Assert.IsTrue(StringExtensions.Contains("aaaabbbb", "AABB", StringComparison.InvariantCultureIgnoreCase));
+            Assert.False(StringExtensions.Contains(string.Empty, 'a', StringComparison.Ordinal));
+
+            Assert.True(StringExtensions.Contains("aaaabbbb", 'b', StringComparison.Ordinal));
+            Assert.True(StringExtensions.Contains("aaaabbbb", 'b', StringComparison.CurrentCulture));
+            Assert.True(StringExtensions.Contains("aaaabbbb", 'b', StringComparison.InvariantCulture));
+            Assert.True(StringExtensions.Contains("aaaabbbb", 'b', StringComparison.OrdinalIgnoreCase));
+            Assert.True(StringExtensions.Contains("aaaabbbb", 'b', StringComparison.CurrentCultureIgnoreCase));
+            Assert.True(StringExtensions.Contains("aaaabbbb", 'b', StringComparison.InvariantCultureIgnoreCase));
+
+            Assert.False(StringExtensions.Contains("aaaabbbb", 'B', StringComparison.Ordinal));
+            Assert.False(StringExtensions.Contains("aaaabbbb", 'B', StringComparison.CurrentCulture));
+            Assert.False(StringExtensions.Contains("aaaabbbb", 'B', StringComparison.InvariantCulture));
+            Assert.True(StringExtensions.Contains("aaaabbbb", 'B', StringComparison.OrdinalIgnoreCase));
+            Assert.True(StringExtensions.Contains("aaaabbbb", 'B', StringComparison.CurrentCultureIgnoreCase));
+            Assert.True(StringExtensions.Contains("aaaabbbb", 'B', StringComparison.InvariantCultureIgnoreCase));
+
+            Assert.False(StringExtensions.Contains("aaaabbbb", 'c', StringComparison.Ordinal));
+            Assert.False(StringExtensions.Contains("aaaabbbb", 'c', StringComparison.CurrentCulture));
+            Assert.False(StringExtensions.Contains("aaaabbbb", 'c', StringComparison.InvariantCulture));
+            Assert.False(StringExtensions.Contains("aaaabbbb", 'c', StringComparison.OrdinalIgnoreCase));
+            Assert.False(StringExtensions.Contains("aaaabbbb", 'c', StringComparison.CurrentCultureIgnoreCase));
+            Assert.False(StringExtensions.Contains("aaaabbbb", 'c', StringComparison.InvariantCultureIgnoreCase));
         }
 
         [Test]
-        public void Contains_P1_DoesNotContain_P2()
+        public void Contains_String_StringComparison()
         {
-            Assert.IsFalse(StringExtensions.Contains("aaaabbbb", "cccc", StringComparison.Ordinal));
-            Assert.IsFalse(StringExtensions.Contains("aaaabbbb", "cccc", StringComparison.CurrentCulture));
-            Assert.IsFalse(StringExtensions.Contains("aaaabbbb", "cccc", StringComparison.InvariantCulture));
+            Assert.Throws<ArgumentNullException>(() => { StringExtensions.Contains(null, "aaaa", StringComparison.Ordinal); });
+            Assert.Throws<ArgumentNullException>(() => { StringExtensions.Contains("aaaa", null, StringComparison.Ordinal); });
 
-            Assert.IsFalse(StringExtensions.Contains("aaaabbbb", "cccc", StringComparison.OrdinalIgnoreCase));
-            Assert.IsFalse(StringExtensions.Contains("aaaabbbb", "cccc", StringComparison.CurrentCultureIgnoreCase));
-            Assert.IsFalse(StringExtensions.Contains("aaaabbbb", "cccc", StringComparison.InvariantCultureIgnoreCase));
-        }
-
-        [Test]
-        public void Contains_P1_IsEmptyString()
-        {
             Assert.False(StringExtensions.Contains(string.Empty, "aaaa", StringComparison.Ordinal));
-        }
-
-        [Test]
-        public void Contains_P1_IsEmptyString_P2_IsEmptyString()
-        {
-            Assert.True(StringExtensions.Contains(string.Empty, string.Empty, StringComparison.Ordinal));
-        }
-
-        [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Contains_P1_IsNull()
-        {
-            StringExtensions.Contains(null, "aaaa", StringComparison.Ordinal);
-        }
-
-        [Test]
-        public void Contains_P2_IsEmptyString()
-        {
             Assert.True(StringExtensions.Contains("aaaa", string.Empty, StringComparison.Ordinal));
+            Assert.True(StringExtensions.Contains(string.Empty, string.Empty, StringComparison.Ordinal));
+ 
+            Assert.True(StringExtensions.Contains("aaaabbbb", "aabb", StringComparison.Ordinal));
+            Assert.True(StringExtensions.Contains("aaaabbbb", "aabb", StringComparison.CurrentCulture));
+            Assert.True(StringExtensions.Contains("aaaabbbb", "aabb", StringComparison.InvariantCulture));
+            Assert.True(StringExtensions.Contains("aaaabbbb", "aabb", StringComparison.OrdinalIgnoreCase));
+            Assert.True(StringExtensions.Contains("aaaabbbb", "aabb", StringComparison.CurrentCultureIgnoreCase));
+            Assert.True(StringExtensions.Contains("aaaabbbb", "aabb", StringComparison.InvariantCultureIgnoreCase));
+
+            Assert.False(StringExtensions.Contains("aaaabbbb", "AABB", StringComparison.Ordinal));
+            Assert.False(StringExtensions.Contains("aaaabbbb", "AABB", StringComparison.CurrentCulture));
+            Assert.False(StringExtensions.Contains("aaaabbbb", "AABB", StringComparison.InvariantCulture));
+            Assert.True(StringExtensions.Contains("aaaabbbb", "AABB", StringComparison.OrdinalIgnoreCase));
+            Assert.True(StringExtensions.Contains("aaaabbbb", "AABB", StringComparison.CurrentCultureIgnoreCase));
+            Assert.True(StringExtensions.Contains("aaaabbbb", "AABB", StringComparison.InvariantCultureIgnoreCase));
+
+            Assert.False(StringExtensions.Contains("aaaabbbb", "cccc", StringComparison.Ordinal));
+            Assert.False(StringExtensions.Contains("aaaabbbb", "cccc", StringComparison.CurrentCulture));
+            Assert.False(StringExtensions.Contains("aaaabbbb", "cccc", StringComparison.InvariantCulture));
+            Assert.False(StringExtensions.Contains("aaaabbbb", "cccc", StringComparison.OrdinalIgnoreCase));
+            Assert.False(StringExtensions.Contains("aaaabbbb", "cccc", StringComparison.CurrentCultureIgnoreCase));
+            Assert.False(StringExtensions.Contains("aaaabbbb", "cccc", StringComparison.InvariantCultureIgnoreCase));
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Contains_P2_IsNull()
-        {
-            StringExtensions.Contains("aaaa", null, StringComparison.Ordinal);
-        }
-
-        [Test]
-        public void Replace_P1_Contains_P2()
+        public void Replace()
         {
             Assert.AreEqual(StringExtensions.Replace("aaaabbbb", "aabb", "cccc", StringComparison.Ordinal), "aaccccbb");
             Assert.AreEqual(StringExtensions.Replace("aaaabbbb", "aabb", "cccc", StringComparison.CurrentCulture), "aaccccbb");
@@ -175,11 +158,8 @@ namespace NUnitTests.Common
             Assert.AreEqual(StringExtensions.Replace("aaaabbbb", "aabb", "cccc", StringComparison.OrdinalIgnoreCase), "aaccccbb");
             Assert.AreEqual(StringExtensions.Replace("aaaabbbb", "aabb", "cccc", StringComparison.CurrentCultureIgnoreCase), "aaccccbb");
             Assert.AreEqual(StringExtensions.Replace("aaaabbbb", "aabb", "cccc", StringComparison.InvariantCultureIgnoreCase), "aaccccbb");
-        }
 
-        [Test]
-        public void Replace_P1_Contains_P2_InDiffCase()
-        {
+            
             Assert.AreEqual(StringExtensions.Replace("aaaabbbb", "AABB", "cccc", StringComparison.Ordinal), "aaaabbbb");
             Assert.AreEqual(StringExtensions.Replace("aaaabbbb", "AABB", "cccc", StringComparison.CurrentCulture), "aaaabbbb");
             Assert.AreEqual(StringExtensions.Replace("aaaabbbb", "AABB", "cccc", StringComparison.InvariantCulture), "aaaabbbb");
@@ -187,11 +167,8 @@ namespace NUnitTests.Common
             Assert.AreEqual(StringExtensions.Replace("aaaabbbb", "AABB", "cccc", StringComparison.OrdinalIgnoreCase), "aaccccbb");
             Assert.AreEqual(StringExtensions.Replace("aaaabbbb", "AABB", "cccc", StringComparison.CurrentCultureIgnoreCase), "aaccccbb");
             Assert.AreEqual(StringExtensions.Replace("aaaabbbb", "AABB", "cccc", StringComparison.InvariantCultureIgnoreCase), "aaccccbb");
-        }
 
-        [Test]
-        public void Replace_P1_DoesNotContain_P2()
-        {
+            
             string param1 = "aaaabbbb";
 
             Assert.AreSame(StringExtensions.Replace(param1, "cccc", "dddd", StringComparison.Ordinal), param1);
@@ -201,38 +178,20 @@ namespace NUnitTests.Common
             Assert.AreSame(StringExtensions.Replace(param1, "cccc", "dddd", StringComparison.OrdinalIgnoreCase), param1);
             Assert.AreSame(StringExtensions.Replace(param1, "cccc", "dddd", StringComparison.CurrentCultureIgnoreCase), param1);
             Assert.AreSame(StringExtensions.Replace(param1, "cccc", "dddd", StringComparison.InvariantCultureIgnoreCase), param1);
-        }
 
-        [Test]
-        public void Replace_P1_IsEmptyString()
-        {
+            
             Assert.AreSame(StringExtensions.Replace(string.Empty, "bbbb", "cccc", StringComparison.Ordinal), string.Empty);
-        }
 
-        [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Replace_P1_IsNull()
-        {
-            StringExtensions.Replace(null, "bbbb", "cccc", StringComparison.Ordinal);
-        }
 
-        [Test]
-        [ExpectedException(typeof(ArgumentException))]
-        public void Replace_P2_IsEmpty()
-        {
-            StringExtensions.Replace("aaaa", string.Empty, "cccc", StringComparison.Ordinal);
-        }
+            Assert.Throws<ArgumentNullException>(() => { StringExtensions.Replace(null, "bbbb", "cccc", StringComparison.Ordinal); });
 
-        [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Replace_P2_IsNull()
-        {
-            StringExtensions.Replace("aaaa", null, "cccc", StringComparison.Ordinal);
-        }
 
-        [Test]
-        public void Replace_P3_IsEmptyString()
-        {
+            Assert.Throws<ArgumentException>(() => { StringExtensions.Replace("aaaa", string.Empty, "cccc", StringComparison.Ordinal); });
+
+
+            Assert.Throws<ArgumentNullException>(() => { StringExtensions.Replace("aaaa", null, "cccc", StringComparison.Ordinal); });
+
+            
             Assert.AreEqual(StringExtensions.Replace("aaaabbbb", "aabb", string.Empty, StringComparison.Ordinal), "aabb");
             Assert.AreEqual(StringExtensions.Replace("aaaabbbb", "aabb", string.Empty, StringComparison.CurrentCulture), "aabb");
             Assert.AreEqual(StringExtensions.Replace("aaaabbbb", "aabb", string.Empty, StringComparison.InvariantCulture), "aabb");
@@ -240,11 +199,8 @@ namespace NUnitTests.Common
             Assert.AreEqual(StringExtensions.Replace("aaaabbbb", "aabb", string.Empty, StringComparison.OrdinalIgnoreCase), "aabb");
             Assert.AreEqual(StringExtensions.Replace("aaaabbbb", "aabb", string.Empty, StringComparison.CurrentCultureIgnoreCase), "aabb");
             Assert.AreEqual(StringExtensions.Replace("aaaabbbb", "aabb", string.Empty, StringComparison.InvariantCultureIgnoreCase), "aabb");
-        }
 
-        [Test]
-        public void Replace_P3_IsNull()
-        {
+            
             Assert.AreEqual(StringExtensions.Replace("aaaabbbb", "aabb", null, StringComparison.Ordinal), "aabb");
             Assert.AreEqual(StringExtensions.Replace("aaaabbbb", "aabb", null, StringComparison.CurrentCulture), "aabb");
             Assert.AreEqual(StringExtensions.Replace("aaaabbbb", "aabb", null, StringComparison.InvariantCulture), "aabb");

@@ -25,8 +25,8 @@ namespace NLib
     {
         //--- Fields ---
 
-        const string startIndexExceptionMessage = "Index was out of range. Must be non-negative and less than the size of the collection.";
-        const string countExceptionMessage = "Count must be positive and count must refer to a location within the string/array/collection.";
+        const string ERRMSG_STARTINDEX_OUT_OF_RANGE = "Index was out of range. Must be non-negative and less than the size of the collection.";
+        const string ERRMSG_COUNT_OUT_OF_RANGE = "Count must be positive and count must refer to a location within the string/array/collection.";
 
 
         //--- Public Static Methods ---
@@ -74,12 +74,12 @@ namespace NLib
         /// <exception cref="ArgumentNullException">
         ///     s is null.
         /// </exception>
-        public static int Contains(this string s, char c)
+        public static bool Contains(this string s, char c)
         {
             if (s == null)
                 throw new ArgumentNullException("s");
 
-            return s.IndexOf(c);
+            return s.IndexOf(c) != -1;
         }
 
         /// <summary>
@@ -97,9 +97,9 @@ namespace NLib
         /// <exception cref="ArgumentNullException">
         ///     s is null.
         /// </exception>
-        public static int Contains(this string s, char c, StringComparison comparisonType)
+        public static bool Contains(this string s, char c, StringComparison comparisonType)
         {
-            return IndexOf(s, c, comparisonType);
+            return IndexOf(s, c, comparisonType) != -1;
         }
 
         /// <summary>
@@ -592,9 +592,9 @@ namespace NLib
             if (anyOf == null)
                 throw new ArgumentNullException("anyOf");
             if (startIndex < 0)
-                throw new ArgumentOutOfRangeException("startIndex", startIndexExceptionMessage);
+                throw new ArgumentOutOfRangeException("startIndex", ERRMSG_STARTINDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex > s.Length - count)
-                throw new ArgumentOutOfRangeException("count", countExceptionMessage);
+                throw new ArgumentOutOfRangeException("count", ERRMSG_COUNT_OUT_OF_RANGE);
 
             int anyOfLength = anyOf.Length;
             char[] ca = new char[anyOfLength];
@@ -1046,9 +1046,9 @@ namespace NLib
             if (anyOf == null)
                 throw new ArgumentNullException("anyOf");
             if (startIndex < 0)
-                throw new ArgumentOutOfRangeException("startIndex", startIndexExceptionMessage);
+                throw new ArgumentOutOfRangeException("startIndex", ERRMSG_STARTINDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex > s.Length - count)
-                throw new ArgumentOutOfRangeException("count", countExceptionMessage);
+                throw new ArgumentOutOfRangeException("count", ERRMSG_COUNT_OUT_OF_RANGE);
 
             fixed (char* pStrBase = s)
             fixed (char* pAnyOfBase = anyOf)
@@ -1372,9 +1372,9 @@ namespace NLib
             if (anyOf == null)
                 throw new ArgumentNullException("anyOf");
             if (startIndex < 0 || startIndex >= s.Length)
-                throw new ArgumentOutOfRangeException("startIndex", startIndexExceptionMessage);
+                throw new ArgumentOutOfRangeException("startIndex", ERRMSG_STARTINDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex - count + 1 < 0)
-                throw new ArgumentOutOfRangeException("count", countExceptionMessage);
+                throw new ArgumentOutOfRangeException("count", ERRMSG_COUNT_OUT_OF_RANGE);
 
             fixed (char* pStrBase = s)
             fixed (char* pAnyOfBase = anyOf)
@@ -1439,9 +1439,9 @@ namespace NLib
             if (s == null)
                 throw new ArgumentNullException("s");
             if (startIndex < 0 || startIndex > s.Length)
-                throw new ArgumentOutOfRangeException("startIndex", startIndexExceptionMessage);
+                throw new ArgumentOutOfRangeException("startIndex", ERRMSG_STARTINDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex > s.Length - count)
-                throw new ArgumentOutOfRangeException("count", countExceptionMessage);
+                throw new ArgumentOutOfRangeException("count", ERRMSG_COUNT_OUT_OF_RANGE);
 
             c = char.ToUpperInvariant(c);
 
@@ -1480,9 +1480,9 @@ namespace NLib
             if (s == null)
                 throw new ArgumentNullException("s");
             if (startIndex < 0 || startIndex > s.Length)
-                throw new ArgumentOutOfRangeException("startIndex", startIndexExceptionMessage);
+                throw new ArgumentOutOfRangeException("startIndex", ERRMSG_STARTINDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex > s.Length - count)
-                throw new ArgumentOutOfRangeException("count", countExceptionMessage);
+                throw new ArgumentOutOfRangeException("count", ERRMSG_COUNT_OUT_OF_RANGE);
 
             string charAsString = c.ToString();
 
@@ -1523,9 +1523,9 @@ namespace NLib
             if (anyOf == null)
                 throw new ArgumentNullException("anyOf");
             if (startIndex < 0 || startIndex > s.Length)
-                throw new ArgumentOutOfRangeException("startIndex", startIndexExceptionMessage);
+                throw new ArgumentOutOfRangeException("startIndex", ERRMSG_STARTINDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex > s.Length - count)
-                throw new ArgumentOutOfRangeException("count", countExceptionMessage);
+                throw new ArgumentOutOfRangeException("count", ERRMSG_COUNT_OUT_OF_RANGE);
 
             int anyOfLength = anyOf.Length;
             char[] ca = new char[anyOfLength];
@@ -1591,9 +1591,9 @@ namespace NLib
             if (anyOf == null)
                 throw new ArgumentNullException("anyOf");
             if (startIndex < 0 || startIndex > s.Length)
-                throw new ArgumentOutOfRangeException("startIndex", startIndexExceptionMessage);
+                throw new ArgumentOutOfRangeException("startIndex", ERRMSG_STARTINDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex > s.Length - count)
-                throw new ArgumentOutOfRangeException("count", countExceptionMessage);
+                throw new ArgumentOutOfRangeException("count", ERRMSG_COUNT_OUT_OF_RANGE);
 
             int anyOfLength = anyOf.Length;
             string[] sa = new string[anyOfLength];
@@ -1678,9 +1678,9 @@ namespace NLib
             if (anyOf == null)
                 throw new ArgumentNullException("anyOf");
             if (startIndex < 0 || startIndex > s.Length)
-                throw new ArgumentOutOfRangeException("startIndex", startIndexExceptionMessage);
+                throw new ArgumentOutOfRangeException("startIndex", ERRMSG_STARTINDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex > s.Length - count)
-                throw new ArgumentOutOfRangeException("count", countExceptionMessage);
+                throw new ArgumentOutOfRangeException("count", ERRMSG_COUNT_OUT_OF_RANGE);
 
             int anyOfLength = anyOf.Length;
             string[] sa = new string[anyOfLength];
@@ -1715,9 +1715,9 @@ namespace NLib
             if (anyOf == null)
                 throw new ArgumentNullException("anyOf");
             if (startIndex < 0 || startIndex > s.Length)
-                throw new ArgumentOutOfRangeException("startIndex", startIndexExceptionMessage);
+                throw new ArgumentOutOfRangeException("startIndex", ERRMSG_STARTINDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex > s.Length - count)
-                throw new ArgumentOutOfRangeException("count", countExceptionMessage);
+                throw new ArgumentOutOfRangeException("count", ERRMSG_COUNT_OUT_OF_RANGE);
 
             int anyOfLength = anyOf.Length;
             char[] ca = new char[anyOfLength];
@@ -1810,9 +1810,9 @@ namespace NLib
             if (anyOf == null)
                 throw new ArgumentNullException("anyOf");
             if (startIndex < 0 || startIndex > s.Length)
-                throw new ArgumentOutOfRangeException("startIndex", startIndexExceptionMessage);
+                throw new ArgumentOutOfRangeException("startIndex", ERRMSG_STARTINDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex > s.Length - count)
-                throw new ArgumentOutOfRangeException("count", countExceptionMessage);
+                throw new ArgumentOutOfRangeException("count", ERRMSG_COUNT_OUT_OF_RANGE);
 
             int strEnd = startIndex + count;
             int anyOfLength = anyOf.Length;
@@ -1851,9 +1851,9 @@ namespace NLib
             if (anyOf == null)
                 throw new ArgumentNullException("anyOf");
             if (startIndex < 0 || startIndex >= s.Length)
-                throw new ArgumentOutOfRangeException("startIndex", startIndexExceptionMessage);
+                throw new ArgumentOutOfRangeException("startIndex", ERRMSG_STARTINDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex - count + 1 < 0)
-                throw new ArgumentOutOfRangeException("count", countExceptionMessage);
+                throw new ArgumentOutOfRangeException("count", ERRMSG_COUNT_OUT_OF_RANGE);
 
             int anyOfLength = anyOf.Length;
             char[] ca = new char[anyOfLength];
@@ -1916,9 +1916,9 @@ namespace NLib
             if (anyOf == null)
                 throw new ArgumentNullException("anyOf");
             if (startIndex < 0 || startIndex >= s.Length)
-                throw new ArgumentOutOfRangeException("startIndex", startIndexExceptionMessage);
+                throw new ArgumentOutOfRangeException("startIndex", ERRMSG_STARTINDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex - count + 1 < 0)
-                throw new ArgumentOutOfRangeException("count", countExceptionMessage);
+                throw new ArgumentOutOfRangeException("count", ERRMSG_COUNT_OUT_OF_RANGE);
 
             int anyOfLength = anyOf.Length;
             string[] sa = new string[anyOfLength];
