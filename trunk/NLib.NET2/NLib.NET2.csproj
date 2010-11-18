@@ -23,6 +23,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,6 +34,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>bin\Release\NLib.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\NLib.Common\BitReader.cs">
@@ -49,8 +52,14 @@
     <Compile Include="..\NLib.Common\ExtensionAttribute.cs">
       <Link>ExtensionAttribute.cs</Link>
     </Compile>
+    <Compile Include="..\NLib.Common\Int16Extensions.cs">
+      <Link>Int16Extensions.cs</Link>
+    </Compile>
     <Compile Include="..\NLib.Common\Int32Extensions.cs">
       <Link>Int32Extensions.cs</Link>
+    </Compile>
+    <Compile Include="..\NLib.Common\Int64Extensions.cs">
+      <Link>Int64Extensions.cs</Link>
     </Compile>
     <Compile Include="..\NLib.Common\OperationQueueThread.cs">
       <Link>OperationQueueThread.cs</Link>
@@ -64,8 +73,14 @@
     <Compile Include="..\NLib.Common\StringExtensions.cs">
       <Link>StringExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\NLib.Common\UsingObject.cs">
-      <Link>UsingObject.cs</Link>
+    <Compile Include="..\NLib.Common\UInt16Extensions.cs">
+      <Link>UInt16Extensions.cs</Link>
+    </Compile>
+    <Compile Include="..\NLib.Common\UInt32Extensions.cs">
+      <Link>UInt32Extensions.cs</Link>
+    </Compile>
+    <Compile Include="..\NLib.Common\UInt64Extensions.cs">
+      <Link>UInt64Extensions.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
