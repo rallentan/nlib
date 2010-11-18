@@ -5,13 +5,14 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{A182CAC3-AAC7-49FC-9DE0-573683308DD4}</ProjectGuid>
+    <ProjectGuid>{94FC0DE5-FBE6-40EE-AA98-6F09E58C708E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NUnitTests</RootNamespace>
-    <AssemblyName>NUnitTests</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <RootNamespace>NUnitTests.NLib_NET2</RootNamespace>
+    <AssemblyName>NUnitTests.NLib_NET2</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,25 +34,40 @@
   <ItemGroup>
     <Reference Include="nunit.framework, Version=2.5.7.10213, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\NUnit 2.5.7\bin\net-2.0\framework\nunit.framework.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\NUnit 2.5.7\bin\net-2.0\framework\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BitStreamTest.cs" />
+    <Compile Include="..\NUnitTests.Common\ByteExtensionsTests.cs">
+      <Link>ByteExtensionsTests.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.Common\Int16ExtensionsTests.cs">
+      <Link>Int16ExtensionsTests.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.Common\Int32ExtensionsTests.cs">
+      <Link>Int32ExtensionsTests.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.Common\Int64ExtensionsTests.cs">
+      <Link>Int64ExtensionsTests.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.Common\UInt16ExtensionsTests.cs">
+      <Link>UInt16ExtensionsTests.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.Common\UInt32ExtensionsTests.cs">
+      <Link>UInt32ExtensionsTests.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.Common\UInt64ExtensionsTests.cs">
+      <Link>UInt64ExtensionsTests.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RunTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NLib.NET35CP\NLib.NET35CP.csproj">
-      <Project>{772F3EC8-4BE3-4E99-AADC-CED45359CC64}</Project>
-      <Name>NLib.NET35CP</Name>
+    <ProjectReference Include="..\NLib.NET2\NLib.NET2.csproj">
+      <Project>{F736DC08-FF79-4A9F-A774-4CC4BD552285}</Project>
+      <Name>NLib.NET2</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
