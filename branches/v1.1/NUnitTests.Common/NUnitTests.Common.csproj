@@ -46,6 +46,8 @@
   <ItemGroup>
     <Compile Include="BitStreamTests.cs" />
     <Compile Include="ByteExtensionsTests.cs" />
+    <Compile Include="RandomExtensionsTests.cs" />
+    <Compile Include="StringExtensionsTests.cs" />
     <Compile Include="TestRunner.cs" />
     <Compile Include="UInt16ExtensionsTests.cs" />
     <Compile Include="UInt32ExtensionsTests.cs" />

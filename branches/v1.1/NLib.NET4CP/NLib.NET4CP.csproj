@@ -37,9 +37,6 @@
     <DocumentationFile>bin\Release\NLib.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="..\NLib.Common\ByteExtensions.cs">
       <Link>ByteExtensions.cs</Link>
     </Compile>

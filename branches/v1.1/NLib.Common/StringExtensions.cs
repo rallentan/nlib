@@ -1850,7 +1850,7 @@ namespace NLib
                 throw new ArgumentNullException("s");
             if (anyOf == null)
                 throw new ArgumentNullException("anyOf");
-            if (startIndex < 0 || startIndex > s.Length)
+            if (startIndex < 0 || startIndex >= s.Length)
                 throw new ArgumentOutOfRangeException("startIndex", startIndexExceptionMessage);
             if (count < 0 || startIndex - count + 1 < 0)
                 throw new ArgumentOutOfRangeException("count", countExceptionMessage);
@@ -1915,7 +1915,7 @@ namespace NLib
                 throw new ArgumentNullException("s");
             if (anyOf == null)
                 throw new ArgumentNullException("anyOf");
-            if (startIndex < 0 || startIndex > s.Length)
+            if (startIndex < 0 || startIndex >= s.Length)
                 throw new ArgumentOutOfRangeException("startIndex", startIndexExceptionMessage);
             if (count < 0 || startIndex - count + 1 < 0)
                 throw new ArgumentOutOfRangeException("count", countExceptionMessage);
