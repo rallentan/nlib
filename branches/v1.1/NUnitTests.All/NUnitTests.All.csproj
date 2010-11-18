@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NUnitTests</RootNamespace>
-    <AssemblyName>NUnitTests</AssemblyName>
+    <AssemblyName>NUnitTests.All</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -44,14 +44,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BitStreamTest.cs" />
+    <Compile Include="NLib_NET2\ByteExtensionsTests.cs" />
+    <Compile Include="NLib_NET2\UInt16ExtensionsTests.cs" />
+    <Compile Include="NLib_NET2\UInt32ExtensionsTests.cs" />
+    <Compile Include="NLib_NET2\UInt64ExtensionsTests.cs" />
+    <Compile Include="NLib_NET2\Int32ExtensionsTests.cs" />
+    <Compile Include="NLib_NET2\Int64ExtensionsTests.cs" />
+    <Compile Include="NLib_NET2\Int16ExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RunTests.cs" />
+    <Compile Include="TestRunner.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NLib.NET35CP\NLib.NET35CP.csproj">
-      <Project>{772F3EC8-4BE3-4E99-AADC-CED45359CC64}</Project>
-      <Name>NLib.NET35CP</Name>
+    <Folder Include="NLib_NET35CP\" />
+    <Folder Include="NLib_NET35\" />
+    <Folder Include="NLib_NET3\" />
+    <Folder Include="NLib_NET4CP\" />
+    <Folder Include="NLib_NET4\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NUnitTests.NLib.NET2\NUnitTests.NLib_NET2.csproj">
+      <Project>{94FC0DE5-FBE6-40EE-AA98-6F09E58C708E}</Project>
+      <Name>NUnitTests.NLib_NET2</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
