@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
-namespace NUnitTests
+namespace NUnitTests.Common
 {
     /// <summary>
     /// Provides a set of methods for running the unit tests in the debugger.
