@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("NLib")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Provides an API which extends the .NET 4 Client Profile Framework.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("NLib")]
