@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NUnitTests.NLib_NET3</RootNamespace>
-    <AssemblyName>NUnitTests.NLib_NET3</AssemblyName>
+    <AssemblyName>NUnitTests.NLib %28.NET3%29</AssemblyName>
     <TargetFrameworkVersion>v3.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

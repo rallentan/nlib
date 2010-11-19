@@ -1,12 +1,12 @@
 ﻿<NUnitProject>
   <Settings activeconfig="Debug" />
   <Config name="Debug" binpathtype="Auto">
-    <assembly path="NUnitTests.NLib_NET2\bin\Debug\NUnitTests.NLib_NET2.dll" />
-    <assembly path="NUnitTests.NLib_NET3\bin\Debug\NUnitTests.NLib_NET3.dll" />
-    <assembly path="NUnitTests.NLib_NET4\bin\Debug\NUnitTests.NLib_NET4.dll" />
-    <assembly path="NUnitTests.NLib_NET4CP\bin\Debug\NUnitTests.NLib_NET4CP.dll" />
-    <assembly path="NUnitTests.NLib_NET35\bin\Debug\NUnitTests.NLib_NET35.dll" />
-    <assembly path="NUnitTests.NLib_NET35CP\bin\Debug\NUnitTests.NLib_NET35CP.dll" />
+    <assembly path="NUnitTests.NLib (.NET2)\bin\Debug\NUnitTests.NLib (.NET2).dll" />
+    <assembly path="NUnitTests.NLib (.NET3)\bin\Debug\NUnitTests.NLib (.NET3).dll" />
+    <assembly path="NUnitTests.NLib (.NET4)\bin\Debug\NUnitTests.NLib (.NET4).dll" />
+    <assembly path="NUnitTests.NLib (.NET4 CP)\bin\Debug\NUnitTests.NLib (.NET4 CP).dll" />
+    <assembly path="NUnitTests.NLib (.NET3.5)\bin\Debug\NUnitTests.NLib (.NET3.5).dll" />
+    <assembly path="NUnitTests.NLib (.NET3.5 CP)\bin\Debug\NUnitTests.NLib (.NET3.5 CP).dll" />
   </Config>
   <Config name="Release" binpathtype="Auto" />
 </NUnitProject>

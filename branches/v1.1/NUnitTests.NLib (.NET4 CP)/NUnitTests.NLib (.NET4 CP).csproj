@@ -8,8 +8,8 @@
     <ProjectGuid>{24FC6730-D539-4C08-AFEC-201C987BA626}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NUnitTests.NLib_NET4CP</RootNamespace>
-    <AssemblyName>NUnitTests.NLib_NET4CP</AssemblyName>
+    <RootNamespace>NUnitTests.NLib_NET4_CP</RootNamespace>
+    <AssemblyName>NUnitTests.NLib %28.NET4 CP%29</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>

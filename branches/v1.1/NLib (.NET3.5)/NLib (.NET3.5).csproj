@@ -78,7 +78,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>SET netTarget=NET35
+    <PostBuildEvent>SET netTarget=NET3.5
 SET configName=$(ConfigurationName)
 IF NOT "%25configName:Debug=%25" == "$(ConfigurationName)" GOTO debug
 

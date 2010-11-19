@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NUnitTests.NLib_NET4</RootNamespace>
-    <AssemblyName>NUnitTests.NLib_NET4</AssemblyName>
+    <AssemblyName>NUnitTests.NLib %28.NET4%29</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
