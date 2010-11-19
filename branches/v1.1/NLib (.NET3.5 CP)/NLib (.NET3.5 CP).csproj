@@ -104,8 +104,8 @@ COPY /Y "$(TargetFileName)" ..\..\..\Output\%25netTarget%25
 
 ECHO.
 ECHO --- Generating Documentation ---
-ECHO %25SystemRoot%25\Microsoft.NET\Framework\v3.5\MSBuild.exe ..\..\NLib.shfbproj
-%25SystemRoot%25\Microsoft.NET\Framework\v3.5\MSBuild.exe ..\..\NLib.shfbproj
+ECHO %25SystemRoot%25\Microsoft.NET\Framework\v3.5\MSBuild.exe "..\..\$(ProjectName).shfbproj"
+%25SystemRoot%25\Microsoft.NET\Framework\v3.5\MSBuild.exe "..\..\$(ProjectName).shfbproj"
 
 ECHO.
 ECHO --- Moving CHM File to Bin Output ---
