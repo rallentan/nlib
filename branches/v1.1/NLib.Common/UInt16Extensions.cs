@@ -4,6 +4,9 @@ using System.Text;
 
 namespace NLib
 {
+    /// <summary>
+    /// Provides a set of extension methods for the <see cref="UInt16"/> type.
+    /// </summary>
     public static class UInt16Extensions
     {
         //--- Public Static Methods ---

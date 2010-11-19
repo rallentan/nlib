@@ -4,6 +4,9 @@ using System.Text;
 
 namespace NLib
 {
+    /// <summary>
+    /// Provides a set of extension methods for the <see cref="Int64"/> type.
+    /// </summary>
     public static class Int64Extensions
     {
         //--- Constants ---

@@ -4,6 +4,9 @@ using System.Text;
 
 namespace NLib
 {
+    /// <summary>
+    /// Represents a starting position and a length that defines a range on a one-dimensional scale.
+    /// </summary>
     public struct Range
     {
         //--- Constants ---
@@ -29,7 +32,7 @@ namespace NLib
         /// </param>
         /// <returns>
         ///     The smallest <see cref="Range"/> containing all of the ranges in the
-        ///     specified <see cref="IEnumberable{T}"/>.
+        ///     specified <see cref="IEnumerable{T}"/>.
         /// </returns>
         /// <exception cref="ArgumentNullException">
         ///     ranges is null.

@@ -75,6 +75,30 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>SET configName=$(ConfigurationName)
+IF NOT "%25configName:Debug=%25" == "$(ConfigurationName)" GOTO debug
+
+:release
+ECHO.
+ECHO --- Running Post-Build Events For Release ---
+
+ECHO.
+ECHO Copying to Output:
+ECHO CMD: COPY /Y "$(TargetFileName)" ..\..\..\Output\NET4
+COPY /Y "$(TargetFileName)" ..\..\..\Output\NET4
+
+ECHO --- Finished Post-Build Events For Release ---
+ECHO.
+
+goto :exit
+
+:debug
+REM Debug configuration build event go here
+
+:exit
+</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

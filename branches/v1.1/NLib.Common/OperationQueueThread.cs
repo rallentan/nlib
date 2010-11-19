@@ -6,6 +6,9 @@ using System.Runtime.Remoting.Messaging;
 
 namespace NLib
 {
+    /// <summary>
+    /// Represents a thread which executes operations from a queue.
+    /// </summary>
     public partial class OperationQueueThread : IDisposable
     {
         //--- Public Static Properties ---
@@ -38,6 +41,9 @@ namespace NLib
         /// </summary>
         public OperationQueueThread() { }
 
+        /// <summary>
+        /// Destructs the <see cref="OperationQueueThread"/>.
+        /// </summary>
         ~OperationQueueThread() { Dispose(); }
 
 
@@ -345,5 +351,8 @@ namespace NLib
         }
     }
 
+    /// <summary>
+    /// Represents a method that the <see cref="OperationQueueThread"/> will call when it has reached the top of the queue.
+    /// </summary>
     public delegate void OperationQueueDelegate();
 }

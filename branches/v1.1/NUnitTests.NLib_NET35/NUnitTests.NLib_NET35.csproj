@@ -47,6 +47,9 @@
     <Compile Include="..\NUnitTests.Common\ByteExtensionsTests.cs">
       <Link>ByteExtensionsTests.cs</Link>
     </Compile>
+    <Compile Include="..\NUnitTests.Common\GenericDelegatesTests.cs">
+      <Link>GenericDelegatesTests.cs</Link>
+    </Compile>
     <Compile Include="..\NUnitTests.Common\Int16ExtensionsTests.cs">
       <Link>Int16ExtensionsTests.cs</Link>
     </Compile>

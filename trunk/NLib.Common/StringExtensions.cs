@@ -138,6 +138,32 @@ namespace NLib
             return s.IndexOf(value, comparisonType) != -1;
         }
 
+        public static bool ContainsAt(this string s, string value, int index)
+        {
+            if (s == null)
+                throw new ArgumentNullException("s");
+            if (value == null)
+                throw new ArgumentNullException("value");
+
+            if (index + value.Length > s.Length)
+                return false;
+
+            return s.IndexOf(value, index, value.Length) != -1;
+        }
+
+        public static bool ContainsAt(this string s, string value, int index, StringComparison comparisonType)
+        {
+            if (s == null)
+                throw new ArgumentNullException("s");
+            if (value == null)
+                throw new ArgumentNullException("value");
+
+            if (index + value.Length > s.Length)
+                return false;
+
+            return s.IndexOf(value, index, value.Length, comparisonType) != -1;
+        }
+
         /// <summary>
         ///     Replaces all occurrences of a specified System.String in this instance, with
         ///     another specified System.String. A parameter specifies the type of search to use for the

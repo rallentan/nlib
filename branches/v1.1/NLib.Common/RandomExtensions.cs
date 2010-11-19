@@ -4,6 +4,9 @@ using System.Text;
 
 namespace NLib
 {
+    /// <summary>
+    /// Provides a set of extension methods for the <see cref="Random"/> class.
+    /// </summary>
     public static class RandomExtensions
     {
         //--- Public Static Methods ---

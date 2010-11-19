@@ -41,6 +41,9 @@
     <Compile Include="..\NLib.Common\EasyThread.cs">
       <Link>EasyThread.cs</Link>
     </Compile>
+    <Compile Include="..\NLib.Common\GenericDelegates_NET35.cs">
+      <Link>GenericDelegates_NET35.cs</Link>
+    </Compile>
     <Compile Include="..\NLib.Common\Int16Extensions.cs">
       <Link>Int16Extensions.cs</Link>
     </Compile>
@@ -74,6 +77,30 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>SET configName=$(ConfigurationName)
+IF NOT "%25configName:Debug=%25" == "$(ConfigurationName)" GOTO debug
+
+:release
+ECHO.
+ECHO --- Running Post-Build Events For Release ---
+
+ECHO.
+ECHO Copying to Output:
+ECHO CMD: COPY /Y "$(TargetFileName)" ..\..\..\Output\NET35
+COPY /Y "$(TargetFileName)" ..\..\..\Output\NET35
+
+ECHO --- Finished Post-Build Events For Release ---
+ECHO.
+
+goto :exit
+
+:debug
+REM Debug configuration build event go here
+
+:exit
+</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
