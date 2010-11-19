@@ -77,7 +77,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NLib.NET3\NLib.NET3.csproj">
+    <ProjectReference Include="..\NLib %28.NET3%29\NLib %28.NET3%29.csproj">
       <Project>{3B47AB4F-5063-486D-AF71-441959CC73E5}</Project>
       <Name>NLib.NET3</Name>
     </ProjectReference>

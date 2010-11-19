@@ -5,12 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{FB7AB6ED-7E2D-4401-97E5-3E961B6D0FEA}</ProjectGuid>
+    <ProjectGuid>{772F3EC8-4BE3-4E99-AADC-CED45359CC64}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NLib</RootNamespace>
     <AssemblyName>NLib</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
@@ -23,8 +23,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>
-    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -42,6 +40,9 @@
     </Compile>
     <Compile Include="..\NLib.Common\EasyThread.cs">
       <Link>EasyThread.cs</Link>
+    </Compile>
+    <Compile Include="..\NLib.Common\GenericDelegates_NET35.cs">
+      <Link>GenericDelegates_NET35.cs</Link>
     </Compile>
     <Compile Include="..\NLib.Common\Int16Extensions.cs">
       <Link>Int16Extensions.cs</Link>
@@ -77,7 +78,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>SET configName=$(ConfigurationName)
+    <PostBuildEvent>SET netTarget=NET35CP
+SET configName=$(ConfigurationName)
 IF NOT "%25configName:Debug=%25" == "$(ConfigurationName)" GOTO debug
 
 :release
@@ -85,10 +87,32 @@ ECHO.
 ECHO --- Running Post-Build Events For Release ---
 
 ECHO.
-ECHO Copying to Output:
-ECHO CMD: COPY /Y "$(TargetFileName)" ..\..\..\Output\NET4CP
-COPY /Y "$(TargetFileName)" ..\..\..\Output\NET4CP
+ECHO --- Ensuring Output Path Exists ---
+IF EXIST ..\..\..\Output GOTO OUTPUT_DIR_EXISTS
+ECHO MKDIR ..\..\..\Output
+MKDIR ..\..\..\Output
+:OUTPUT_DIR_EXISTS
+IF EXIST ..\..\..\Output\%25netTarget%25 GOTO NET_DIR_EXISTS
+ECHO MKDIR ..\..\..\Output\%25netTarget%25
+MKDIR ..\..\..\Output\%25netTarget%25
+:NET_DIR_EXISTS
 
+ECHO.
+ECHO --- Copying to Output ---
+ECHO COPY /Y "$(TargetFileName)" ..\..\..\Output\%25netTarget%25
+COPY /Y "$(TargetFileName)" ..\..\..\Output\%25netTarget%25
+
+ECHO.
+ECHO --- Generating Documentation ---
+ECHO %25SystemRoot%25\Microsoft.NET\Framework\v3.5\MSBuild.exe ..\..\NLib.shfbproj
+%25SystemRoot%25\Microsoft.NET\Framework\v3.5\MSBuild.exe ..\..\NLib.shfbproj
+
+ECHO.
+ECHO --- Moving CHM File to Bin Output ---
+ECHO MOVE /Y ..\..\..\Output\OnlineDocumentation\%25netTarget%25\Documentation.chm ..\..\..\Output\%25netTarget%25\NLib.chm
+MOVE /Y ..\..\..\Output\OnlineDocumentation\%25netTarget%25\Documentation.chm ..\..\..\Output\%25netTarget%25\NLib.chm
+
+ECHO.
 ECHO --- Finished Post-Build Events For Release ---
 ECHO.
 

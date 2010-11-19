@@ -80,7 +80,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NLib.NET4\NLib.NET4.csproj">
+    <ProjectReference Include="..\NLib %28.NET4%29\NLib %28.NET4%29.csproj">
       <Project>{51E27017-FB1F-4FDD-B87E-65609AF4D38A}</Project>
       <Name>NLib.NET4</Name>
     </ProjectReference>
