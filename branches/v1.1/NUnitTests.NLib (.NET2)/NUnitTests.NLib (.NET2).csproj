@@ -79,7 +79,7 @@
   <ItemGroup>
     <ProjectReference Include="..\NLib %28.NET2%29\NLib %28.NET2%29.csproj">
       <Project>{F736DC08-FF79-4A9F-A774-4CC4BD552285}</Project>
-      <Name>NLib.NET2</Name>
+      <Name>NLib %28.NET2%29</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

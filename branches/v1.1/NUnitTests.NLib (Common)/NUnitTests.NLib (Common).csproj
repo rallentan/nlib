@@ -44,7 +44,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BitStreamTests.cs" />
     <Compile Include="ByteExtensionsTests.cs" />
     <Compile Include="GenericDelegatesTests.cs" />
     <Compile Include="RandomExtensionsTests.cs" />
