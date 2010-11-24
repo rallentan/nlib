@@ -5,6 +5,9 @@ using System.Text;
 
 namespace NLib.Windows.Forms
 {
+    /// <summary>
+    /// Specifies the sides of a control to snap to or with.
+    /// </summary>
     [Flags]
     public enum SnapToSide
     {

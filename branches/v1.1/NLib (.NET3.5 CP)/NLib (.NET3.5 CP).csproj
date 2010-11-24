@@ -40,44 +40,56 @@
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>NLib.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release Without Documentation|AnyCPU'">
+    <OutputPath>bin\Release Without Documentation\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>bin\Release\NLib.XML</DocumentationFile>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\NLib.Common\ByteExtensions.cs">
+    <Compile Include="..\NLib %28Common%29\ByteExtensions.cs">
       <Link>ByteExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\NLib.Common\EasyThread.cs">
+    <Compile Include="..\NLib %28Common%29\EasyThread.cs">
       <Link>EasyThread.cs</Link>
     </Compile>
-    <Compile Include="..\NLib.Common\GenericDelegates_NET35.cs">
+    <Compile Include="..\NLib %28Common%29\GenericDelegates_NET35.cs">
       <Link>GenericDelegates_NET35.cs</Link>
     </Compile>
-    <Compile Include="..\NLib.Common\Int16Extensions.cs">
+    <Compile Include="..\NLib %28Common%29\Int16Extensions.cs">
       <Link>Int16Extensions.cs</Link>
     </Compile>
-    <Compile Include="..\NLib.Common\Int32Extensions.cs">
+    <Compile Include="..\NLib %28Common%29\Int32Extensions.cs">
       <Link>Int32Extensions.cs</Link>
     </Compile>
-    <Compile Include="..\NLib.Common\Int64Extensions.cs">
+    <Compile Include="..\NLib %28Common%29\Int64Extensions.cs">
       <Link>Int64Extensions.cs</Link>
     </Compile>
-    <Compile Include="..\NLib.Common\OperationQueueThread.cs">
+    <Compile Include="..\NLib %28Common%29\OperationQueueThread.cs">
       <Link>OperationQueueThread.cs</Link>
     </Compile>
-    <Compile Include="..\NLib.Common\RandomExtensions.cs">
+    <Compile Include="..\NLib %28Common%29\RandomExtensions.cs">
       <Link>RandomExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\NLib.Common\Range.cs">
+    <Compile Include="..\NLib %28Common%29\Range.cs">
       <Link>Range.cs</Link>
     </Compile>
-    <Compile Include="..\NLib.Common\StringExtensions.cs">
+    <Compile Include="..\NLib %28Common%29\StringExtensions.cs">
       <Link>StringExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\NLib.Common\UInt16Extensions.cs">
+    <Compile Include="..\NLib %28Common%29\UInt16Extensions.cs">
       <Link>UInt16Extensions.cs</Link>
     </Compile>
-    <Compile Include="..\NLib.Common\UInt32Extensions.cs">
+    <Compile Include="..\NLib %28Common%29\UInt32Extensions.cs">
       <Link>UInt32Extensions.cs</Link>
     </Compile>
-    <Compile Include="..\NLib.Common\UInt64Extensions.cs">
+    <Compile Include="..\NLib %28Common%29\UInt64Extensions.cs">
       <Link>UInt64Extensions.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -111,6 +123,8 @@ ECHO --- Copying to Output ---
 ECHO COPY /Y "$(TargetFileName)" ..\..\..\Output\%25netTarget%25
 COPY /Y "$(TargetFileName)" ..\..\..\Output\%25netTarget%25
 
+IF NOT "%25configName:Without Documentation=%25" == "$(ConfigurationName)" GOTO no_documentation
+
 ECHO.
 ECHO --- Generating Documentation ---
 ECHO %25SystemRoot%25\Microsoft.NET\Framework\v3.5\MSBuild.exe "..\..\$(ProjectName).shfbproj"
@@ -118,8 +132,10 @@ ECHO %25SystemRoot%25\Microsoft.NET\Framework\v3.5\MSBuild.exe "..\..\$(ProjectN
 
 ECHO.
 ECHO --- Moving CHM File to Bin Output ---
-ECHO MOVE /Y ..\..\..\Output\OnlineDocumentation\%25netTarget%25\Documentation.chm ..\..\..\Output\%25netTarget%25\NLib.chm
-MOVE /Y ..\..\..\Output\OnlineDocumentation\%25netTarget%25\Documentation.chm ..\..\..\Output\%25netTarget%25\NLib.chm
+ECHO MOVE /Y ..\..\..\Output\OnlineDocumentation\%25netTarget%25\$(TargetName)\Documentation.chm ..\..\..\Output\%25netTarget%25\$(TargetName).chm
+MOVE /Y ..\..\..\Output\OnlineDocumentation\%25netTarget%25\$(TargetName)\Documentation.chm ..\..\..\Output\%25netTarget%25\$(TargetName).chm
+
+:no_documentation
 
 ECHO.
 ECHO --- Finished Post-Build Events For Release ---

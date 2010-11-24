@@ -14,13 +14,12 @@
     <RootNamespace>Documentation</RootNamespace>
     <Name>Documentation</Name>
     <!-- SHFB properties -->
-    <OutputPath>..\Output\OnlineDocumentation\NET2\</OutputPath>
+    <OutputPath>..\Output\OnlineDocumentation\NET2\NLib\</OutputPath>
     <HtmlHelpName>Documentation</HtmlHelpName>
     <Language>en-US</Language>
     <FrameworkVersion>2.0.50727</FrameworkVersion>
     <DocumentationSources>
-      <DocumentationSource sourceFile="bin\Release\NLib.dll" />
-      <DocumentationSource sourceFile="bin\Release\NLib.xml" />
+      <DocumentationSource sourceFile="NLib (.NET2).csproj" />
     </DocumentationSources>
     <HelpFileFormat>HtmlHelp1, Website</HelpFileFormat>
     <ApiFilter>

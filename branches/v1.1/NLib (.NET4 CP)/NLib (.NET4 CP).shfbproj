@@ -14,13 +14,12 @@
     <RootNamespace>Documentation</RootNamespace>
     <Name>Documentation</Name>
     <!-- SHFB properties -->
-    <OutputPath>..\Output\OnlineDocumentation\NET4CP\</OutputPath>
+    <OutputPath>..\Output\OnlineDocumentation\NET4CP\NLib\</OutputPath>
     <HtmlHelpName>Documentation</HtmlHelpName>
     <Language>en-US</Language>
     <FrameworkVersion>4.0.30319</FrameworkVersion>
     <DocumentationSources>
-      <DocumentationSource sourceFile="bin\Release\NLib.dll" />
-      <DocumentationSource sourceFile="bin\Release\NLib.xml" />
+      <DocumentationSource sourceFile="NLib (.NET4 CP).csproj" />
     </DocumentationSources>
     <HelpFileFormat>HtmlHelp1, Website</HelpFileFormat>
     <ApiFilter>

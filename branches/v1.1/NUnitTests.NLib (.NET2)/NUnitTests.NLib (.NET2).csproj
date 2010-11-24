@@ -41,37 +41,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\NUnitTests.Common\ByteExtensionsTests.cs">
+    <Compile Include="..\NUnitTests.NLib %28Common%29\ByteExtensionsTests.cs">
       <Link>ByteExtensionsTests.cs</Link>
     </Compile>
-    <Compile Include="..\NUnitTests.Common\GenericDelegatesTests.cs">
+    <Compile Include="..\NUnitTests.NLib %28Common%29\GenericDelegatesTests.cs">
       <Link>GenericDelegatesTests.cs</Link>
     </Compile>
-    <Compile Include="..\NUnitTests.Common\Int16ExtensionsTests.cs">
+    <Compile Include="..\NUnitTests.NLib %28Common%29\Int16ExtensionsTests.cs">
       <Link>Int16ExtensionsTests.cs</Link>
     </Compile>
-    <Compile Include="..\NUnitTests.Common\Int32ExtensionsTests.cs">
+    <Compile Include="..\NUnitTests.NLib %28Common%29\Int32ExtensionsTests.cs">
       <Link>Int32ExtensionsTests.cs</Link>
     </Compile>
-    <Compile Include="..\NUnitTests.Common\Int64ExtensionsTests.cs">
+    <Compile Include="..\NUnitTests.NLib %28Common%29\Int64ExtensionsTests.cs">
       <Link>Int64ExtensionsTests.cs</Link>
     </Compile>
-    <Compile Include="..\NUnitTests.Common\RandomExtensionsTests.cs">
+    <Compile Include="..\NUnitTests.NLib %28Common%29\RandomExtensionsTests.cs">
       <Link>RandomExtensionsTests.cs</Link>
     </Compile>
-    <Compile Include="..\NUnitTests.Common\StringExtensionsTests.cs">
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests.cs">
       <Link>StringExtensionsTests.cs</Link>
     </Compile>
-    <Compile Include="..\NUnitTests.Common\TestRunner.cs">
+    <Compile Include="..\NUnitTests.NLib %28Common%29\TestRunner.cs">
       <Link>TestRunner.cs</Link>
     </Compile>
-    <Compile Include="..\NUnitTests.Common\UInt16ExtensionsTests.cs">
+    <Compile Include="..\NUnitTests.NLib %28Common%29\UInt16ExtensionsTests.cs">
       <Link>UInt16ExtensionsTests.cs</Link>
     </Compile>
-    <Compile Include="..\NUnitTests.Common\UInt32ExtensionsTests.cs">
+    <Compile Include="..\NUnitTests.NLib %28Common%29\UInt32ExtensionsTests.cs">
       <Link>UInt32ExtensionsTests.cs</Link>
     </Compile>
-    <Compile Include="..\NUnitTests.Common\UInt64ExtensionsTests.cs">
+    <Compile Include="..\NUnitTests.NLib %28Common%29\UInt64ExtensionsTests.cs">
       <Link>UInt64ExtensionsTests.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
