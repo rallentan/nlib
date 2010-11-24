@@ -27,7 +27,7 @@ namespace NLib
         ///     returns. This can be useful for debugging when multiple threads interfere
         ///     with the debugging process.
         /// </remarks>
-        public static void BeginInvoke(EasyThreadDelegate method)
+        public static void BeginInvoke(EasyThreadMethod method)
         {
             if (DisableThreading)
                 method();
@@ -55,7 +55,7 @@ namespace NLib
         private static void ThreadCallback(IAsyncResult ar)
         {
             AsyncResult result = (AsyncResult)ar;
-            var caller = (EasyThreadDelegate)result.AsyncDelegate;
+            var caller = (EasyThreadMethod)result.AsyncDelegate;
 
             try
             {
@@ -74,5 +74,5 @@ namespace NLib
     /// <summary>
     /// Represents a method that the <see cref="EasyThread"/> class will call in a new thread.
     /// </summary>
-    public delegate void EasyThreadDelegate();
+    public delegate void EasyThreadMethod();
 }

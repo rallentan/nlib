@@ -7,6 +7,7 @@ namespace NLib
     /// <summary>
     /// Provides a set of extension methods for the <see cref="UInt16"/> type.
     /// </summary>
+    [CLSCompliant(false)]
     public static class UInt16Extensions
     {
         //--- Public Static Methods ---
@@ -14,36 +15,36 @@ namespace NLib
         /// <summary>
         ///     Gets the eight high-order bits of the specified <see cref="UInt16"/>.
         /// </summary>
-        /// <param name="n">
+        /// <param name="value">
         ///     The <see cref="UInt16"/> to get the high-order nibble of.
         /// </param>
         /// <returns>
         ///     An <see cref="Byte"/> containing the high-order nibble of the specified <see cref="UInt16"/>.
         /// </returns>
-        public static byte HighByte(this ushort n)
+        public static byte HighByte(this ushort value)
         {
-            return Int16Extensions.HighByte((short)n);
+            return Int16Extensions.HighByte((short)value);
         }
 
         /// <summary>
         ///     Gets the eight low-order bits of the specified <see cref="UInt16"/>.
         /// </summary>
-        /// <param name="n">
+        /// <param name="value">
         ///     The <see cref="UInt16"/> to get the low-order nibble of.
         /// </param>
         /// <returns>
         ///     An <see cref="Byte"/> containing the low-order nibble of the specified <see cref="UInt16"/>.
         /// </returns>
-        public static byte LowByte(this ushort n)
+        public static byte LowByte(this ushort value)
         {
-            return Int16Extensions.LowByte((short)n);
+            return Int16Extensions.LowByte((short)value);
         }
 
         /// <summary>
         ///     Rotates the bits of the specified <see cref="UInt16"/> right. A parameter
         ///     specifies the number of places to rotate the bits by.
         /// </summary>
-        /// <param name="n">
+        /// <param name="value">
         ///     The <see cref="UInt16"/> to rotate.
         /// </param>
         /// <param name="count">
@@ -53,19 +54,19 @@ namespace NLib
         ///     A <see cref="UInt16"/> containing the rotated bits.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///     count is greater than the number of bit places in n
+        ///     count is greater than the number of bit places in value
         ///     -or- count is less than zero.
         /// </exception>
-        public static ushort RotateRight(this ushort n, int count)
+        public static ushort RotateRight(this ushort value, int count)
         {
-            return (ushort)Int16Extensions.RotateRight((short)n, count);
+            return (ushort)Int16Extensions.RotateRight((short)value, count);
         }
 
         /// <summary>
         ///     Rotates the bits of the specified <see cref="UInt16"/> left. A parameter
         ///     specifies the number of places to rotate the bits by.
         /// </summary>
-        /// <param name="n">
+        /// <param name="value">
         ///     The <see cref="UInt16"/> to rotate.
         /// </param>
         /// <param name="count">
@@ -75,12 +76,12 @@ namespace NLib
         ///     A <see cref="UInt16"/> containing the rotated bits.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///     count is greater than the number of bit places in n
+        ///     count is greater than the number of bit places in value
         ///     -or- count is less than zero.
         /// </exception>
-        public static ushort RotateLeft(this ushort n, int count)
+        public static ushort RotateLeft(this ushort value, int count)
         {
-            return (ushort)Int16Extensions.RotateLeft((short)n, count);
+            return (ushort)Int16Extensions.RotateLeft((short)value, count);
         }
     }
 }

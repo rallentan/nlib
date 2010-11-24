@@ -142,14 +142,14 @@ namespace NUnitTests.NLib.Windows.Forms
             // Form1 Left
             SetUpForm1();
             SetUpControl1();
-            Assert.Throws<ArgumentException>(() => { _testForm1.SnapToChild(SnapToSide.Left, _testControl1); });
+            Assert.Throws<ArgumentOutOfRangeException>(() => { _testForm1.SnapToChild(SnapToSide.Left, _testControl1); });
             Assert.AreEqual(FORM_1_W, _testForm1.Size.Width);
             Assert.AreEqual(FORM_1_H, _testForm1.Size.Height);
 
             // Form1 Top
             SetUpForm1();
             SetUpControl1();
-            Assert.Throws<ArgumentException>(() => { _testForm1.SnapToChild(SnapToSide.Top, _testControl1); });
+            Assert.Throws<ArgumentOutOfRangeException>(() => { _testForm1.SnapToChild(SnapToSide.Top, _testControl1); });
             Assert.AreEqual(FORM_1_W, _testForm1.Size.Width);
             Assert.AreEqual(FORM_1_H, _testForm1.Size.Height);
 

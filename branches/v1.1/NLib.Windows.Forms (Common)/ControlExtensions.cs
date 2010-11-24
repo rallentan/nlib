@@ -135,13 +135,13 @@ namespace NLib.Windows.Forms
             }
             if ((((thisSide & SnapToSide.Left) != 0 || (thisSide & SnapToSide.Right) != 0)
                 && (siblingsSide & SnapToSide.Left) == 0
-                && (siblingsSide & SnapToSide.Bottom) == 0
+                && (siblingsSide & SnapToSide.Right) == 0
                 ) || (
-                (thisSide & SnapToSide.Top) != 0 || (thisSide & SnapToSide.Bottom) != 0)
-                && (siblingsSide & SnapToSide.Left) == 0
-                && (siblingsSide & SnapToSide.Right) == 0)
+                ((thisSide & SnapToSide.Top) != 0 || (thisSide & SnapToSide.Bottom) != 0)
+                && (siblingsSide & SnapToSide.Top) == 0
+                && (siblingsSide & SnapToSide.Bottom) == 0))
             {
-                    throw new ArgumentException(EXCMSG_INCOMPATIBLE_ENUMS);
+                throw new ArgumentException(EXCMSG_INCOMPATIBLE_ENUMS);
             }
 
             if (thisSide == SnapToSide.Left && siblingsSide == SnapToSide.Left)         /**/c.Location = new Point(sibling.Location.X, c.Location.Y);

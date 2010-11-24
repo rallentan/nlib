@@ -11,7 +11,9 @@ namespace NLib
     {
         //--- Constants ---
 
-        const string ERRMSG_LENGTH_OUT_OF_RANGE = "Parameter must be a non-negative integer.";
+        const string ARGNAME_LENGTH = "length";
+        const string ARGNAME_VALUE = "value";
+        const string EXCMSG_LENGTH_OUT_OF_RANGE = "Parameter must be a non-negative integer.";
 
 
         //--- Static Fields ---
@@ -105,6 +107,16 @@ namespace NLib
             return new Range(lowBound, highBound - lowBound);
         }
 
+        public static bool operator ==(Range range1, Range range2)
+        {
+            return range1.Equals(range2);
+        }
+
+        public static bool operator !=(Range range1, Range range2)
+        {
+            return !range1.Equals(range2);
+        }    
+
 
         //--- Public Static Properties ---
 
@@ -144,10 +156,60 @@ namespace NLib
         public Range(int startPos, int length)
         {
             if (length < 0)
-                throw new ArgumentOutOfRangeException(ERRMSG_LENGTH_OUT_OF_RANGE, "length");
+                throw new ArgumentOutOfRangeException(ARGNAME_LENGTH, EXCMSG_LENGTH_OUT_OF_RANGE);
 
             _startPos = startPos;
             _length = length;
+        }
+
+
+        //--- Public Methods ---
+
+        /// <summary>
+        ///     Indicates whether this instance and a specified object are equal.
+        /// </summary>
+        /// <param name="obj">
+        ///     Another object to compare to.
+        /// </param>
+        /// <returns>
+        ///     true if obj and this instance are the same type and represent the same value;
+        ///     otherwise, false.
+        /// </returns>
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Range))
+                return false;
+
+            return Equals((Range)obj);
+        }
+
+        /// <summary>
+        ///     Indicates whether this instance and a specified Range are equal.
+        /// </summary>
+        /// <param name="other">
+        ///     Another Range to compare to.
+        /// </param>
+        /// <returns>
+        ///     true if other and this instance represent the same range;
+        ///     otherwise, false.
+        /// </returns>
+        public bool Equals(Range other)
+        {
+            if (_startPos != other._startPos)
+                return false;
+
+            return _length == other._length;
+        }
+
+        /// <summary>
+        ///     Returns the hash code for this instance.
+        /// </summary
+        /// <returns>
+        ///     A 32-bit signed integer that is the hash code for this instance.
+        /// </returns>
+        public override int GetHashCode()
+        {
+            return _startPos ^ _length;
         }
 
 
@@ -183,7 +245,7 @@ namespace NLib
             set
             {
                 if (value < 0)
-                    throw new ArgumentOutOfRangeException(ERRMSG_LENGTH_OUT_OF_RANGE, "value");
+                    throw new ArgumentOutOfRangeException(ARGNAME_VALUE, EXCMSG_LENGTH_OUT_OF_RANGE);
                 _length = value;
             }
         }

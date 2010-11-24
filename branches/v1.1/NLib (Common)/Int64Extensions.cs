@@ -19,36 +19,36 @@ namespace NLib
         /// <summary>
         ///     Gets the eight high-order bits of the specified <see cref="Int64"/>.
         /// </summary>
-        /// <param name="n">
+        /// <param name="value">
         ///     The <see cref="Int64"/> to get the high-order nibble of.
         /// </param>
         /// <returns>
         ///     An <see cref="Int32"/> containing the high-order nibble of the specified <see cref="Int64"/>.
         /// </returns>
-        public static int HighDWord(this long n)
+        public static int HighDWord(this long value)
         {
-            return (int)(n >> 32);
+            return (int)(value >> 32);
         }
 
         /// <summary>
         ///     Gets the eight low-order bits of the specified <see cref="Int64"/>.
         /// </summary>
-        /// <param name="n">
+        /// <param name="value">
         ///     The <see cref="Int64"/> to get the low-order nibble of.
         /// </param>
         /// <returns>
         ///     An <see cref="Int32"/> containing the low-order nibble of the specified <see cref="Int64"/>.
         /// </returns>
-        public static int LowDWord(this long n)
+        public static int LowDWord(this long value)
         {
-            return (int)(n & 0x00000000ffffffff);
+            return (int)(value & 0x00000000ffffffff);
         }
 
         /// <summary>
         ///     Rotates the bits of the specified <see cref="Int64"/> right. A parameter
         ///     specifies the number of places to rotate the bits by.
         /// </summary>
-        /// <param name="n">
+        /// <param name="value">
         ///     The <see cref="Int64"/> to rotate.
         /// </param>
         /// <param name="count">
@@ -58,22 +58,22 @@ namespace NLib
         ///     A <see cref="Int64"/> containing the rotated bits.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///     count is greater than the number of bit places in n
+        ///     count is greater than the number of bit places in value
         ///     -or- count is less than zero.
         /// </exception>
-        public static long RotateRight(this long n, int count)
+        public static long RotateRight(this long value, int count)
         {
             if (count > BIT_SIZE || count < 0)
                 throw new ArgumentOutOfRangeException("count", count, string.Empty);
 
-            return (n >> count) | (n << (BIT_SIZE - count));
+            return (value >> count) | (value << (BIT_SIZE - count));
         }
 
         /// <summary>
         ///     Rotates the bits of the specified <see cref="Int64"/> left. A parameter
         ///     specifies the number of places to rotate the bits by.
         /// </summary>
-        /// <param name="n">
+        /// <param name="value">
         ///     The <see cref="Int64"/> to rotate.
         /// </param>
         /// <param name="count">
@@ -83,15 +83,15 @@ namespace NLib
         ///     A <see cref="Int64"/> containing the rotated bits.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        ///     count is greater than the number of bit places in n
+        ///     count is greater than the number of bit places in value
         ///     -or- count is less than zero.
         /// </exception>
-        public static long RotateLeft(this long n, int count)
+        public static long RotateLeft(this long value, int count)
         {
             if (count > BIT_SIZE || count < 0)
                 throw new ArgumentOutOfRangeException("count", count, string.Empty);
 
-            return (n << count) | (n >> (BIT_SIZE - count));
+            return (value << count) | (value >> (BIT_SIZE - count));
         }
     }
 }

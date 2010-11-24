@@ -31,7 +31,6 @@ namespace NLib
         IAsyncResult _threadAsyncResult = null;
         object _queue_SyncLock = new object();
         volatile int _queueThreadId = -1;
-        object _operationCompleted_SyncLock = new object();
 
 
         //--- Constructors / Destructor ---
@@ -40,11 +39,6 @@ namespace NLib
         /// Initializes a new instance of the <see cref="OperationQueueThread"/>.
         /// </summary>
         public OperationQueueThread() { }
-
-        /// <summary>
-        /// Destructs the <see cref="OperationQueueThread"/>.
-        /// </summary>
-        ~OperationQueueThread() { Dispose(); }
 
 
         //--- Public Methods ---
@@ -144,18 +138,7 @@ namespace NLib
         /// </remarks>
         public void Dispose()
         {
-            if (IsDisposed)
-                return;
-
-            lock (_queue_SyncLock)
-            {
-                _operationQueue.Clear();
-                _operationQueue = null;
-                IsDisposed = true;
-                if (!DisableThreading)
-                    Monitor.Pulse(_queue_SyncLock);
-            }
-
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
 
@@ -176,7 +159,7 @@ namespace NLib
         /// <exception cref="ObjectDisposedException">
         /// The <see cref="OperationQueueThread"/> has been disposed.
         /// </exception>
-        public void EnqueueOperation(OperationQueueDelegate method)
+        public void EnqueueOperation(OperationQueueMethod method)
         {
             if (IsDisposed)
                 throw new ObjectDisposedException(this.GetType().Name);
@@ -221,7 +204,7 @@ namespace NLib
         /// <exception cref="ObjectDisposedException">
         /// The <see cref="OperationQueueThread"/> has been disposed.
         /// </exception>
-        public void EnqueueOperationWait(OperationQueueDelegate method)
+        public void EnqueueOperationWait(OperationQueueMethod method)
         {
             if (IsDisposed)
                 throw new ObjectDisposedException(this.GetType().Name);
@@ -258,6 +241,45 @@ namespace NLib
         public bool IsDisposed { get; private set; }
 
 
+        //--- Protected Methods ---
+
+        /// <summary>
+        /// Releases the unmanaged resources used by the <see cref="OperationQueueThread"/>
+        /// and optionally releases the managed resources.
+        /// </summary>
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources; false to release only unmanaged resources.
+        /// </param>
+        /// <remarks>
+        /// If disposing is true, this method clears the operation queue, and waits for any currently running
+        /// operations to complete. Then, it releases the resources used by this instance,
+        /// and returns. While this method is waiting for the operation thread to become idle,
+        /// no new operations can be enqueued. If EnqueueOperation or EnqueueOperationWait
+        /// is called while this method is waiting, it will be blocked until this method returns,
+        /// and then will throw an <see cref="ObjectDisposedException"/>.
+        /// This method will block indefinitely until any currently running operations
+        /// complete. If an operation has frozen and does not return, this method will
+        /// not return either.
+        /// </remarks>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (_operationQueue != null)
+                {
+                    lock (_queue_SyncLock)
+                    {
+                        _operationQueue.Clear();
+                        _operationQueue = null;
+                        IsDisposed = true;
+                        if (!DisableThreading)
+                            Monitor.Pulse(_queue_SyncLock);
+                    }
+                }
+            }
+        }
+
+
         //--- Private Methods ---
         
         private bool TryStartOperationQueueThread()
@@ -268,7 +290,7 @@ namespace NLib
             if (_threadAsyncResult != null)
                 return false;
 
-            var operationQueueThread = new OperationQueueDelegate(OperationIteratorThread);
+            var operationQueueThread = new OperationQueueMethod(OperationIteratorThread);
             AsyncCallback operationQueueThreadCompleted = new AsyncCallback(OperationIteratorThreadCompleted);
 
             _threadAsyncResult = operationQueueThread.BeginInvoke(operationQueueThreadCompleted, null);
@@ -319,17 +341,9 @@ namespace NLib
         private void OperationIteratorThreadCompleted(IAsyncResult ar)
         {
             AsyncResult result = (AsyncResult)ar;
-            var caller = (OperationQueueDelegate)result.AsyncDelegate;
+            var caller = (OperationQueueMethod)result.AsyncDelegate;
 
             caller.EndInvoke(ar);
-        }
-
-
-        //--- IDisposable Interface Methods ---
-
-        void IDisposable.Dispose()
-        {
-            Dispose();
         }
         
 
@@ -339,12 +353,12 @@ namespace NLib
         {
             //--- Public Fields ---
 
-            public OperationQueueDelegate Method;
+            public OperationQueueMethod Method;
 
 
             //--- Constructors ---
 
-            public Operation(OperationQueueDelegate method)
+            public Operation(OperationQueueMethod method)
             {
                 Method = method;
             }
@@ -354,5 +368,5 @@ namespace NLib
     /// <summary>
     /// Represents a method that the <see cref="OperationQueueThread"/> will call when it has reached the top of the queue.
     /// </summary>
-    public delegate void OperationQueueDelegate();
+    public delegate void OperationQueueMethod();
 }

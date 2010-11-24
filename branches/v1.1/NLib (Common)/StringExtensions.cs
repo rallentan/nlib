@@ -1,10 +1,18 @@
-﻿//
-// Essential:
+﻿// IMPORTANT:
+//  Take care renaming the parameters of the string methods. Many of the methods rely on exception
+//  reporting from the .NET Framework, and the exceptions thrown will reflect the parameter names in
+//  the .NET Framework, thus the exposed parameter names in this API must be identical. This is done
+//  to provide a lightweight interface. It is expected that this design does not expose the .NET
+//  Framework methods in any way except in the callstack. If there is any unintentional exposing
+//  of the dependency, this design should be altered to remove it.
+//
+// Todo (Essential):
 //  Create metadata documentation
 //  Creating missing overloads for LastIndexOfAny and LastIndexOfNotAny
+//  Create exception reporting for invalid enumerations
 //
 // Todo:
-//  When creating LastIndexOfNotAny(StringComparison), update LastIndexOfNotAny's documentation remarks with this:  "To perform a culture-sensitive search, use the <see cref="LastIndexOfNotAny(string, char[], int, int, StringComparison)"/> method."
+//  When creating LastIndexOfNotAny(StringComparison), update LastIndexOfNotAny'source documentation remarks with this:  "To perform a culture-sensitive search, use the <see cref="LastIndexOfNotAny(string, char[], int, int, StringComparison)"/> method."
 //  Redirect IndexOf(string, int, int, StringComparison) { IndexOfCompareType() } to the string overload of IndexOf using char.ToUpperInvariant
 //  Remove remaining duplicate strings
 //  Modify validation code for LastIndex[...] methods to match string.LastIndexOf validation
@@ -25,10 +33,18 @@ namespace NLib
     {
         //--- Fields ---
 
-        const string ERRMSG_STARTINDEX_OUT_OF_RANGE = "Index was out of range. Must be non-negative and less than the size of the collection.";
-        const string ERRMSG_COUNT_OUT_OF_RANGE = "Count must be positive and count must refer to a location within the string/array/collection.";
-
-
+        const string ARGNAME_SOURCE = "source";
+        const string ARGNAME_VALUE = "value";
+        const string ARGNAME_ANYOF = "anyOf";
+        const string ARGNAME_STARTINDEX = "startIndex";
+        const string ARGNAME_COUNT = "count";
+        const string ARGNAME_COMPARISONTYPE = "comparisonType";
+        const string EXCMSG_STARTINDEX_OUT_OF_RANGE = "Index was out of range. Must be non-negative and less than the size of the collection.";
+        const string EXCMSG_COUNT_OUT_OF_RANGE = "Count must be positive and count must refer to a location within the string/array/collection.";
+        const string EXCMSG_CANNOT_CONTAIN_NULL_OR_EMPTY = "Parameter cannot contain null or zero-length strings.";
+        const string EXCMSG_MUST_BE_LESS_THAN_INT32_MAXVALUE = "Parameter must be less than Int32.MaxValue.";
+        
+        
         //--- Public Static Methods ---
 
         /// <summary>
@@ -37,13 +53,13 @@ namespace NLib
         ///     in the sort order as the specified System.String. A parameter specifies the
         ///     type of search to use for the specified string.
         /// </summary>
-        /// <param name="s">
+        /// <param name="strA">
         ///     The string to search.
         /// </param>
         /// <param name="strB">
         ///     A System.String.
         /// </param>
-        /// <param name="comparisonType">
+        /// <param name=ARGNAME_COMPARISONTYPE>
         ///     One of the System.StringComparison values.
         /// </param>
         /// <returns>
@@ -58,48 +74,48 @@ namespace NLib
         ///     the additional parameter comparisonType allows the type of search to be specified
         ///     using one of the <see cref="System.StringComparison"/> values.
         /// </remarks>
-        public static int CompareTo(this string s, string strB, StringComparison comparisonType)
+        public static int CompareTo(this string strA, string strB, StringComparison comparisonType)
         {
-            return string.Compare(s, strB, comparisonType);
+            return string.Compare(strA, strB, comparisonType);
         }
 
         /// <summary>
         /// Returns a value indicating whether the specified <see cref="Char"/> occurs within this string.
         /// </summary>
-        /// <param name="s">An instance of a <see cref="String"/>.</param>
-        /// <param name="c">The <see cref="Char"/> to seek.</param>
+        /// <param name=ARGNAME_SOURCE>An instance of a <see cref="String"/>.</param>
+        /// <param name=ARGNAME_VALUE>The <see cref="Char"/> to seek.</param>
         /// <returns>
         ///     true if the value parameter occurs within this string; otherwise, false.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        ///     s is null.
+        ///     source is null.
         /// </exception>
-        public static bool Contains(this string s, char c)
+        public static bool Contains(this string source, char value)
         {
-            if (s == null)
-                throw new ArgumentNullException("s");
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
 
-            return s.IndexOf(c) != -1;
+            return source.IndexOf(value) != -1;
         }
 
         /// <summary>
         /// Returns a value indicating whether the specified <see cref="Char"/> occurs within this string.
         /// A parameter specifies the type of search to use for the specified string.
         /// </summary>
-        /// <param name="s">An instance of a <see cref="String"/>.</param>
-        /// <param name="c">The <see cref="Char"/> to seek.</param>
-        /// <param name="comparisonType">
+        /// <param name=ARGNAME_SOURCE>An instance of a <see cref="String"/>.</param>
+        /// <param name=ARGNAME_VALUE>The <see cref="Char"/> to seek.</param>
+        /// <param name=ARGNAME_COMPARISONTYPE>
         ///     One of the System.StringComparison values.
         /// </param>
         /// <returns>
         ///     true if the value parameter occurs within this string; otherwise, false.
         /// </returns>
         /// <exception cref="ArgumentNullException">
-        ///     s is null.
+        ///     source is null.
         /// </exception>
-        public static bool Contains(this string s, char c, StringComparison comparisonType)
+        public static bool Contains(this string source, char value, StringComparison comparisonType)
         {
-            return IndexOf(s, c, comparisonType) != -1;
+            return IndexOf(source, value, comparisonType) != -1;
         }
 
         /// <summary>
@@ -107,13 +123,13 @@ namespace NLib
         ///     within this string. A parameter specifies the type of search to use for the
         ///     specified string.
         /// </summary>
-        /// <param name="s">
+        /// <param name=ARGNAME_SOURCE>
         ///     The string to search.
         /// </param>
-        /// <param name="value">
+        /// <param name=ARGNAME_VALUE>
         ///     The System.String object to seek.
         /// </param>
-        /// <param name="comparisonType">
+        /// <param name=ARGNAME_COMPARISONTYPE>
         ///     One of the System.StringComparison values.
         /// </param>
         /// <returns>
@@ -128,14 +144,14 @@ namespace NLib
         ///     the additional parameter comparisonType allows the type of search to be specified
         ///     using one of the <see cref="System.StringComparison"/> values.
         /// </remarks>
-        public static bool Contains(this string s, string value, StringComparison comparisonType)
+        public static bool Contains(this string source, string value, StringComparison comparisonType)
         {
-            if (s == null)
-                throw new ArgumentNullException("s");
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
             if (value == null)
-                throw new ArgumentNullException("value");
+                throw new ArgumentNullException(ARGNAME_VALUE);
 
-            return s.IndexOf(value, comparisonType) != -1;
+            return source.IndexOf(value, comparisonType) != -1;
         }
 
         /// <summary>
@@ -143,7 +159,7 @@ namespace NLib
         ///     another specified System.String. A parameter specifies the type of search to use for the
         ///     specified string.
         /// </summary>
-        /// <param name="s">
+        /// <param name=ARGNAME_SOURCE>
         ///     The string to search.
         /// </param>
         /// <param name="oldValue">
@@ -152,7 +168,7 @@ namespace NLib
         /// <param name="newValue">
         ///     A System.String to replace all occurrences of oldValue.
         /// </param>
-        /// <param name="comparisonType">
+        /// <param name=ARGNAME_COMPARISONTYPE>
         ///     One of the System.StringComparison values.
         /// </param>
         /// <returns>
@@ -170,10 +186,10 @@ namespace NLib
         ///     the additional parameter comparisonType allows the type of search to be specified
         ///     using one of the <see cref="System.StringComparison"/> values.
         /// </remarks>
-        public static string Replace(this string s, string oldValue, string newValue, StringComparison comparisonType)
+        public static string Replace(this string source, string oldValue, string newValue, StringComparison comparisonType)
         {
-            if (s == null)
-                throw new ArgumentNullException("s");
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
             if (oldValue == null)
                 throw new ArgumentNullException("oldValue");
             if (oldValue.Length == 0)
@@ -182,23 +198,23 @@ namespace NLib
             int posCurrent = 0;
             int lenPattern = oldValue.Length;
             
-            int idxNext = s.IndexOf(oldValue, comparisonType);
+            int idxNext = source.IndexOf(oldValue, comparisonType);
             if (idxNext == -1)
-                return s;
+                return source;
 
-            StringBuilder result = new StringBuilder(s.Length + s.Length);
+            StringBuilder result = new StringBuilder(source.Length + source.Length);
 
             while (idxNext >= 0)
             {
-                result.Append(s, posCurrent, idxNext - posCurrent);
+                result.Append(source, posCurrent, idxNext - posCurrent);
                 result.Append(newValue);
 
                 posCurrent = idxNext + lenPattern;
 
-                idxNext = s.IndexOf(oldValue, posCurrent, comparisonType);
+                idxNext = source.IndexOf(oldValue, posCurrent, comparisonType);
             }
 
-            result.Append(s, posCurrent, s.Length - posCurrent);
+            result.Append(source, posCurrent, source.Length - posCurrent);
 
             return result.ToString();
         }
@@ -211,13 +227,13 @@ namespace NLib
         ///     in this string. A parameter specifies the type of search to use for the
         ///     specified string.
         /// </summary>
-        /// <param name="s">
+        /// <param name=ARGNAME_SOURCE>
         ///     The string to search.
         /// </param>
-        /// <param name="value">
+        /// <param name=ARGNAME_VALUE>
         ///     A Unicode character to seek.
         /// </param>
-        /// <param name="comparisonType">
+        /// <param name=ARGNAME_COMPARISONTYPE>
         ///     One of the System.StringComparison values.
         /// </param>
         /// <returns>
@@ -229,17 +245,23 @@ namespace NLib
         ///     the additional parameter comparisonType allows the type of search to be specified
         ///     using one of the <see cref="System.StringComparison"/> values.
         /// </remarks>
-        public static int IndexOf(this string s, char value, StringComparison comparisonType)
+        public static int IndexOf(this string source, char value, StringComparison comparisonType)
         {
-            if (s == null)
-                throw new ArgumentNullException("s");
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
 
             if (comparisonType == StringComparison.OrdinalIgnoreCase)
-                return IndexOfIgnoreCase(s, value, 0, s.Length);
+            {
+                return IndexOfIgnoreCase(source, value, 0, source.Length);
+            }
             else if (comparisonType == StringComparison.Ordinal)
-                return s.IndexOf(value, 0, s.Length);
+            {
+                return source.IndexOf(value, 0, source.Length);
+            }
             else
-                return IndexOfCompareType(s, value, 0, s.Length, comparisonType);
+            {
+                return IndexOfCompareType(source, value, 0, source.Length, comparisonType);
+            }
         }
 
         /// <summary>
@@ -247,16 +269,16 @@ namespace NLib
         ///     in this string. Parameters specify the starting search position in the string,
         ///     and the type of search to use.
         /// </summary>
-        /// <param name="s">
+        /// <param name=ARGNAME_SOURCE>
         ///     The string to search.
         /// </param>
-        /// <param name="value">
+        /// <param name=ARGNAME_VALUE>
         ///     A Unicode character to seek.
         /// </param>
-        /// <param name="startIndex">
+        /// <param name=ARGNAME_STARTINDEX>
         ///     The search starting position.
         /// </param>
-        /// <param name="comparisonType">
+        /// <param name=ARGNAME_COMPARISONTYPE>
         ///     One of the System.StringComparison values.
         /// </param>
         /// <returns>
@@ -272,17 +294,23 @@ namespace NLib
         ///     the additional parameter comparisonType allows the type of search to be specified
         ///     using one of the <see cref="System.StringComparison"/> values.
         /// </remarks>
-        public static int IndexOf(this string s, char value, int startIndex, StringComparison comparisonType)
+        public static int IndexOf(this string source, char value, int startIndex, StringComparison comparisonType)
         {
-            if (s == null)
-                throw new ArgumentNullException("s");
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
 
             if (comparisonType == StringComparison.OrdinalIgnoreCase)
-                return IndexOfIgnoreCase(s, value, startIndex, s.Length - startIndex);
+            {
+                return IndexOfIgnoreCase(source, value, startIndex, source.Length - startIndex);
+            }
             else if (comparisonType == StringComparison.Ordinal)
-                return s.IndexOf(value, startIndex, s.Length - startIndex);
+            {
+                return source.IndexOf(value, startIndex, source.Length - startIndex);
+            }
             else
-                return IndexOfCompareType(s, value, startIndex, s.Length - startIndex, comparisonType);
+            {
+                return IndexOfCompareType(source, value, startIndex, source.Length - startIndex, comparisonType);
+            }
         }
 
         /// <summary>
@@ -291,19 +319,19 @@ namespace NLib
         ///     the number of characters in the current string to search, and the type of
         ///     search to use.
         /// </summary>
-        /// <param name="s">
+        /// <param name=ARGNAME_SOURCE>
         ///     The string to search.
         /// </param>
-        /// <param name="value">
+        /// <param name=ARGNAME_VALUE>
         ///     A Unicode character to seek.
         /// </param>
-        /// <param name="startIndex">
+        /// <param name=ARGNAME_STARTINDEX>
         ///     The search starting position.
         /// </param>
-        /// <param name="count">
+        /// <param name=ARGNAME_COUNT>
         ///     The number of character positions to examine.
         /// </param>
-        /// <param name="comparisonType">
+        /// <param name=ARGNAME_COMPARISONTYPE>
         ///     One of the System.StringComparison values.
         /// </param>
         /// <returns>
@@ -319,17 +347,18 @@ namespace NLib
         ///     the additional parameter comparisonType allows the type of search to be specified
         ///     using one of the <see cref="System.StringComparison"/> values.
         /// </remarks>
-        public static int IndexOf(this string s, char value, int startIndex, int count, StringComparison comparisonType)
+        public static int IndexOf(this string source, char value, int startIndex, int count, StringComparison comparisonType)
         {
-            if (s == null)
-                throw new ArgumentNullException("s");
-
             if (comparisonType == StringComparison.OrdinalIgnoreCase)
-                return IndexOfIgnoreCase(s, value, startIndex, count);
+                return IndexOfIgnoreCase(source, value, startIndex, count);
             else if (comparisonType == StringComparison.Ordinal)
-                return s.IndexOf(value, startIndex, count);
+            {
+                if (source == null)
+                    throw new ArgumentNullException(ARGNAME_SOURCE);
+                return source.IndexOf(value, startIndex, count);
+            }
             else
-                return IndexOfCompareType(s, value, startIndex, count, comparisonType);
+                return IndexOfCompareType(source, value, startIndex, count, comparisonType);
         }
 
 
@@ -340,13 +369,13 @@ namespace NLib
         ///     in a specified array of Unicode characters. A parameter specifies the type
         ///     of search to use.
         /// </summary>
-        /// <param name="s">
+        /// <param name=ARGNAME_SOURCE>
         ///     The string to search.
         /// </param>
-        /// <param name="anyOf">
+        /// <param name=ARGNAME_ANYOF>
         ///     A Unicode character array containing one or more characters to seek.
         /// </param>
-        /// <param name="comparisonType">
+        /// <param name=ARGNAME_COMPARISONTYPE>
         ///     One of the System.StringComparison values.
         /// </param>
         /// <returns>
@@ -355,24 +384,30 @@ namespace NLib
         ///     was found.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
-        ///     s or anyOf is null.
+        ///     source or anyOf is null.
         /// </exception>
         /// <remarks>
         ///     This method behaves identically to <see cref="System.String.IndexOfAny(char[])"/>, except
         ///     the additional parameter comparisonType allows the type of search to be specified
         ///     using one of the <see cref="System.StringComparison"/> values.
         /// </remarks>
-        public static int IndexOfAny(this string s, char[] anyOf, StringComparison comparisonType)
+        public static int IndexOfAny(this string source, char[] anyOf, StringComparison comparisonType)
         {
-            if (s == null)
-                throw new ArgumentNullException("s");
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
 
             if (comparisonType == StringComparison.OrdinalIgnoreCase)
-                return IndexOfAnyIgnoreCase(s, anyOf, 0, s.Length);
+            {
+                return IndexOfAnyIgnoreCase(source, anyOf, 0, source.Length);
+            }
             else if (comparisonType == StringComparison.Ordinal)
-                return s.IndexOfAny(anyOf, 0, s.Length);
+            {
+                return source.IndexOfAny(anyOf, 0, source.Length);
+            }
             else
-                return IndexOfAnyCompareType(s, anyOf, 0, s.Length, comparisonType);
+            {
+                return IndexOfAnyCompareType(source, anyOf, 0, source.Length, comparisonType);
+            }
         }
 
         /// <summary>
@@ -381,16 +416,16 @@ namespace NLib
         ///     search position in the string, and the type of search to use for the specified
         ///     string.
         /// </summary>
-        /// <param name="s">
+        /// <param name=ARGNAME_SOURCE>
         ///     The string to search.
         /// </param>
-        /// <param name="anyOf">
+        /// <param name=ARGNAME_ANYOF>
         ///     A Unicode character array containing one or more characters to seek.
         /// </param>
-        /// <param name="startIndex">
+        /// <param name=ARGNAME_STARTINDEX>
         ///     The search starting position.
         /// </param>
-        /// <param name="comparisonType">
+        /// <param name=ARGNAME_COMPARISONTYPE>
         ///     One of the System.StringComparison values.
         /// </param>
         /// <returns>
@@ -399,7 +434,7 @@ namespace NLib
         ///     was found.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
-        ///     s or anyOf is null.
+        ///     source or anyOf is null.
         /// </exception>
         /// <exception cref="System.ArgumentOutOfRangeException">
         ///     startIndex is negative.  -or- startIndex is greater than the number of characters
@@ -410,17 +445,23 @@ namespace NLib
         ///     the additional parameter comparisonType allows the type of search to be specified
         ///     using one of the <see cref="System.StringComparison"/> values.
         /// </remarks>
-        public static int IndexOfAny(this string s, char[] anyOf, int startIndex, StringComparison comparisonType)
+        public static int IndexOfAny(this string source, char[] anyOf, int startIndex, StringComparison comparisonType)
         {
-            if (s == null)
-                throw new ArgumentNullException("s");
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
 
             if (comparisonType == StringComparison.OrdinalIgnoreCase)
-                return IndexOfAnyIgnoreCase(s, anyOf, startIndex, s.Length - startIndex);
+            {
+                return IndexOfAnyIgnoreCase(source, anyOf, startIndex, source.Length - startIndex);
+            }
             else if (comparisonType == StringComparison.Ordinal)
-                return s.IndexOfAny(anyOf, startIndex, s.Length - startIndex);
+            {
+                return source.IndexOfAny(anyOf, startIndex, source.Length - startIndex);
+            }
             else
-                return IndexOfAnyCompareType(s, anyOf, startIndex, s.Length - startIndex, comparisonType);
+            {
+                return IndexOfAnyCompareType(source, anyOf, startIndex, source.Length - startIndex, comparisonType);
+            }
         }
 
         /// <summary>
@@ -429,19 +470,19 @@ namespace NLib
         ///     search position in the string, the number of characters in the current string
         ///     to search, and the type of search to use.
         /// </summary>
-        /// <param name="s">
+        /// <param name=ARGNAME_SOURCE>
         ///     The string to search.
         /// </param>
-        /// <param name="anyOf">
+        /// <param name=ARGNAME_ANYOF>
         ///     A Unicode character array containing one or more characters to seek.
         /// </param>
-        /// <param name="startIndex">
+        /// <param name=ARGNAME_STARTINDEX>
         ///     The search starting position.
         /// </param>
-        /// <param name="count">
+        /// <param name=ARGNAME_COUNT>
         ///     The number of character positions to examine.
         /// </param>
-        /// <param name="comparisonType">
+        /// <param name=ARGNAME_COMPARISONTYPE>
         ///     One of the System.StringComparison values.
         /// </param>
         /// <returns>
@@ -450,7 +491,7 @@ namespace NLib
         ///     was found.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
-        ///     s or anyOf is null.
+        ///     source or anyOf is null.
         /// </exception>
         /// <exception cref="System.ArgumentOutOfRangeException">
         ///     count or startIndex is negative.  -or- count + startIndex specifies a position
@@ -461,17 +502,18 @@ namespace NLib
         ///     the additional parameter comparisonType allows the type of search to be specified
         ///     using one of the <see cref="System.StringComparison"/> values.
         /// </remarks>
-        public static int IndexOfAny(this string s, char[] anyOf, int startIndex, int count, StringComparison comparisonType)
+        public static int IndexOfAny(this string source, char[] anyOf, int startIndex, int count, StringComparison comparisonType)
         {
-            if (s == null)
-                throw new ArgumentNullException("s");
-
             if (comparisonType == StringComparison.OrdinalIgnoreCase)
-                return IndexOfAnyIgnoreCase(s, anyOf, startIndex, count);
+                return IndexOfAnyIgnoreCase(source, anyOf, startIndex, count);
             else if (comparisonType == StringComparison.Ordinal)
-                return s.IndexOfAny(anyOf, startIndex, count);
+            {
+                if (source == null)
+                    throw new ArgumentNullException(ARGNAME_SOURCE);
+                return source.IndexOfAny(anyOf, startIndex, count);
+            }
             else
-                return IndexOfAnyCompareType(s, anyOf, startIndex, count, comparisonType);
+                return IndexOfAnyCompareType(source, anyOf, startIndex, count, comparisonType);
         }
 
 
@@ -481,10 +523,10 @@ namespace NLib
         ///     Reports the index of the first occurrence in this instance of any string
         ///     in a specified array of strings.
         /// </summary>
-        /// <param name="s">
+        /// <param name=ARGNAME_SOURCE>
         ///     The string to search.
         /// </param>
-        /// <param name="anyOf">
+        /// <param name=ARGNAME_ANYOF>
         ///     A string array containing one or more strings to seek.
         /// </param>
         /// <returns>
@@ -493,7 +535,7 @@ namespace NLib
         ///     was found.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
-        ///     s or anyOf is null.
+        ///     source or anyOf is null.
         /// </exception>
         /// <remarks>
         ///     <p>Index numbering starts from zero.</p>
@@ -503,12 +545,12 @@ namespace NLib
         ///         use the <see cref="IndexOfNotAny(string, char[], int, int, StringComparison)"/>
         ///         method.</p>
         /// </remarks>
-        public static int IndexOfAny(this string s, string[] anyOf)
+        public static int IndexOfAny(this string source, string[] anyOf)
         {
-            if (s == null)
-                throw new ArgumentNullException("s");
-
-            return IndexOfAny(s, anyOf, 0, s.Length);
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
+            
+            return IndexOfAnyOrdinal(source, anyOf, 0, source.Length);
         }
 
         /// <summary>
@@ -516,13 +558,13 @@ namespace NLib
         ///     in a specified array of strings. A parameter specifies the starting search
         ///     position in the string.
         /// </summary>
-        /// <param name="s">
+        /// <param name=ARGNAME_SOURCE>
         ///     The string to search.
         /// </param>
-        /// <param name="anyOf">
+        /// <param name=ARGNAME_ANYOF>
         ///     A string array containing one or more strings to seek.
         /// </param>
-        /// <param name="startIndex">
+        /// <param name=ARGNAME_STARTINDEX>
         ///     The search starting position.
         /// </param>
         /// <returns>
@@ -531,7 +573,7 @@ namespace NLib
         ///     was found.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
-        ///     s or anyOf is null.
+        ///     source or anyOf is null.
         /// </exception>
         /// <exception cref="System.ArgumentOutOfRangeException">
         ///     startIndex is negative.  -or- startIndex is greater than the number of characters
@@ -547,12 +589,12 @@ namespace NLib
         ///         use the <see cref="IndexOfNotAny(string, char[], int, int, StringComparison)"/>
         ///         method.</p>
         /// </remarks>
-        public static int IndexOfAny(this string s, string[] anyOf, int startIndex)
+        public static int IndexOfAny(this string source, string[] anyOf, int startIndex)
         {
-            if (s == null)
-                throw new ArgumentNullException("s");
-
-            return IndexOfAny(s, anyOf, startIndex, s.Length - startIndex);
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
+            
+            return IndexOfAnyOrdinal(source, anyOf, startIndex, source.Length - startIndex);
         }
 
         /// <summary>
@@ -561,16 +603,16 @@ namespace NLib
         ///     position in the string, and the number of characters in the current string
         ///     to search.
         /// </summary>
-        /// <param name="s">
+        /// <param name=ARGNAME_SOURCE>
         ///     The string to search.
         /// </param>
-        /// <param name="anyOf">
+        /// <param name=ARGNAME_ANYOF>
         ///     A string array containing one or more strings to seek.
         /// </param>
-        /// <param name="startIndex">
+        /// <param name=ARGNAME_STARTINDEX>
         ///     The search starting position.
         /// </param>
-        /// <param name="count">
+        /// <param name=ARGNAME_COUNT>
         ///     The number of character positions to examine.
         /// </param>
         /// <returns>
@@ -579,47 +621,15 @@ namespace NLib
         ///     was found.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
-        ///     s or anyOf is null.
+        ///     source or anyOf is null.
         /// </exception>
         /// <exception cref="System.ArgumentOutOfRangeException">
         ///     count or startIndex is negative.  -or- count + startIndex specifies a position
         ///     beyond the end of this instance.
         /// </exception>
-        public static int IndexOfAny(this string s, string[] anyOf, int startIndex, int count)
+        public static int IndexOfAny(this string source, string[] anyOf, int startIndex, int count)
         {
-            if (s == null)
-                throw new ArgumentNullException("s");
-            if (anyOf == null)
-                throw new ArgumentNullException("anyOf");
-            if (startIndex < 0)
-                throw new ArgumentOutOfRangeException("startIndex", ERRMSG_STARTINDEX_OUT_OF_RANGE);
-            if (count < 0 || startIndex > s.Length - count)
-                throw new ArgumentOutOfRangeException("count", ERRMSG_COUNT_OUT_OF_RANGE);
-
-            int anyOfLength = anyOf.Length;
-            char[] ca = new char[anyOfLength];
-
-            for (int i = 0; i < anyOfLength; i++)
-            {
-                if (anyOf[i] == null)
-                    throw new ArgumentNullException();
-                if (anyOf[i].Length == 0)
-                    throw new ArgumentException("Parameter cannot contain zero-length strings.", "anyOf");
-                ca[i] = anyOf[i][0];
-            }
-
-            int p = startIndex;
-            int end = startIndex + count;
-            while (true)
-            {
-                p = s.IndexOfAny(ca, p, end - p);
-                if (p == -1)
-                    return p;
-                for (int i = 0; i < anyOfLength; i++)
-                    if (string.Compare(s, p, anyOf[i], 0, anyOf[i].Length, StringComparison.Ordinal) == 0)
-                        return p;
-                p++;
-            }
+            return IndexOfAnyOrdinal(source, anyOf, startIndex, count);
         }
 
 
@@ -628,13 +638,13 @@ namespace NLib
         ///     in a specified array of strings. A parameter specifies the type of search
         ///     to use.
         /// </summary>
-        /// <param name="s">
+        /// <param name=ARGNAME_SOURCE>
         ///     The string to search.
         /// </param>
-        /// <param name="anyOf">
+        /// <param name=ARGNAME_ANYOF>
         ///     A string array containing one or more strings to seek.
         /// </param>
-        /// <param name="comparisonType">
+        /// <param name=ARGNAME_COMPARISONTYPE>
         ///     One of the System.StringComparison values.
         /// </param>
         /// <returns>
@@ -643,7 +653,7 @@ namespace NLib
         ///     was found.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
-        ///     s or anyOf is null.
+        ///     source or anyOf is null.
         /// </exception>
         /// <remarks>
         ///     <p>Index numbering starts from zero.</p>
@@ -652,17 +662,17 @@ namespace NLib
         ///         comparands, or use word (culture-sensitive) or ordinal (culture-
         ///         insensitive) sort rules.</p>
         /// </remarks>
-        public static int IndexOfAny(this string s, string[] anyOf, StringComparison comparisonType)
+        public static int IndexOfAny(this string source, string[] anyOf, StringComparison comparisonType)
         {
-            if (s == null)
-                throw new ArgumentNullException("s");
-            
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
+
             if (comparisonType == StringComparison.OrdinalIgnoreCase)
-                return IndexOfAnyIgnoreCase(s, anyOf, 0, s.Length);
+                return IndexOfAnyIgnoreCase(source, anyOf, 0, source.Length);
             else if (comparisonType == StringComparison.Ordinal)
-                return s.IndexOfAny(anyOf, 0, s.Length);
+                return IndexOfAnyOrdinal(source, anyOf, 0, source.Length);
             else
-                return IndexOfAnyCompareType(s, anyOf, 0, s.Length, comparisonType);
+                return IndexOfAnyCompareType(source, anyOf, 0, source.Length, comparisonType);
         }
 
         /// <summary>
@@ -671,16 +681,16 @@ namespace NLib
         ///     position in the string, and the type of search to use for the specified
         ///     string.
         /// </summary>
-        /// <param name="s">
+        /// <param name=ARGNAME_SOURCE>
         ///     The string to search.
         /// </param>
-        /// <param name="anyOf">
+        /// <param name=ARGNAME_ANYOF>
         ///     A string array containing one or more strings to seek.
         /// </param>
-        /// <param name="startIndex">
+        /// <param name=ARGNAME_STARTINDEX>
         ///     The search starting position.
         /// </param>
-        /// <param name="comparisonType">
+        /// <param name=ARGNAME_COMPARISONTYPE>
         ///     One of the System.StringComparison values.
         /// </param>
         /// <returns>
@@ -689,7 +699,7 @@ namespace NLib
         ///     was found.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
-        ///     s or anyOf is null.
+        ///     source or anyOf is null.
         /// </exception>
         /// <exception cref="System.ArgumentOutOfRangeException">
         ///     startIndex is negative.  -or- startIndex is greater than the number of characters
@@ -704,17 +714,17 @@ namespace NLib
         ///         comparands, or use word (culture-sensitive) or ordinal (culture-
         ///         insensitive) sort rules.</p>
         /// </remarks>
-        public static int IndexOfAny(this string s, string[] anyOf, int startIndex, StringComparison comparisonType)
+        public static int IndexOfAny(this string source, string[] anyOf, int startIndex, StringComparison comparisonType)
         {
-            if (s == null)
-                throw new ArgumentNullException("s");
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
 
             if (comparisonType == StringComparison.OrdinalIgnoreCase)
-                return IndexOfAnyIgnoreCase(s, anyOf, startIndex, s.Length - startIndex);
+                return IndexOfAnyIgnoreCase(source, anyOf, startIndex, source.Length - startIndex);
             else if (comparisonType == StringComparison.Ordinal)
-                return s.IndexOfAny(anyOf, startIndex, s.Length - startIndex);
+                return IndexOfAnyOrdinal(source, anyOf, startIndex, source.Length - startIndex);
             else
-                return IndexOfAnyCompareType(s, anyOf, startIndex, s.Length - startIndex, comparisonType);
+                return IndexOfAnyCompareType(source, anyOf, startIndex, source.Length - startIndex, comparisonType);
         }
 
         /// <summary>
@@ -723,19 +733,19 @@ namespace NLib
         ///     position in the string, the number of characters in the current string
         ///     to search, and the type of search to use.
         /// </summary>
-        /// <param name="s">
+        /// <param name=ARGNAME_SOURCE>
         ///     The string to search.
         /// </param>
-        /// <param name="anyOf">
+        /// <param name=ARGNAME_ANYOF>
         ///     A string array containing one or more strings to seek.
         /// </param>
-        /// <param name="startIndex">
+        /// <param name=ARGNAME_STARTINDEX>
         ///     The search starting position.
         /// </param>
-        /// <param name="count">
+        /// <param name=ARGNAME_COUNT>
         ///     The number of character positions to examine.
         /// </param>
-        /// <param name="comparisonType">
+        /// <param name=ARGNAME_COMPARISONTYPE>
         ///     One of the System.StringComparison values.
         /// </param>
         /// <returns>
@@ -744,7 +754,7 @@ namespace NLib
         ///     was found.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
-        ///     s or anyOf is null.
+        ///     source or anyOf is null.
         /// </exception>
         /// <exception cref="System.ArgumentOutOfRangeException">
         ///     count or startIndex is negative.  -or- count + startIndex specifies a position
@@ -760,14 +770,14 @@ namespace NLib
         ///         comparands, or use word (culture-sensitive) or ordinal (culture-
         ///         insensitive) sort rules.</p>
         /// </remarks>
-        public static int IndexOfAny(this string s, string[] anyOf, int startIndex, int count, StringComparison comparisonType)
+        public static int IndexOfAny(this string source, string[] anyOf, int startIndex, int count, StringComparison comparisonType)
         {
             if (comparisonType == StringComparison.OrdinalIgnoreCase)
-                return IndexOfAnyIgnoreCase(s, anyOf, startIndex, count);
+                return IndexOfAnyIgnoreCase(source, anyOf, startIndex, count);
             else if (comparisonType == StringComparison.Ordinal)
-                return s.IndexOfAny(anyOf, startIndex, count);
+                return IndexOfAnyOrdinal(source, anyOf, startIndex, count);
             else
-                return IndexOfAnyCompareType(s, anyOf, startIndex, count, comparisonType);
+                return IndexOfAnyCompareType(source, anyOf, startIndex, count, comparisonType);
         }
 
 
@@ -778,13 +788,13 @@ namespace NLib
         ///     not in a specified array of Unicode characters. A parameter specifies the
         ///     type of search to use.
         /// </summary>
-        /// <param name="s">
+        /// <param name=ARGNAME_SOURCE>
         ///     The string to search.
         /// </param>
-        /// <param name="anyOf">
+        /// <param name=ARGNAME_ANYOF>
         ///     A Unicode character array containing one or more character to seek past.
         /// </param>
-        /// <param name="comparisonType">
+        /// <param name=ARGNAME_COMPARISONTYPE>
         ///     One of the System.StringComparison values.
         /// </param>
         /// <returns>
@@ -793,7 +803,7 @@ namespace NLib
         ///     anyOf was found.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
-        ///     s or anyOf is null.
+        ///     source or anyOf is null.
         /// </exception>
         /// <remarks>
         ///     <p>Index numbering starts from zero.</p>
@@ -802,17 +812,17 @@ namespace NLib
         ///         comparands, or use word (culture-sensitive) or ordinal (culture-
         ///         insensitive) sort rules.</p>
         /// </remarks>
-        public static int IndexOfNotAny(this string s, char[] anyOf, StringComparison comparisonType)
+        public static int IndexOfNotAny(this string source, char[] anyOf, StringComparison comparisonType)
         {
-            if (s == null)
-                throw new ArgumentNullException("s");
-            
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
+
             if (comparisonType == StringComparison.OrdinalIgnoreCase)
-                return IndexOfNotAnyIgnoreCase(s, anyOf, 0, s.Length);
+                return IndexOfNotAnyIgnoreCase(source, anyOf, 0, source.Length);
             else if (comparisonType == StringComparison.Ordinal)
-                return s.IndexOfNotAny(anyOf, 0, s.Length);
+                return IndexOfNotAnyOrdinal(source, anyOf, 0, source.Length);
             else
-                return IndexOfNotAnyCompareType(s, anyOf, 0, s.Length, comparisonType);
+                return IndexOfNotAnyCompareType(source, anyOf, 0, source.Length, comparisonType);
         }
 
         /// <summary>
@@ -820,16 +830,16 @@ namespace NLib
         ///     not in a specified array of Unicode characters. Parameters specify the
         ///     starting search position in the string, and the type of search to use.
         /// </summary>
-        /// <param name="s">
+        /// <param name=ARGNAME_SOURCE>
         ///     The string to search.
         /// </param>
-        /// <param name="anyOf">
+        /// <param name=ARGNAME_ANYOF>
         ///     A Unicode character array containing one or more character to seek past.
         /// </param>
-        /// <param name="startIndex">
+        /// <param name=ARGNAME_STARTINDEX>
         ///     The search starting position.
         /// </param>
-        /// <param name="comparisonType">
+        /// <param name=ARGNAME_COMPARISONTYPE>
         ///     One of the System.StringComparison values.
         /// </param>
         /// <returns>
@@ -838,7 +848,7 @@ namespace NLib
         ///     anyOf was found.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
-        ///     s or anyOf is null.
+        ///     source or anyOf is null.
         /// </exception>
         /// <exception cref="System.ArgumentOutOfRangeException">
         ///     startIndex is negative.  -or- startIndex is greater than the number of characters
@@ -853,17 +863,17 @@ namespace NLib
         ///         comparands, or use word (culture-sensitive) or ordinal (culture-
         ///         insensitive) sort rules.</p>
         /// </remarks>
-        public static int IndexOfNotAny(this string s, char[] anyOf, int startIndex, StringComparison comparisonType)
+        public static int IndexOfNotAny(this string source, char[] anyOf, int startIndex, StringComparison comparisonType)
         {
-            if (s == null)
-                throw new ArgumentNullException("s");
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
 
             if (comparisonType == StringComparison.OrdinalIgnoreCase)
-                return IndexOfNotAnyIgnoreCase(s, anyOf, startIndex, s.Length - startIndex);
+                return IndexOfNotAnyIgnoreCase(source, anyOf, startIndex, source.Length - startIndex);
             else if (comparisonType == StringComparison.Ordinal)
-                return s.IndexOfNotAny(anyOf, startIndex, s.Length - startIndex);
+                return IndexOfNotAnyOrdinal(source, anyOf, startIndex, source.Length - startIndex);
             else
-                return IndexOfNotAnyCompareType(s, anyOf, startIndex, s.Length - startIndex, comparisonType);
+                return IndexOfNotAnyCompareType(source, anyOf, startIndex, source.Length - startIndex, comparisonType);
         }
 
         /// <summary>
@@ -872,19 +882,19 @@ namespace NLib
         ///     starting search position in the string, the number of characters in the
         ///     current string to search, and the type of search to use.
         /// </summary>
-        /// <param name="s">
+        /// <param name=ARGNAME_SOURCE>
         ///     The string to search.
         /// </param>
-        /// <param name="anyOf">
+        /// <param name=ARGNAME_ANYOF>
         ///     A Unicode character array containing one or more character to seek past.
         /// </param>
-        /// <param name="startIndex">
+        /// <param name=ARGNAME_STARTINDEX>
         ///     The search starting position.
         /// </param>
-        /// <param name="count">
+        /// <param name=ARGNAME_COUNT>
         ///     The number of character positions to examine.
         /// </param>
-        /// <param name="comparisonType">
+        /// <param name=ARGNAME_COMPARISONTYPE>
         ///     One of the System.StringComparison values.
         /// </param>
         /// <returns>
@@ -893,7 +903,7 @@ namespace NLib
         ///     anyOf was found.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
-        ///     s or anyOf is null.
+        ///     source or anyOf is null.
         /// </exception>
         /// <exception cref="System.ArgumentOutOfRangeException">
         ///     count or startIndex is negative.  -or- count + startIndex specifies a position
@@ -909,14 +919,14 @@ namespace NLib
         ///         comparands, or use word (culture-sensitive) or ordinal (culture-
         ///         insensitive) sort rules.</p>
         /// </remarks>
-        public static int IndexOfNotAny(this string s, char[] anyOf, int startIndex, int count, StringComparison comparisonType)
+        public static int IndexOfNotAny(this string source, char[] anyOf, int startIndex, int count, StringComparison comparisonType)
         {
             if (comparisonType == StringComparison.OrdinalIgnoreCase)
-                return IndexOfNotAnyIgnoreCase(s, anyOf, startIndex, count);
+                return IndexOfNotAnyIgnoreCase(source, anyOf, startIndex, count);
             else if (comparisonType == StringComparison.Ordinal)
-                return s.IndexOfNotAny(anyOf, startIndex, count);
+                return IndexOfNotAnyOrdinal(source, anyOf, startIndex, count);
             else
-                return IndexOfNotAnyCompareType(s, anyOf, startIndex, count, comparisonType);
+                return IndexOfNotAnyCompareType(source, anyOf, startIndex, count, comparisonType);
         }
 
 
@@ -924,10 +934,10 @@ namespace NLib
         ///     Reports the index of the first occurrence in this instance of any character
         ///     not in a specified array of Unicode characters.
         /// </summary>
-        /// <param name="s">
+        /// <param name=ARGNAME_SOURCE>
         ///     The string to search.
         /// </param>
-        /// <param name="anyOf">
+        /// <param name=ARGNAME_ANYOF>
         ///     A Unicode character array containing one or more character to seek past.
         /// </param>
         /// <returns>
@@ -936,7 +946,7 @@ namespace NLib
         ///     anyOf was found.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
-        ///     s or anyOf is null.
+        ///     source or anyOf is null.
         /// </exception>
         /// <remarks>
         ///     <p>Index numbering starts from zero.</p>
@@ -946,12 +956,12 @@ namespace NLib
         ///         use the <see cref="IndexOfNotAny(string, char[], int, int, StringComparison)"/>
         ///         method.</p>
         /// </remarks>
-        public static int IndexOfNotAny(this string s, char[] anyOf)
+        public static int IndexOfNotAny(this string source, char[] anyOf)
         {
-            if (s == null)
-                throw new ArgumentNullException("s");
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
 
-            return IndexOfNotAny(s, anyOf, 0, s.Length);
+            return IndexOfNotAnyOrdinal(source, anyOf, 0, source.Length);
         }
 
         /// <summary>
@@ -959,13 +969,13 @@ namespace NLib
         ///     not in a specified array of Unicode characters. A parameter specifies the
         ///     starting search position in the string.
         /// </summary>
-        /// <param name="s">
+        /// <param name=ARGNAME_SOURCE>
         ///     The string to search.
         /// </param>
-        /// <param name="anyOf">
+        /// <param name=ARGNAME_ANYOF>
         ///     A Unicode character array containing one or more character to seek past.
         /// </param>
-        /// <param name="startIndex">
+        /// <param name=ARGNAME_STARTINDEX>
         ///     The search starting position.
         /// </param>
         /// <returns>
@@ -974,7 +984,7 @@ namespace NLib
         ///     anyOf was found.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
-        ///     s or anyOf is null.
+        ///     source or anyOf is null.
         /// </exception>
         /// <exception cref="System.ArgumentOutOfRangeException">
         ///     startIndex is negative.  -or- startIndex is greater than the number of characters
@@ -990,12 +1000,12 @@ namespace NLib
         ///         use the <see cref="IndexOfNotAny(string, char[], int, int, StringComparison)"/>
         ///         method.</p>
         /// </remarks>
-        public static int IndexOfNotAny(this string s, char[] anyOf, int startIndex)
+        public static int IndexOfNotAny(this string source, char[] anyOf, int startIndex)
         {
-            if (s == null)
-                throw new ArgumentNullException("s");
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
 
-            return IndexOfNotAny(s, anyOf, startIndex, s.Length - startIndex);
+            return IndexOfNotAnyOrdinal(source, anyOf, startIndex, source.Length - startIndex);
         }
 
         /// <summary>
@@ -1004,16 +1014,16 @@ namespace NLib
         ///     starting search position in the string, the number of characters in the
         ///     current string to search.
         /// </summary>
-        /// <param name="s">
+        /// <param name=ARGNAME_SOURCE>
         ///     The string to search.
         /// </param>
-        /// <param name="anyOf">
+        /// <param name=ARGNAME_ANYOF>
         ///     A Unicode character array containing one or more character to seek past.
         /// </param>
-        /// <param name="startIndex">
+        /// <param name=ARGNAME_STARTINDEX>
         ///     The search starting position.
         /// </param>
-        /// <param name="count">
+        /// <param name=ARGNAME_COUNT>
         ///     The number of character positions to examine.
         /// </param>
         /// <returns>
@@ -1022,7 +1032,7 @@ namespace NLib
         ///     anyOf was found.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
-        ///     s or anyOf is null.
+        ///     source or anyOf is null.
         /// </exception>
         /// <exception cref="System.ArgumentOutOfRangeException">
         ///     count or startIndex is negative.  -or- count + startIndex specifies a position
@@ -1039,70 +1049,9 @@ namespace NLib
         ///         use the <see cref="IndexOfNotAny(string, char[], int, int, StringComparison)"/>
         ///         method.</p>
         /// </remarks>
-        public static unsafe int IndexOfNotAny(this string s, char[] anyOf, int startIndex, int count)
+        public static int IndexOfNotAny(this string source, char[] anyOf, int startIndex, int count)
         {
-            if (s == null)
-                throw new ArgumentNullException("s");
-            if (anyOf == null)
-                throw new ArgumentNullException("anyOf");
-            if (startIndex < 0)
-                throw new ArgumentOutOfRangeException("startIndex", ERRMSG_STARTINDEX_OUT_OF_RANGE);
-            if (count < 0 || startIndex > s.Length - count)
-                throw new ArgumentOutOfRangeException("count", ERRMSG_COUNT_OUT_OF_RANGE);
-
-            fixed (char* pStrBase = s)
-            fixed (char* pAnyOfBase = anyOf)
-            {
-                char* pStr = pStrBase + startIndex;
-                char* pStrEnd = pStr + count;
-                char* pAnyOfEnd = pAnyOfBase + anyOf.Length;
-                if (anyOf.Length >= 8)
-                {
-                    char* pAnyOfFoldedEnd = pAnyOfEnd - 7;
-                    while (pStr < pStrEnd)
-                    {
-                        char* pAnyOf = pAnyOfBase;
-                        while (pAnyOf < pAnyOfFoldedEnd)
-                        {
-                            if (*pStr == *(pAnyOf++)
-                                || *pStr == *(pAnyOf++)
-                                || *pStr == *(pAnyOf++)
-                                || *pStr == *(pAnyOf++)
-                                || *pStr == *(pAnyOf++)
-                                || *pStr == *(pAnyOf++)
-                                || *pStr == *(pAnyOf++)
-                                || *pStr == *(pAnyOf++))
-                            {
-                                goto nextChar_FoldedSection;
-                            }
-                        }
-                        while (pAnyOf < pAnyOfEnd)
-                        {
-                            if (*pStr == *(pAnyOf++))
-                                goto nextChar_FoldedSection;
-                        }
-                        return (int)(pStr - pStrBase);
-                    nextChar_FoldedSection:
-                        pStr++;
-                    }
-                }
-                else
-                {
-                    while (pStr < pStrEnd)
-                    {
-                        char* pAnyOf = pAnyOfBase;
-                        while (pAnyOf < pAnyOfEnd)
-                        {
-                            if (*pStr == *(pAnyOf++))
-                                goto nextChar;
-                        }
-                        return (int)(pStr - pStrBase);
-                    nextChar:
-                        pStr++;
-                    }
-                }
-                return -1;
-            }
+            return IndexOfNotAnyOrdinal(source, anyOf, startIndex, count);
         }
 
 
@@ -1113,13 +1062,13 @@ namespace NLib
         ///     in a specified array of Unicode characters. A parameters specifies the type
         ///     of search to use.
         /// </summary>
-        /// <param name="s">
+        /// <param name=ARGNAME_SOURCE>
         ///     The string to search.
         /// </param>
-        /// <param name="anyOf">
+        /// <param name=ARGNAME_ANYOF>
         ///     A Unicode character array containing one or more characters to seek.
         /// </param>
-        /// <param name="comparisonType">
+        /// <param name=ARGNAME_COMPARISONTYPE>
         ///     One of the System.StringComparison values.
         /// </param>
         /// <returns>
@@ -1128,24 +1077,24 @@ namespace NLib
         ///     was found.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
-        ///     s or anyOf is null.
+        ///     source or anyOf is null.
         /// </exception>
         /// <remarks>
         ///     This method behaves identically to <see cref="System.String.LastIndexOfAny(char[])"/>, except
         ///     the additional parameter comparisonType allows the type of search to be specified
         ///     using one of the <see cref="System.StringComparison"/> values.
         /// </remarks>
-        public static int LastIndexOfAny(this string s, char[] anyOf, StringComparison comparisonType)
+        public static int LastIndexOfAny(this string source, char[] anyOf, StringComparison comparisonType)
         {
-            if (s == null)
-                throw new ArgumentNullException("s");
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
             
             if (comparisonType == StringComparison.OrdinalIgnoreCase)
-                return LastIndexOfAnyIgnoreCase(s, anyOf, s.Length - 1, s.Length);
+                return LastIndexOfAnyIgnoreCase(source, anyOf, source.Length - 1, source.Length);
             else if (comparisonType == StringComparison.Ordinal)
-                return s.LastIndexOfAny(anyOf, s.Length - 1, s.Length);
+                return source.LastIndexOfAny(anyOf, source.Length - 1, source.Length);
             else
-                return LastIndexOfAnyCompareType(s, anyOf, s.Length - 1, s.Length, comparisonType);
+                return LastIndexOfAnyCompareType(source, anyOf, source.Length - 1, source.Length, comparisonType);
         }
 
         /// <summary>
@@ -1153,16 +1102,16 @@ namespace NLib
         ///     in a specified array of Unicode characters. Parameters specify the starting
         ///     search position in the string, and the type of search to use.
         /// </summary>
-        /// <param name="s">
+        /// <param name=ARGNAME_SOURCE>
         ///     The string to search.
         /// </param>
-        /// <param name="anyOf">
+        /// <param name=ARGNAME_ANYOF>
         ///     A Unicode character array containing one or more characters to seek.
         /// </param>
-        /// <param name="startIndex">
+        /// <param name=ARGNAME_STARTINDEX>
         ///     The search starting position.
         /// </param>
-        /// <param name="comparisonType">
+        /// <param name=ARGNAME_COMPARISONTYPE>
         ///     One of the System.StringComparison values.
         /// </param>
         /// <returns>
@@ -1171,7 +1120,7 @@ namespace NLib
         ///     was found.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
-        ///     s or anyOf is null.
+        ///     source or anyOf is null.
         /// </exception>
         /// <exception cref="System.ArgumentOutOfRangeException">
         ///     startIndex specifies a position not within this instance.
@@ -1181,17 +1130,19 @@ namespace NLib
         ///     the additional parameter comparisonType allows the type of search to be specified
         ///     using one of the <see cref="System.StringComparison"/> values.
         /// </remarks>
-        public static int LastIndexOfAny(this string s, char[] anyOf, int startIndex, StringComparison comparisonType)
+        public static int LastIndexOfAny(this string source, char[] anyOf, int startIndex, StringComparison comparisonType)
         {
-            if (s == null)
-                throw new ArgumentNullException("s");
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
+            if (startIndex == int.MaxValue)
+                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_MUST_BE_LESS_THAN_INT32_MAXVALUE);
 
             if (comparisonType == StringComparison.OrdinalIgnoreCase)
-                return LastIndexOfAnyIgnoreCase(s, anyOf, startIndex, startIndex + 1);
+                return LastIndexOfAnyIgnoreCase(source, anyOf, startIndex, startIndex + 1);
             else if (comparisonType == StringComparison.Ordinal)
-                return s.LastIndexOfAny(anyOf, startIndex, startIndex + 1);
+                return source.LastIndexOfAny(anyOf, startIndex, startIndex + 1);
             else
-                return LastIndexOfAnyCompareType(s, anyOf, startIndex, startIndex + 1, comparisonType);
+                return LastIndexOfAnyCompareType(source, anyOf, startIndex, startIndex + 1, comparisonType);
         }
         
         /// <summary>
@@ -1200,19 +1151,19 @@ namespace NLib
         ///     search position in the string, the number of characters in the current string
         ///     to search, and the type of search to use.
         /// </summary>
-        /// <param name="s">
+        /// <param name=ARGNAME_SOURCE>
         ///     The string to search.
         /// </param>
-        /// <param name="anyOf">
+        /// <param name=ARGNAME_ANYOF>
         ///     A Unicode character array containing one or more characters to seek.
         /// </param>
-        /// <param name="startIndex">
+        /// <param name=ARGNAME_STARTINDEX>
         ///     The search starting position.
         /// </param>
-        /// <param name="count">
+        /// <param name=ARGNAME_COUNT>
         ///     The number of character positions to examine.
         /// </param>
-        /// <param name="comparisonType">
+        /// <param name=ARGNAME_COMPARISONTYPE>
         ///     One of the System.StringComparison values.
         /// </param>
         /// <returns>
@@ -1221,7 +1172,7 @@ namespace NLib
         ///     was found.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
-        ///     s or anyOf is null.
+        ///     source or anyOf is null.
         /// </exception>
         /// <exception cref="System.ArgumentOutOfRangeException">
         ///     count or startIndex is negative.  -or- startIndex minus count specify a position
@@ -1232,17 +1183,17 @@ namespace NLib
         ///     the additional parameter comparisonType allows the type of search to be specified
         ///     using one of the <see cref="System.StringComparison"/> values.
         /// </remarks>
-        public static int LastIndexOfAny(this string s, char[] anyOf, int startIndex, int count, StringComparison comparisonType)
+        public static int LastIndexOfAny(this string source, char[] anyOf, int startIndex, int count, StringComparison comparisonType)
         {
-            if (s == null)
-                throw new ArgumentNullException("s");
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
 
             if (comparisonType == StringComparison.OrdinalIgnoreCase)
-                return LastIndexOfAnyIgnoreCase(s, anyOf, startIndex, count);
+                return LastIndexOfAnyIgnoreCase(source, anyOf, startIndex, count);
             else if (comparisonType == StringComparison.Ordinal)
-                return s.LastIndexOfAny(anyOf, startIndex, count);
+                return source.LastIndexOfAny(anyOf, startIndex, count);
             else
-                return LastIndexOfAnyCompareType(s, anyOf, startIndex, count, comparisonType);
+                return LastIndexOfAnyCompareType(source, anyOf, startIndex, count, comparisonType);
         }
 
 
@@ -1253,10 +1204,10 @@ namespace NLib
         ///     not in a specified array of Unicode characters. A parameter specifies the
         ///     starting search position in the string.
         /// </summary>
-        /// <param name="s">
+        /// <param name=ARGNAME_SOURCE>
         ///     The string to search.
         /// </param>
-        /// <param name="anyOf">
+        /// <param name=ARGNAME_ANYOF>
         ///     A Unicode character array containing one or more characters to seek past.
         /// </param>
         /// <returns>
@@ -1265,7 +1216,7 @@ namespace NLib
         ///     was found.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
-        ///     s or anyOf is null.
+        ///     source or anyOf is null.
         /// </exception>
         /// <remarks>
         ///     <p>Index numbering starts from zero.</p>
@@ -1277,12 +1228,12 @@ namespace NLib
         ///         character is considered equivalent to another character only if their
         ///         Unicode scalar values are the same.</p>
         /// </remarks>
-        public static int LastIndexOfNotAny(this string s, char[] anyOf)
+        public static int LastIndexOfNotAny(this string source, char[] anyOf)
         {
-            if (s == null)
-                throw new ArgumentNullException("s");
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
 
-            return LastIndexOfNotAny(s, anyOf, s.Length - 1, s.Length);
+            return LastIndexOfNotAny(source, anyOf, source.Length - 1, source.Length);
         }
 
         /// <summary>
@@ -1290,13 +1241,13 @@ namespace NLib
         ///     not in a specified array of Unicode characters. Parameters specify the starting
         ///     search position in the string.
         /// </summary>
-        /// <param name="s">
+        /// <param name=ARGNAME_SOURCE>
         ///     The string to search.
         /// </param>
-        /// <param name="anyOf">
+        /// <param name=ARGNAME_ANYOF>
         ///     A Unicode character array containing one or more characters to seek past.
         /// </param>
-        /// <param name="startIndex">
+        /// <param name=ARGNAME_STARTINDEX>
         ///     The search starting position.
         /// </param>
         /// <returns>
@@ -1305,7 +1256,7 @@ namespace NLib
         ///     was found.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
-        ///     s or anyOf is null.
+        ///     source or anyOf is null.
         /// </exception>
         /// <exception cref="System.ArgumentOutOfRangeException">
         ///     startIndex specifies a position not within this instance.
@@ -1320,9 +1271,12 @@ namespace NLib
         ///         character is considered equivalent to another character only if their
         ///         Unicode scalar values are the same.</p>
         /// </remarks>
-        public static int LastIndexOfNotAny(this string s, char[] anyOf, int startIndex)
+        public static int LastIndexOfNotAny(this string source, char[] anyOf, int startIndex)
         {
-            return LastIndexOfNotAny(s, anyOf, startIndex, startIndex + 1);
+            if (startIndex == Int32.MaxValue)
+                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_MUST_BE_LESS_THAN_INT32_MAXVALUE);
+
+            return LastIndexOfNotAny(source, anyOf, startIndex, startIndex + 1);
         }
 
         /// <summary>
@@ -1331,16 +1285,16 @@ namespace NLib
         ///     search position in the string, the number of characters in the current string
         ///     to search.
         /// </summary>
-        /// <param name="s">
+        /// <param name=ARGNAME_SOURCE>
         ///     The string to search.
         /// </param>
-        /// <param name="anyOf">
+        /// <param name=ARGNAME_ANYOF>
         ///     A Unicode character array containing one or more characters to seek past.
         /// </param>
-        /// <param name="startIndex">
+        /// <param name=ARGNAME_STARTINDEX>
         ///     The search starting position.
         /// </param>
-        /// <param name="count">
+        /// <param name=ARGNAME_COUNT>
         ///     The number of character positions to examine.
         /// </param>
         /// <returns>
@@ -1349,7 +1303,7 @@ namespace NLib
         ///     was found.
         /// </returns>
         /// <exception cref="System.ArgumentNullException">
-        ///     s or anyOf is null.
+        ///     source or anyOf is null.
         /// </exception>
         /// <exception cref="System.ArgumentOutOfRangeException">
         ///     count or startIndex is negative.  -or- startIndex minus count specify a position
@@ -1365,18 +1319,18 @@ namespace NLib
         ///         character is considered equivalent to another character only if their
         ///         Unicode scalar values are the same.</p>
         /// </remarks>
-        public static unsafe int LastIndexOfNotAny(this string s, char[] anyOf, int startIndex, int count)
+        public static unsafe int LastIndexOfNotAny(this string source, char[] anyOf, int startIndex, int count)
         {
-            if (s == null)
-                throw new ArgumentNullException("s");
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
             if (anyOf == null)
-                throw new ArgumentNullException("anyOf");
-            if (startIndex < 0 || startIndex >= s.Length)
-                throw new ArgumentOutOfRangeException("startIndex", ERRMSG_STARTINDEX_OUT_OF_RANGE);
+                throw new ArgumentNullException(ARGNAME_ANYOF);
+            if (startIndex < 0 || startIndex >= source.Length)
+                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex - count + 1 < 0)
-                throw new ArgumentOutOfRangeException("count", ERRMSG_COUNT_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
 
-            fixed (char* pStrBase = s)
+            fixed (char* pStrBase = source)
             fixed (char* pAnyOfBase = anyOf)
             {
                 char* pStr = pStrBase + startIndex;
@@ -1433,58 +1387,58 @@ namespace NLib
 
 
         //--- Private Static Methods ---
-        
-        static unsafe int IndexOfIgnoreCase(string s, char c, int startIndex, int count)
+
+        static unsafe int IndexOfIgnoreCase(string source, char value, int startIndex, int count)
         {
-            if (s == null)
-                throw new ArgumentNullException("s");
-            if (startIndex < 0 || startIndex > s.Length)
-                throw new ArgumentOutOfRangeException("startIndex", ERRMSG_STARTINDEX_OUT_OF_RANGE);
-            if (count < 0 || startIndex > s.Length - count)
-                throw new ArgumentOutOfRangeException("count", ERRMSG_COUNT_OUT_OF_RANGE);
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
+            if (startIndex < 0 || startIndex > source.Length)
+                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
+            if (count < 0 || startIndex > source.Length - count)
+                throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
 
-            c = char.ToUpperInvariant(c);
+            value = char.ToUpperInvariant(value);
 
-            fixed (char* pStrBase = s)
+            fixed (char* pStrBase = source)
             {
                 char* pStr = pStrBase + startIndex;
                 char* pStrEnd = pStr + count;
                 char* pStrFoldedEnd = pStrEnd - 9;
                 while (pStr < pStrFoldedEnd)
                 {
-                    if (char.ToUpperInvariant(*(pStr++)) == c
-                        || char.ToUpperInvariant(*(pStr++)) == c
-                        || char.ToUpperInvariant(*(pStr++)) == c
-                        || char.ToUpperInvariant(*(pStr++)) == c
-                        || char.ToUpperInvariant(*(pStr++)) == c
-                        || char.ToUpperInvariant(*(pStr++)) == c
-                        || char.ToUpperInvariant(*(pStr++)) == c
-                        || char.ToUpperInvariant(*(pStr++)) == c
-                        || char.ToUpperInvariant(*(pStr++)) == c
-                        || char.ToUpperInvariant(*(pStr++)) == c)
+                    if (char.ToUpperInvariant(*(pStr++)) == value
+                        || char.ToUpperInvariant(*(pStr++)) == value
+                        || char.ToUpperInvariant(*(pStr++)) == value
+                        || char.ToUpperInvariant(*(pStr++)) == value
+                        || char.ToUpperInvariant(*(pStr++)) == value
+                        || char.ToUpperInvariant(*(pStr++)) == value
+                        || char.ToUpperInvariant(*(pStr++)) == value
+                        || char.ToUpperInvariant(*(pStr++)) == value
+                        || char.ToUpperInvariant(*(pStr++)) == value
+                        || char.ToUpperInvariant(*(pStr++)) == value)
                     {
                         return (int)(pStr - pStrBase - 1);
                     }
                 }
                 while (pStr < pStrEnd)
                 {
-                    if (char.ToUpperInvariant(*(pStr++)) == c)
+                    if (char.ToUpperInvariant(*(pStr++)) == value)
                         return (int)(pStr - pStrBase - 1);
                 }
                 return -1;
             }
         }
 
-        static unsafe int IndexOfCompareType(string s, char c, int startIndex, int count, StringComparison comparisonType)
+        static unsafe int IndexOfCompareType(string source, char value, int startIndex, int count, StringComparison comparisonType)
         {
-            if (s == null)
-                throw new ArgumentNullException("s");
-            if (startIndex < 0 || startIndex > s.Length)
-                throw new ArgumentOutOfRangeException("startIndex", ERRMSG_STARTINDEX_OUT_OF_RANGE);
-            if (count < 0 || startIndex > s.Length - count)
-                throw new ArgumentOutOfRangeException("count", ERRMSG_COUNT_OUT_OF_RANGE);
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
+            if (startIndex < 0 || startIndex > source.Length)
+                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
+            if (count < 0 || startIndex > source.Length - count)
+                throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
 
-            string charAsString = c.ToString();
+            string charAsString = value.ToString();
 
             int pos = startIndex;
             int end = startIndex + count;
@@ -1492,16 +1446,16 @@ namespace NLib
 
             while (pos < endOfFold)
             {
-                if (string.Compare(charAsString, 0, s, pos++, 1, comparisonType) == 0
-                    || string.Compare(charAsString, 0, s, pos++, 1, comparisonType) == 0
-                    || string.Compare(charAsString, 0, s, pos++, 1, comparisonType) == 0
-                    || string.Compare(charAsString, 0, s, pos++, 1, comparisonType) == 0
-                    || string.Compare(charAsString, 0, s, pos++, 1, comparisonType) == 0
-                    || string.Compare(charAsString, 0, s, pos++, 1, comparisonType) == 0
-                    || string.Compare(charAsString, 0, s, pos++, 1, comparisonType) == 0
-                    || string.Compare(charAsString, 0, s, pos++, 1, comparisonType) == 0
-                    || string.Compare(charAsString, 0, s, pos++, 1, comparisonType) == 0
-                    || string.Compare(charAsString, 0, s, pos++, 1, comparisonType) == 0)
+                if (string.Compare(charAsString, 0, source, pos++, 1, comparisonType) == 0
+                    || string.Compare(charAsString, 0, source, pos++, 1, comparisonType) == 0
+                    || string.Compare(charAsString, 0, source, pos++, 1, comparisonType) == 0
+                    || string.Compare(charAsString, 0, source, pos++, 1, comparisonType) == 0
+                    || string.Compare(charAsString, 0, source, pos++, 1, comparisonType) == 0
+                    || string.Compare(charAsString, 0, source, pos++, 1, comparisonType) == 0
+                    || string.Compare(charAsString, 0, source, pos++, 1, comparisonType) == 0
+                    || string.Compare(charAsString, 0, source, pos++, 1, comparisonType) == 0
+                    || string.Compare(charAsString, 0, source, pos++, 1, comparisonType) == 0
+                    || string.Compare(charAsString, 0, source, pos++, 1, comparisonType) == 0)
                 {
                     return pos - 1;
                 }
@@ -1509,30 +1463,65 @@ namespace NLib
 
             while (pos < end)
             {
-                if (string.Compare(charAsString, 0, s, pos++, 1, comparisonType) == 0)
+                if (string.Compare(charAsString, 0, source, pos++, 1, comparisonType) == 0)
                     return pos - 1;
             }
 
             return -1;
         }
-        
-        static unsafe int IndexOfAnyIgnoreCase(string s, char[] anyOf, int startIndex, int count)
+
+        static int IndexOfAnyOrdinal(string source, string[] anyOf, int startIndex, int count)
         {
-            if (s == null)
-                throw new ArgumentNullException("s");
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
             if (anyOf == null)
-                throw new ArgumentNullException("anyOf");
-            if (startIndex < 0 || startIndex > s.Length)
-                throw new ArgumentOutOfRangeException("startIndex", ERRMSG_STARTINDEX_OUT_OF_RANGE);
-            if (count < 0 || startIndex > s.Length - count)
-                throw new ArgumentOutOfRangeException("count", ERRMSG_COUNT_OUT_OF_RANGE);
+                throw new ArgumentNullException(ARGNAME_ANYOF);
+            if (startIndex < 0)
+                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
+            if (count < 0 || startIndex > source.Length - count)
+                throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
+
+            int anyOfLength = anyOf.Length;
+            char[] ca = new char[anyOfLength];
+
+            for (int i = 0; i < anyOfLength; i++)
+            {
+                if (anyOf[i] == null || anyOf[i].Length == 0)
+                    throw new ArgumentException(EXCMSG_CANNOT_CONTAIN_NULL_OR_EMPTY, ARGNAME_ANYOF);
+                ca[i] = anyOf[i][0];
+            }
+
+            int p = startIndex;
+            int end = startIndex + count;
+            while (true)
+            {
+                p = source.IndexOfAny(ca, p, end - p);
+                if (p == -1)
+                    return p;
+                for (int i = 0; i < anyOfLength; i++)
+                    if (string.Compare(source, p, anyOf[i], 0, anyOf[i].Length, StringComparison.Ordinal) == 0)
+                        return p;
+                p++;
+            }
+        }
+
+        static unsafe int IndexOfAnyIgnoreCase(string source, char[] anyOf, int startIndex, int count)
+        {
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
+            if (anyOf == null)
+                throw new ArgumentNullException(ARGNAME_ANYOF);
+            if (startIndex < 0 || startIndex > source.Length)
+                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
+            if (count < 0 || startIndex > source.Length - count)
+                throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
 
             int anyOfLength = anyOf.Length;
             char[] ca = new char[anyOfLength];
             for (int i = 0; i < anyOfLength; i++)
                 ca[i] = char.ToUpperInvariant(anyOf[i]);
 
-            fixed (char* pStrBase = s)
+            fixed (char* pStrBase = source)
             fixed (char* pAnyOfBase = ca)
             {
                 char* pStr = pStrBase + startIndex;
@@ -1584,38 +1573,38 @@ namespace NLib
             }
         }
         
-        static int IndexOfAnyCompareType(string s, char[] anyOf, int startIndex, int count, StringComparison comparisonType)
+        static int IndexOfAnyCompareType(string source, char[] anyOf, int startIndex, int count, StringComparison comparisonType)
         {
-            if (s == null)
-                throw new ArgumentNullException("s");
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
             if (anyOf == null)
-                throw new ArgumentNullException("anyOf");
-            if (startIndex < 0 || startIndex > s.Length)
-                throw new ArgumentOutOfRangeException("startIndex", ERRMSG_STARTINDEX_OUT_OF_RANGE);
-            if (count < 0 || startIndex > s.Length - count)
-                throw new ArgumentOutOfRangeException("count", ERRMSG_COUNT_OUT_OF_RANGE);
+                throw new ArgumentNullException(ARGNAME_ANYOF);
+            if (startIndex < 0 || startIndex > source.Length)
+                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
+            if (count < 0 || startIndex > source.Length - count)
+                throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
 
             int anyOfLength = anyOf.Length;
             string[] sa = new string[anyOfLength];
             for (int i = 0; i < anyOfLength; i++)
                 sa[i] = anyOf[i].ToString();
 
-            return IndexOfAnyString1CompareType(s, sa, startIndex, count, comparisonType);
+            return IndexOfAnyString1CompareType(source, sa, startIndex, count, comparisonType);
         }
         
-        /// <param name="s"></param>
-        /// <param name="anyOf">Array of strings each with a length of exactly one.</param>
-        /// <param name="startIndex"></param>
-        /// <param name="count"></param>
-        /// <param name="comparisonType"></param>
-        static int IndexOfAnyString1CompareType(string s, string[] anyOf, int startIndex, int count, StringComparison comparisonType)
+        /// <param name=ARGNAME_SOURCE></param>
+        /// <param name=ARGNAME_ANYOF>Array of strings each with a length of exactly one.</param>
+        /// <param name=ARGNAME_STARTINDEX></param>
+        /// <param name=ARGNAME_COUNT></param>
+        /// <param name=ARGNAME_COMPARISONTYPE></param>
+        static int IndexOfAnyString1CompareType(string source, string[] anyOf, int startIndex, int count, StringComparison comparisonType)
         {
             int strEnd = startIndex + count;
             int anyOfLength = anyOf.Length;
 
             for (int strPos = startIndex; strPos < strEnd; strPos++)
             {
-                string sc = s[strPos].ToString();
+                string sc = source[strPos].ToString();
 
                 int anyOfPos = 0;
                 while (anyOfPos + 4 < anyOfLength)
@@ -1640,20 +1629,18 @@ namespace NLib
             return -1;
         }
         
-        static int IndexOfAnyIgnoreCase(string s, string[] anyOf, int startIndex, int count)
+        static int IndexOfAnyIgnoreCase(string source, string[] anyOf, int startIndex, int count)
         {
             if (anyOf == null)
-                throw new ArgumentNullException("anyOf");
+                throw new ArgumentNullException(ARGNAME_ANYOF);
 
             int anyOfLength = anyOf.Length;
             char[] ca = new char[anyOfLength];
 
             for (int i = 0; i < anyOfLength; i++)
             {
-                if (anyOf[i] == null)
-                    throw new ArgumentNullException();
-                if (anyOf[i].Length == 0)
-                    throw new ArgumentException("Parameter cannot contain zero-length strings.", "anyOf");
+                if (anyOf[i] == null || anyOf[i].Length == 0)
+                    throw new ArgumentException(EXCMSG_CANNOT_CONTAIN_NULL_OR_EMPTY, ARGNAME_ANYOF);
                 ca[i] = anyOf[i][0];
             }
 
@@ -1661,36 +1648,34 @@ namespace NLib
             int end = startIndex + count;
             while (true)
             {
-                p = IndexOfAnyIgnoreCase(s, ca, p, end - p);
+                p = IndexOfAnyIgnoreCase(source, ca, p, end - p);
                 if (p == -1)
                     return p;
                 for (int i = 0; i < anyOfLength; i++)
-                    if (string.Compare(s, p, anyOf[i], 0, anyOf[i].Length, StringComparison.OrdinalIgnoreCase) == 0)
+                    if (string.Compare(source, p, anyOf[i], 0, anyOf[i].Length, StringComparison.OrdinalIgnoreCase) == 0)
                         return p;
                 p++;
             }
         }
         
-        static int IndexOfAnyCompareType(string s, string[] anyOf, int startIndex, int count, StringComparison comparisonType)
+        static int IndexOfAnyCompareType(string source, string[] anyOf, int startIndex, int count, StringComparison comparisonType)
         {
-            if (s == null)
-                throw new ArgumentNullException("s");
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
             if (anyOf == null)
-                throw new ArgumentNullException("anyOf");
-            if (startIndex < 0 || startIndex > s.Length)
-                throw new ArgumentOutOfRangeException("startIndex", ERRMSG_STARTINDEX_OUT_OF_RANGE);
-            if (count < 0 || startIndex > s.Length - count)
-                throw new ArgumentOutOfRangeException("count", ERRMSG_COUNT_OUT_OF_RANGE);
+                throw new ArgumentNullException(ARGNAME_ANYOF);
+            if (startIndex < 0 || startIndex > source.Length)
+                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
+            if (count < 0 || startIndex > source.Length - count)
+                throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
 
             int anyOfLength = anyOf.Length;
             string[] sa = new string[anyOfLength];
 
             for (int i = 0; i < anyOfLength; i++)
             {
-                if (anyOf[i] == null)
-                    throw new ArgumentNullException();
-                if (anyOf[i].Length == 0)
-                    throw new ArgumentException("Parameter cannot contain zero-length strings.", "anyOf");
+                if (anyOf[i] == null || anyOf[i].Length == 0)
+                    throw new ArgumentException(EXCMSG_CANNOT_CONTAIN_NULL_OR_EMPTY, ARGNAME_ANYOF);
                 sa[i] = anyOf[i].Substring(0, 1);
             }
 
@@ -1698,33 +1683,99 @@ namespace NLib
             int end = startIndex + count;
             while (true)
             {
-                p = IndexOfAnyString1CompareType(s, sa, p, end - p, comparisonType);
+                p = IndexOfAnyString1CompareType(source, sa, p, end - p, comparisonType);
                 if (p == -1)
                     return p;
                 for (int i = 0; i < anyOfLength; i++)
-                    if (string.Compare(s, p, anyOf[i], 0, anyOf[i].Length, comparisonType) == 0)
+                    if (string.Compare(source, p, anyOf[i], 0, anyOf[i].Length, comparisonType) == 0)
                         return p;
                 p++;
             }
         }
         
-        static unsafe int IndexOfNotAnyIgnoreCase(string s, char[] anyOf, int startIndex, int count)
+        static unsafe int IndexOfNotAnyOrdinal(string source, char[] anyOf, int startIndex, int count)
         {
-            if (s == null)
-                throw new ArgumentNullException("s");
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
             if (anyOf == null)
-                throw new ArgumentNullException("anyOf");
-            if (startIndex < 0 || startIndex > s.Length)
-                throw new ArgumentOutOfRangeException("startIndex", ERRMSG_STARTINDEX_OUT_OF_RANGE);
-            if (count < 0 || startIndex > s.Length - count)
-                throw new ArgumentOutOfRangeException("count", ERRMSG_COUNT_OUT_OF_RANGE);
+                throw new ArgumentNullException(ARGNAME_ANYOF);
+            if (startIndex < 0)
+                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
+            if (count < 0 || startIndex > source.Length - count)
+                throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
+
+            fixed (char* pStrBase = source)
+            fixed (char* pAnyOfBase = anyOf)
+            {
+                char* pStr = pStrBase + startIndex;
+                char* pStrEnd = pStr + count;
+                char* pAnyOfEnd = pAnyOfBase + anyOf.Length;
+                if (anyOf.Length >= 8)
+                {
+                    char* pAnyOfFoldedEnd = pAnyOfEnd - 7;
+                    while (pStr < pStrEnd)
+                    {
+                        char* pAnyOf = pAnyOfBase;
+                        while (pAnyOf < pAnyOfFoldedEnd)
+                        {
+                            if (*pStr == *(pAnyOf++)
+                                || *pStr == *(pAnyOf++)
+                                || *pStr == *(pAnyOf++)
+                                || *pStr == *(pAnyOf++)
+                                || *pStr == *(pAnyOf++)
+                                || *pStr == *(pAnyOf++)
+                                || *pStr == *(pAnyOf++)
+                                || *pStr == *(pAnyOf++))
+                            {
+                                goto nextChar_FoldedSection;
+                            }
+                        }
+                        while (pAnyOf < pAnyOfEnd)
+                        {
+                            if (*pStr == *(pAnyOf++))
+                                goto nextChar_FoldedSection;
+                        }
+                        return (int)(pStr - pStrBase);
+                    nextChar_FoldedSection:
+                        pStr++;
+                    }
+                }
+                else
+                {
+                    while (pStr < pStrEnd)
+                    {
+                        char* pAnyOf = pAnyOfBase;
+                        while (pAnyOf < pAnyOfEnd)
+                        {
+                            if (*pStr == *(pAnyOf++))
+                                goto nextChar;
+                        }
+                        return (int)(pStr - pStrBase);
+                    nextChar:
+                        pStr++;
+                    }
+                }
+                return -1;
+            }
+        }
+   
+        static unsafe int IndexOfNotAnyIgnoreCase(string source, char[] anyOf, int startIndex, int count)
+        {
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
+            if (anyOf == null)
+                throw new ArgumentNullException(ARGNAME_ANYOF);
+            if (startIndex < 0 || startIndex > source.Length)
+                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
+            if (count < 0 || startIndex > source.Length - count)
+                throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
 
             int anyOfLength = anyOf.Length;
             char[] ca = new char[anyOfLength];
             for (int i = 0; i < anyOfLength; i++)
                 ca[i] = char.ToUpperInvariant(anyOf[i]);
 
-            fixed (char* pStrBase = s)
+            fixed (char* pStrBase = source)
             fixed (char* pAnyOfBase = ca)
             {
                 char* pStr = pStrBase + startIndex;
@@ -1785,34 +1836,34 @@ namespace NLib
             }
         }
         
-        static int IndexOfNotAnyCompareType(string s, char[] anyOf, int startIndex, int count, StringComparison comparisonType)
+        static int IndexOfNotAnyCompareType(string source, char[] anyOf, int startIndex, int count, StringComparison comparisonType)
         {
             if (anyOf == null)
-                throw new ArgumentNullException("anyOf");
+                throw new ArgumentNullException(ARGNAME_ANYOF);
 
             int anyOfLength = anyOf.Length;
             string[] sa = new string[anyOfLength];
             for (int i = 0; i < anyOfLength; i++)
                 sa[i] = anyOf[i].ToString();
 
-            return IndexOfNotAnyCompareType(s, sa, startIndex, count, comparisonType);
+            return IndexOfNotAnyCompareType(source, sa, startIndex, count, comparisonType);
         }
         
-        /// <param name="s"></param>
-        /// <param name="anyOf">Array of strings each with a length of exactly one.</param>
-        /// <param name="startIndex"></param>
-        /// <param name="count"></param>
-        /// <param name="comparisonType"></param>
-        static int IndexOfNotAnyCompareType(string s, string[] anyOf, int startIndex, int count, StringComparison comparisonType)
+        /// <param name=ARGNAME_SOURCE></param>
+        /// <param name=ARGNAME_ANYOF>Array of strings each with a length of exactly one.</param>
+        /// <param name=ARGNAME_STARTINDEX></param>
+        /// <param name=ARGNAME_COUNT></param>
+        /// <param name=ARGNAME_COMPARISONTYPE></param>
+        static int IndexOfNotAnyCompareType(string source, string[] anyOf, int startIndex, int count, StringComparison comparisonType)
         {
-            if (s == null)
-                throw new ArgumentNullException("s");
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
             if (anyOf == null)
-                throw new ArgumentNullException("anyOf");
-            if (startIndex < 0 || startIndex > s.Length)
-                throw new ArgumentOutOfRangeException("startIndex", ERRMSG_STARTINDEX_OUT_OF_RANGE);
-            if (count < 0 || startIndex > s.Length - count)
-                throw new ArgumentOutOfRangeException("count", ERRMSG_COUNT_OUT_OF_RANGE);
+                throw new ArgumentNullException(ARGNAME_ANYOF);
+            if (startIndex < 0 || startIndex > source.Length)
+                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
+            if (count < 0 || startIndex > source.Length - count)
+                throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
 
             int strEnd = startIndex + count;
             int anyOfLength = anyOf.Length;
@@ -1822,10 +1873,10 @@ namespace NLib
                 int anyOfPos = 0;
                 while (anyOfPos + 4 < anyOfLength)
                 {
-                    if (string.Compare(anyOf[anyOfPos], 0, s, strPos, anyOf[anyOfPos++].Length, comparisonType) == 0
-                        || string.Compare(anyOf[anyOfPos], 0, s, strPos, anyOf[anyOfPos++].Length, comparisonType) == 0
-                        || string.Compare(anyOf[anyOfPos], 0, s, strPos, anyOf[anyOfPos++].Length, comparisonType) == 0
-                        || string.Compare(anyOf[anyOfPos], 0, s, strPos, anyOf[anyOfPos++].Length, comparisonType) == 0)
+                    if (string.Compare(anyOf[anyOfPos], 0, source, strPos, anyOf[anyOfPos++].Length, comparisonType) == 0
+                        || string.Compare(anyOf[anyOfPos], 0, source, strPos, anyOf[anyOfPos++].Length, comparisonType) == 0
+                        || string.Compare(anyOf[anyOfPos], 0, source, strPos, anyOf[anyOfPos++].Length, comparisonType) == 0
+                        || string.Compare(anyOf[anyOfPos], 0, source, strPos, anyOf[anyOfPos++].Length, comparisonType) == 0)
                     {
                         goto nextChar;
                     }
@@ -1833,7 +1884,7 @@ namespace NLib
 
                 while (anyOfPos < anyOfLength)
                 {
-                    if (string.Compare(anyOf[anyOfPos], 0, s, strPos, anyOf[anyOfPos++].Length, comparisonType) == 0)
+                    if (string.Compare(anyOf[anyOfPos], 0, source, strPos, anyOf[anyOfPos++].Length, comparisonType) == 0)
                         goto nextChar;
                 }
 
@@ -1844,23 +1895,23 @@ namespace NLib
             return -1;
         }
 
-        static unsafe int LastIndexOfAnyIgnoreCase(string s, char[] anyOf, int startIndex, int count)
+        static unsafe int LastIndexOfAnyIgnoreCase(string source, char[] anyOf, int startIndex, int count)
         {
-            if (s == null)
-                throw new ArgumentNullException("s");
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
             if (anyOf == null)
-                throw new ArgumentNullException("anyOf");
-            if (startIndex < 0 || startIndex >= s.Length)
-                throw new ArgumentOutOfRangeException("startIndex", ERRMSG_STARTINDEX_OUT_OF_RANGE);
+                throw new ArgumentNullException(ARGNAME_ANYOF);
+            if (startIndex < 0 || startIndex >= source.Length)
+                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex - count + 1 < 0)
-                throw new ArgumentOutOfRangeException("count", ERRMSG_COUNT_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
 
             int anyOfLength = anyOf.Length;
             char[] ca = new char[anyOfLength];
             for (int i = 0; i < anyOfLength; i++)
                 ca[i] = char.ToUpperInvariant(anyOf[i]);
 
-            fixed (char* pStrBase = s)
+            fixed (char* pStrBase = source)
             fixed (char* pAnyOfBase = ca)
             {
                 char* pStr = pStrBase + startIndex;
@@ -1909,38 +1960,38 @@ namespace NLib
             }
         }
         
-        static int LastIndexOfAnyCompareType(string s, char[] anyOf, int startIndex, int count, StringComparison comparisonType)
+        static int LastIndexOfAnyCompareType(string source, char[] anyOf, int startIndex, int count, StringComparison comparisonType)
         {
-            if (s == null)
-                throw new ArgumentNullException("s");
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
             if (anyOf == null)
-                throw new ArgumentNullException("anyOf");
-            if (startIndex < 0 || startIndex >= s.Length)
-                throw new ArgumentOutOfRangeException("startIndex", ERRMSG_STARTINDEX_OUT_OF_RANGE);
+                throw new ArgumentNullException(ARGNAME_ANYOF);
+            if (startIndex < 0 || startIndex >= source.Length)
+                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex - count + 1 < 0)
-                throw new ArgumentOutOfRangeException("count", ERRMSG_COUNT_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
 
             int anyOfLength = anyOf.Length;
             string[] sa = new string[anyOfLength];
             for (int i = 0; i < anyOfLength; i++)
                 sa[i] = anyOf[i].ToString();
 
-            return LastIndexOfAnyString1CompareType(s, sa, startIndex, count, comparisonType);
+            return LastIndexOfAnyString1CompareType(source, sa, startIndex, count, comparisonType);
         }
         
-        /// <param name="s"></param>
-        /// <param name="anyOf">Array of strings each with a length of exactly one.</param>
-        /// <param name="startIndex"></param>
-        /// <param name="count"></param>
-        /// <param name="comparisonType"></param>
-        static int LastIndexOfAnyString1CompareType(string s, string[] anyOf, int startIndex, int count, StringComparison comparisonType)
+        /// <param name=ARGNAME_SOURCE></param>
+        /// <param name=ARGNAME_ANYOF>Array of strings each with a length of exactly one.</param>
+        /// <param name=ARGNAME_STARTINDEX></param>
+        /// <param name=ARGNAME_COUNT></param>
+        /// <param name=ARGNAME_COMPARISONTYPE></param>
+        static int LastIndexOfAnyString1CompareType(string source, string[] anyOf, int startIndex, int count, StringComparison comparisonType)
         {
             int strEnd = startIndex - count;
             int anyOfLength = anyOf.Length;
 
             for (int strPos = startIndex; strPos > strEnd; strPos--)
             {
-                string sc = s[strPos].ToString();
+                string sc = source[strPos].ToString();
 
                 int anyOfPos = 0;
                 while (anyOfPos + 4 < anyOfLength)
