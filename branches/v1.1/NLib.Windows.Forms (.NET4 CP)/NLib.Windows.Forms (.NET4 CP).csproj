@@ -39,7 +39,7 @@
     <AssemblyOriginatorKeyFile>NLib.Windows.Forms.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release Without Documentation|AnyCPU'">
-    <OutputPath>bin\Release Without Documentation\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
