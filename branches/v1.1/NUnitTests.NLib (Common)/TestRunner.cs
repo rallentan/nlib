@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NUnitTests.Common
+namespace NUnitTests.NLib
 {
     /// <summary>
     /// Provides a set of methods for running the unit tests in the debugger.
@@ -19,7 +19,6 @@ namespace NUnitTests.Common
             RunInt16ExtensionsTests();
             RunInt32ExtensionsTests();
             RunInt64ExtensionsTests();
-            RunStringExtensionsTests();
             RunUInt16ExtensionsTests();
             RunUInt32ExtensionsTests();
             RunUInt64ExtensionsTests();
@@ -59,21 +58,6 @@ namespace NUnitTests.Common
             testObject.LowDWord();
             testObject.RotateLeft();
             testObject.RotateRight();
-        }
-
-        public static void RunStringExtensionsTests()
-        {
-            var testObject = new StringExtensionsTests();
-            testObject.CompareTo();
-            testObject.Contains_Char();
-            testObject.Contains_Char_StringComparison();
-            testObject.Contains_String_StringComparison();
-            testObject.IndexOf();
-            testObject.IndexOfAny();
-            testObject.IndexOfNotAny();
-            testObject.LastIndexOfAny();
-            testObject.LastIndexOfNotAny();
-            testObject.Replace();
         }
 
         public static void RunUInt16ExtensionsTests()

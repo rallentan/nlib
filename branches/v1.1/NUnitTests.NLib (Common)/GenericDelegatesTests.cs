@@ -4,7 +4,7 @@ using System.Text;
 using NUnit.Framework;
 using NLib;
 
-namespace NUnitTests.Common
+namespace NUnitTests.NLib
 {
     /// <summary>
     /// The purpose of this class is to ensure all of the generic delegates exist. It

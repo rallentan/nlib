@@ -43,7 +43,7 @@ namespace NLib
         const string EXCMSG_COUNT_OUT_OF_RANGE = "Count must be positive and count must refer to a location within the string/array/collection.";
         const string EXCMSG_CANNOT_CONTAIN_NULL_OR_EMPTY = "Parameter cannot contain null or zero-length strings.";
         const string EXCMSG_MUST_BE_LESS_THAN_INT32_MAXVALUE = "Parameter must be less than Int32.MaxValue.";
-        
+        const string EXCMSG_INVALID_ENUMERATION_VALUE = "Parameter is an invalid enumeration value.";
         
         //--- Public Static Methods ---
 
@@ -1435,8 +1435,10 @@ namespace NLib
                 throw new ArgumentNullException(ARGNAME_SOURCE);
             if (startIndex < 0 || startIndex > source.Length)
                 throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
-            if (count < 0 || startIndex > source.Length - count)
+            if (count < 0 || startIndex + count > source.Length)
                 throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
+            if (!Enum.IsDefined(typeof(StringComparison), comparisonType))
+                throw new ArgumentOutOfRangeException(ARGNAME_COMPARISONTYPE, EXCMSG_INVALID_ENUMERATION_VALUE);
 
             string charAsString = value.ToString();
 
@@ -1470,41 +1472,6 @@ namespace NLib
             return -1;
         }
 
-        static int IndexOfAnyOrdinal(string source, string[] anyOf, int startIndex, int count)
-        {
-            if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
-            if (anyOf == null)
-                throw new ArgumentNullException(ARGNAME_ANYOF);
-            if (startIndex < 0)
-                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
-            if (count < 0 || startIndex > source.Length - count)
-                throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
-
-            int anyOfLength = anyOf.Length;
-            char[] ca = new char[anyOfLength];
-
-            for (int i = 0; i < anyOfLength; i++)
-            {
-                if (anyOf[i] == null || anyOf[i].Length == 0)
-                    throw new ArgumentException(EXCMSG_CANNOT_CONTAIN_NULL_OR_EMPTY, ARGNAME_ANYOF);
-                ca[i] = anyOf[i][0];
-            }
-
-            int p = startIndex;
-            int end = startIndex + count;
-            while (true)
-            {
-                p = source.IndexOfAny(ca, p, end - p);
-                if (p == -1)
-                    return p;
-                for (int i = 0; i < anyOfLength; i++)
-                    if (string.Compare(source, p, anyOf[i], 0, anyOf[i].Length, StringComparison.Ordinal) == 0)
-                        return p;
-                p++;
-            }
-        }
-
         static unsafe int IndexOfAnyIgnoreCase(string source, char[] anyOf, int startIndex, int count)
         {
             if (source == null)
@@ -1513,7 +1480,7 @@ namespace NLib
                 throw new ArgumentNullException(ARGNAME_ANYOF);
             if (startIndex < 0 || startIndex > source.Length)
                 throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
-            if (count < 0 || startIndex > source.Length - count)
+            if (count < 0 || startIndex + count > source.Length)
                 throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
 
             int anyOfLength = anyOf.Length;
@@ -1581,8 +1548,10 @@ namespace NLib
                 throw new ArgumentNullException(ARGNAME_ANYOF);
             if (startIndex < 0 || startIndex > source.Length)
                 throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
-            if (count < 0 || startIndex > source.Length - count)
+            if (count < 0 || startIndex + count > source.Length)
                 throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
+            if (!Enum.IsDefined(typeof(StringComparison), comparisonType))
+                throw new ArgumentOutOfRangeException(ARGNAME_COMPARISONTYPE, EXCMSG_INVALID_ENUMERATION_VALUE);
 
             int anyOfLength = anyOf.Length;
             string[] sa = new string[anyOfLength];
@@ -1628,7 +1597,47 @@ namespace NLib
             }
             return -1;
         }
-        
+
+        static int IndexOfAnyOrdinal(string source, string[] anyOf, int startIndex, int count)
+        {
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
+            if (anyOf == null)
+                throw new ArgumentNullException(ARGNAME_ANYOF);
+            if (startIndex < 0)
+                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
+            if (count < 0 || startIndex > source.Length - count)
+                throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
+
+            int anyOfLength = anyOf.Length;
+            char[] ca = new char[anyOfLength];
+
+            for (int i = 0; i < anyOfLength; i++)
+            {
+                if (anyOf[i] == null || anyOf[i].Length == 0)
+                    throw new ArgumentException(EXCMSG_CANNOT_CONTAIN_NULL_OR_EMPTY, ARGNAME_ANYOF);
+                ca[i] = anyOf[i][0];
+            }
+
+            int p = startIndex;
+            int end = startIndex + count;
+            while (true)
+            {
+                p = source.IndexOfAny(ca, p, end - p);
+                if (p == -1)
+                    return p;
+                for (int i = 0; i < anyOfLength; i++)
+                {
+                    int length = anyOf[i].Length;
+                    if (p + length > end)
+                        continue;
+                    if (string.Compare(source, p, anyOf[i], 0, length, StringComparison.Ordinal) == 0)
+                        return p;
+                }
+                p++;
+            }
+        }
+
         static int IndexOfAnyIgnoreCase(string source, string[] anyOf, int startIndex, int count)
         {
             if (anyOf == null)
@@ -1652,8 +1661,13 @@ namespace NLib
                 if (p == -1)
                     return p;
                 for (int i = 0; i < anyOfLength; i++)
-                    if (string.Compare(source, p, anyOf[i], 0, anyOf[i].Length, StringComparison.OrdinalIgnoreCase) == 0)
+                {
+                    int length = anyOf[i].Length;
+                    if (p + length > end)
+                        continue;
+                    if (string.Compare(source, p, anyOf[i], 0, length, StringComparison.OrdinalIgnoreCase) == 0)
                         return p;
+                }
                 p++;
             }
         }
@@ -1668,6 +1682,8 @@ namespace NLib
                 throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex > source.Length - count)
                 throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
+            if (!Enum.IsDefined(typeof(StringComparison), comparisonType))
+                throw new ArgumentOutOfRangeException(ARGNAME_COMPARISONTYPE, EXCMSG_INVALID_ENUMERATION_VALUE);
 
             int anyOfLength = anyOf.Length;
             string[] sa = new string[anyOfLength];
@@ -1687,8 +1703,13 @@ namespace NLib
                 if (p == -1)
                     return p;
                 for (int i = 0; i < anyOfLength; i++)
-                    if (string.Compare(source, p, anyOf[i], 0, anyOf[i].Length, comparisonType) == 0)
+                {
+                    int length = anyOf[i].Length;
+                    if (p + length > end)
+                        continue;
+                    if (string.Compare(source, p, anyOf[i], 0, length, comparisonType) == 0)
                         return p;
+                }
                 p++;
             }
         }
@@ -1840,6 +1861,8 @@ namespace NLib
         {
             if (anyOf == null)
                 throw new ArgumentNullException(ARGNAME_ANYOF);
+            if (!Enum.IsDefined(typeof(StringComparison), comparisonType))
+                throw new ArgumentOutOfRangeException(ARGNAME_COMPARISONTYPE, EXCMSG_INVALID_ENUMERATION_VALUE);
 
             int anyOfLength = anyOf.Length;
             string[] sa = new string[anyOfLength];
@@ -1864,6 +1887,8 @@ namespace NLib
                 throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex > source.Length - count)
                 throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
+            if (!Enum.IsDefined(typeof(StringComparison), comparisonType))
+                throw new ArgumentOutOfRangeException(ARGNAME_COMPARISONTYPE, EXCMSG_INVALID_ENUMERATION_VALUE);
 
             int strEnd = startIndex + count;
             int anyOfLength = anyOf.Length;
@@ -1901,6 +1926,8 @@ namespace NLib
                 throw new ArgumentNullException(ARGNAME_SOURCE);
             if (anyOf == null)
                 throw new ArgumentNullException(ARGNAME_ANYOF);
+            if (source.Length == 0)
+                return -1;
             if (startIndex < 0 || startIndex >= source.Length)
                 throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex - count + 1 < 0)
@@ -1966,10 +1993,14 @@ namespace NLib
                 throw new ArgumentNullException(ARGNAME_SOURCE);
             if (anyOf == null)
                 throw new ArgumentNullException(ARGNAME_ANYOF);
+            if (source.Length == 0)
+                return -1;
             if (startIndex < 0 || startIndex >= source.Length)
                 throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
-            if (count < 0 || startIndex - count + 1 < 0)
+            if (count < 0 || startIndex - count < -1)
                 throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
+            if (!Enum.IsDefined(typeof(StringComparison), comparisonType))
+                throw new ArgumentOutOfRangeException(ARGNAME_COMPARISONTYPE, EXCMSG_INVALID_ENUMERATION_VALUE);
 
             int anyOfLength = anyOf.Length;
             string[] sa = new string[anyOfLength];

@@ -4,7 +4,7 @@ using System.Text;
 using NUnit.Framework;
 using NLib;
 
-namespace NUnitTests.Common
+namespace NUnitTests.NLib
 {
     [TestFixture]
     public class ByteExtensionsTests
