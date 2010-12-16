@@ -1057,21 +1057,6 @@ namespace NLib
 
         // LastIndexOfAny:
 
-        public static int LastIndexOfAny(this string source, char[] anyOf)
-        {
-            throw new NotImplementedException();
-        }
-
-        public static int LastIndexOfAny(this string source, char[] anyOf, int startIndex)
-        {
-            throw new NotImplementedException();
-        }
-
-        public static int LastIndexOfAny(this string source, char[] anyOf, int startIndex, int count)
-        {
-            throw new NotImplementedException();
-        }
-
         /// <summary>
         ///     Reports the index of the last occurrence in this instance of any character
         ///     in a specified array of Unicode characters. A parameters specifies the type

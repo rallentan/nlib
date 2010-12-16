@@ -107,15 +107,6 @@
     <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\IndexOfNotAny_String_CharArray_StringComparison.cs">
       <Link>StringExtensionsTests\IndexOfNotAny_String_CharArray_StringComparison.cs</Link>
     </Compile>
-    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\LastIndexOfAny_String_CharArray.cs">
-      <Link>StringExtensionsTests\LastIndexOfAny_String_CharArray.cs</Link>
-    </Compile>
-    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\LastIndexOfAny_String_CharArray_Int32.cs">
-      <Link>StringExtensionsTests\LastIndexOfAny_String_CharArray_Int32.cs</Link>
-    </Compile>
-    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\LastIndexOfAny_String_CharArray_Int32_Int32.cs">
-      <Link>StringExtensionsTests\LastIndexOfAny_String_CharArray_Int32_Int32.cs</Link>
-    </Compile>
     <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\LastIndexOfAny_String_CharArray_Int32_Int32_StringComparison.cs">
       <Link>StringExtensionsTests\LastIndexOfAny_String_CharArray_Int32_Int32_StringComparison.cs</Link>
     </Compile>
