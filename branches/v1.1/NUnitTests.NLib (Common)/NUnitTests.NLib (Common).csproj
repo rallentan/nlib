@@ -64,9 +64,6 @@
     <Compile Include="StringExtensionsTests\IndexOfNotAny_String_CharArray_Int32_Int32.cs" />
     <Compile Include="StringExtensionsTests\IndexOfNotAny_String_CharArray_StringComparison.cs" />
     <Compile Include="StringExtensionsTests\IndexOfNotAny_String_CharArray_Int32_StringComparison.cs" />
-    <Compile Include="StringExtensionsTests\IndexOfAny_String_CharArray.cs" />
-    <Compile Include="StringExtensionsTests\IndexOfAny_String_CharArray_Int32.cs" />
-    <Compile Include="StringExtensionsTests\IndexOfAny_String_CharArray_Int32_Int32.cs" />
     <Compile Include="StringExtensionsTests\IndexOfAny_String_CharArray_StringComparison.cs" />
     <Compile Include="StringExtensionsTests\IndexOfAny_String_CharArray_Int32_StringComparison.cs" />
     <Compile Include="StringExtensionsTests\LastIndexOfNotAny_String_CharArray_Int32_Int32_StringComparison.cs" />
