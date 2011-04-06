@@ -63,9 +63,6 @@
     <Compile Include="..\NUnitTests.NLib %28Common%29\RandomExtensionsTests.cs">
       <Link>RandomExtensionsTests.cs</Link>
     </Compile>
-    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests.cs">
-      <Link>StringExtensionsTests.cs</Link>
-    </Compile>
     <Compile Include="..\NUnitTests.NLib %28Common%29\TestRunner.cs">
       <Link>TestRunner.cs</Link>
     </Compile>
