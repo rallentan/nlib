@@ -9,7 +9,7 @@ namespace NLib.Windows.Forms
     /// Specifies the sides of a control to snap to or with.
     /// </summary>
     [Flags]
-    public enum SnapToSide
+    public enum SnapToSides
     {
         Left = 0x1,
         Top = 0x2,

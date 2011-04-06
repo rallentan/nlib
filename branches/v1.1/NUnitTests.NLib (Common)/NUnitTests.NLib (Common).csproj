@@ -48,6 +48,7 @@
     <Compile Include="GenericDelegatesTests.cs" />
     <Compile Include="RandomExtensionsTests.cs" />
     <Compile Include="StringExtensionsTests.cs" />
+    <Compile Include="StringExtensionsTests\BaseClasses\IndexOfAny_StringArray_Bases.cs" />
     <Compile Include="StringExtensionsTests\BaseClasses\IndexOfAny_CharArray_Bases.cs" />
     <Compile Include="StringExtensionsTests\LastIndexOfNotAny_String_CharArray_Int32.cs" />
     <Compile Include="StringExtensionsTests\LastIndexOfNotAny_String_CharArray_Int32_Int32.cs" />

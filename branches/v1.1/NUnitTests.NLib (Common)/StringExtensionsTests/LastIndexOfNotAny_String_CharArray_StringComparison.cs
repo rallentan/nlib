@@ -9,7 +9,7 @@ using NUnit.Framework;
 using NLib;
 using System.Threading;
 using System.Globalization;
-using NUnitTests.NLib.StringExtensionsTests.BaseClasses;
+using NUnitTests.NLib.StringExtensionsTests.CharArrayBases;
 
 namespace NUnitTests.NLib.StringExtensionsTests
 {
@@ -44,12 +44,13 @@ namespace NUnitTests.NLib.StringExtensionsTests
 
             //--- Public Static Readonly Fields ---
 
-            public static readonly IndexOfXXXXModel model0 =
-                new IndexOfXXXXModel(
-                    TestedMethodAdapter,
+            public static readonly StringMethodGroupModel model0 =
+                new StringMethodGroupModel(
+                    new TestedMethodDisambiguator(TestedMethodAdapter),
                     OVERLOAD_HAS_STARTINDEX_PARAM,
                     OVERLOAD_HAS_COUNT_PARAM,
-                    OVERLOAD_HAS_COMPARISONTYPE_PARAM);
+                    OVERLOAD_HAS_COMPARISONTYPE_PARAM,
+                    IS_LASTINDEXOF);
 
 
             //--- Constructors ---
@@ -96,13 +97,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
 
                 //--- Public Static Readonly Fields ---
 
-                public static readonly IndexOfNotAnyCharModel MODEL_1 =
-                    new IndexOfNotAnyCharModel(
-                        new IndexOfAnyCharModel(
-                            new IndexOfXXXXModel2(
-                                Root0.model0,
-                                COMPARISON_TYPE),
-                            Root0.IS_LASTINDEXOF));
+                public static readonly XIndexOfNotAny_Model MODEL_1 = new XIndexOfNotAny_Model(Root0.model0, COMPARISON_TYPE);
 
 
                 //--- Constructors ---
@@ -230,13 +225,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
 
                 //--- Public Static Readonly Fields ---
 
-                public static readonly IndexOfNotAnyCharModel MODEL_1 =
-                    new IndexOfNotAnyCharModel(
-                        new IndexOfAnyCharModel(
-                            new IndexOfXXXXModel2(
-                                Root0.model0,
-                                COMPARISON_TYPE),
-                            Root0.IS_LASTINDEXOF));
+                public static readonly XIndexOfNotAny_Model MODEL_1 = new XIndexOfNotAny_Model(Root0.model0, COMPARISON_TYPE);
 
 
                 //--- Constructors ---
@@ -363,13 +352,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
 
                 //--- Public Static Readonly Fields ---
 
-                public static readonly IndexOfNotAnyCharModel MODEL_1 =
-                    new IndexOfNotAnyCharModel(
-                        new IndexOfAnyCharModel(
-                            new IndexOfXXXXModel2(
-                                Root0.model0,
-                                COMPARISON_TYPE),
-                            Root0.IS_LASTINDEXOF));
+                public static readonly XIndexOfNotAny_Model MODEL_1 = new XIndexOfNotAny_Model(Root0.model0, COMPARISON_TYPE);
 
 
                 //--- Constructors ---
@@ -496,13 +479,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
 
                 //--- Public Static Readonly Fields ---
 
-                public static readonly IndexOfNotAnyCharModel MODEL_1 =
-                    new IndexOfNotAnyCharModel(
-                        new IndexOfAnyCharModel(
-                            new IndexOfXXXXModel2(
-                                Root0.model0,
-                                COMPARISON_TYPE),
-                            Root0.IS_LASTINDEXOF));
+                public static readonly XIndexOfNotAny_Model MODEL_1 = new XIndexOfNotAny_Model(Root0.model0, COMPARISON_TYPE);
 
 
                 //--- Constructors ---
@@ -629,13 +606,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
 
                 //--- Public Static Readonly Fields ---
 
-                public static readonly IndexOfNotAnyCharModel MODEL_1 =
-                    new IndexOfNotAnyCharModel(
-                        new IndexOfAnyCharModel(
-                            new IndexOfXXXXModel2(
-                                Root0.model0,
-                                COMPARISON_TYPE),
-                            Root0.IS_LASTINDEXOF));
+                public static readonly XIndexOfNotAny_Model MODEL_1 = new XIndexOfNotAny_Model(Root0.model0, COMPARISON_TYPE);
 
 
                 //--- Constructors ---
@@ -762,13 +733,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
 
                 //--- Public Static Readonly Fields ---
 
-                public static readonly IndexOfNotAnyCharModel MODEL_1 =
-                    new IndexOfNotAnyCharModel(
-                        new IndexOfAnyCharModel(
-                            new IndexOfXXXXModel2(
-                                Root0.model0,
-                                COMPARISON_TYPE),
-                            Root0.IS_LASTINDEXOF));
+                public static readonly XIndexOfNotAny_Model MODEL_1 = new XIndexOfNotAny_Model(Root0.model0, COMPARISON_TYPE);
 
 
                 //--- Constructors ---

@@ -133,37 +133,37 @@ namespace NUnitTests.NLib.Windows.Forms
             // Add Control1 to Form1 for Explicitly Padded Form Testing
             _testForm1.Controls.Add(_testControl1);
 
-            Assert.Throws<ArgumentNullException>(() => { ControlExtensions.SnapToChild(null, SnapToSide.Right, _testControl1); });
-            Assert.Throws<ArgumentNullException>(() => { _testForm1.SnapToChild(SnapToSide.Right, null); });
+            Assert.Throws<ArgumentNullException>(() => { ControlExtensions.SnapToChild(null, SnapToSides.Right, _testControl1); });
+            Assert.Throws<ArgumentNullException>(() => { _testForm1.SnapToChild(SnapToSides.Right, null); });
             Assert.Throws<ArgumentOutOfRangeException>(() => { _testForm1.SnapToChild(0, _testControl1); });
-            Assert.Throws<ArgumentOutOfRangeException>(() => { _testForm1.SnapToChild((SnapToSide)(-1), _testControl1); });
-            Assert.Throws<ArgumentOutOfRangeException>(() => { _testForm1.SnapToChild(SnapToSide.Top | SnapToSide.Right, _testControl1); });
+            Assert.Throws<ArgumentOutOfRangeException>(() => { _testForm1.SnapToChild((SnapToSides)(-1), _testControl1); });
+            Assert.Throws<ArgumentOutOfRangeException>(() => { _testForm1.SnapToChild(SnapToSides.Top | SnapToSides.Right, _testControl1); });
 
             // Form1 Left
             SetUpForm1();
             SetUpControl1();
-            Assert.Throws<ArgumentOutOfRangeException>(() => { _testForm1.SnapToChild(SnapToSide.Left, _testControl1); });
+            Assert.Throws<ArgumentOutOfRangeException>(() => { _testForm1.SnapToChild(SnapToSides.Left, _testControl1); });
             Assert.AreEqual(FORM_1_W, _testForm1.Size.Width);
             Assert.AreEqual(FORM_1_H, _testForm1.Size.Height);
 
             // Form1 Top
             SetUpForm1();
             SetUpControl1();
-            Assert.Throws<ArgumentOutOfRangeException>(() => { _testForm1.SnapToChild(SnapToSide.Top, _testControl1); });
+            Assert.Throws<ArgumentOutOfRangeException>(() => { _testForm1.SnapToChild(SnapToSides.Top, _testControl1); });
             Assert.AreEqual(FORM_1_W, _testForm1.Size.Width);
             Assert.AreEqual(FORM_1_H, _testForm1.Size.Height);
 
             // Form1 Right
             SetUpForm1();
             SetUpControl1();
-            _testForm1.SnapToChild(SnapToSide.Right, _testControl1);
+            _testForm1.SnapToChild(SnapToSides.Right, _testControl1);
             Assert.AreEqual(CTRL_1_R + CTRL_1_MR + FORM_1_PR, _testForm1.Size.Width);
             Assert.AreEqual(FORM_1_H, _testForm1.Size.Height);
 
             // Form1 Bottom
             SetUpForm1();
             SetUpControl1();
-            _testForm1.SnapToChild(SnapToSide.Bottom, _testControl1);
+            _testForm1.SnapToChild(SnapToSides.Bottom, _testControl1);
             Assert.AreEqual(FORM_1_W, _testForm1.Size.Width);
             Assert.AreEqual(CTRL_1_B + CTRL_1_MB + FORM_1_PB, _testForm1.Size.Height);
 
@@ -174,27 +174,27 @@ namespace NUnitTests.NLib.Windows.Forms
             // Form2 Right
             SetUpForm2();
             SetUpControl1();
-            _testForm2.SnapToChild(SnapToSide.Right, _testControl1);
+            _testForm2.SnapToChild(SnapToSides.Right, _testControl1);
             Assert.AreEqual(CTRL_1_R + CTRL_1_MR + 9, _testForm2.Size.Width);
             Assert.AreEqual(FORM_2_H, _testForm2.Size.Height);
 
             // Form2 Bottom
             SetUpForm2();
             SetUpControl1();
-            _testForm2.SnapToChild(SnapToSide.Bottom, _testControl1);
+            _testForm2.SnapToChild(SnapToSides.Bottom, _testControl1);
             Assert.AreEqual(FORM_2_W, _testForm2.Size.Width);
             Assert.AreEqual(CTRL_1_B + CTRL_1_MB + 9, _testForm2.Size.Height);
 
 
             // Control1 Right
             SetUpControls();
-            _testControl1.SnapToChild(SnapToSide.Right, _testControl2);
+            _testControl1.SnapToChild(SnapToSides.Right, _testControl2);
             Assert.AreEqual(CTRL_2_R + CTRL_2_MR, _testControl1.Bounds.Width);
             Assert.AreEqual(CTRL_1_H, _testControl1.Size.Height);
 
             // Control1 Bottom
             SetUpControls();
-            _testControl1.SnapToChild(SnapToSide.Bottom, _testControl2);
+            _testControl1.SnapToChild(SnapToSides.Bottom, _testControl2);
             Assert.AreEqual(CTRL_1_W, _testControl1.Size.Width);
             Assert.AreEqual(CTRL_2_B + CTRL_2_MB, _testControl1.Bounds.Height);
         }
@@ -209,7 +209,7 @@ namespace NUnitTests.NLib.Windows.Forms
 
             // Form1 Left
             SetUpControl1();
-            _testControl1.SnapToParent(SnapToSide.Left);
+            _testControl1.SnapToParent(SnapToSides.Left);
             Assert.AreEqual(FORM_1_PL + CTRL_1_ML, _testControl1.Location.X);
             Assert.AreEqual(CTRL_1_Y, _testControl1.Location.Y);
             Assert.AreEqual(CTRL_1_W, _testControl1.Size.Width);
@@ -217,7 +217,7 @@ namespace NUnitTests.NLib.Windows.Forms
 
             // Form1 Top
             SetUpControl1();
-            _testControl1.SnapToParent(SnapToSide.Top);
+            _testControl1.SnapToParent(SnapToSides.Top);
             Assert.AreEqual(CTRL_1_X, _testControl1.Location.X);
             Assert.AreEqual(FORM_1_PT + CTRL_1_MT, _testControl1.Location.Y);
             Assert.AreEqual(CTRL_1_W, _testControl1.Size.Width);
@@ -225,7 +225,7 @@ namespace NUnitTests.NLib.Windows.Forms
 
             // Form1 Right
             SetUpControl1();
-            _testControl1.SnapToParent(SnapToSide.Right);
+            _testControl1.SnapToParent(SnapToSides.Right);
             Assert.AreEqual(FORM_1_W - CTRL_1_W - (FORM_1_PR + CTRL_1_MR), _testControl1.Location.X);
             Assert.AreEqual(CTRL_1_Y, _testControl1.Location.Y);
             Assert.AreEqual(CTRL_1_W, _testControl1.Size.Width);
@@ -233,7 +233,7 @@ namespace NUnitTests.NLib.Windows.Forms
 
             // Form1 Bottom
             SetUpControl1();
-            _testControl1.SnapToParent(SnapToSide.Bottom);
+            _testControl1.SnapToParent(SnapToSides.Bottom);
             Assert.AreEqual(CTRL_1_X, _testControl1.Location.X);
             Assert.AreEqual(FORM_1_H - CTRL_1_H - (FORM_1_PB + CTRL_1_MB), _testControl1.Location.Y);
             Assert.AreEqual(CTRL_1_W, _testControl1.Size.Width);
@@ -245,7 +245,7 @@ namespace NUnitTests.NLib.Windows.Forms
             
             // Form2 Left
             SetUpControl1();
-            _testControl1.SnapToParent(SnapToSide.Left);
+            _testControl1.SnapToParent(SnapToSides.Left);
             Assert.AreEqual(9 + CTRL_1_ML, _testControl1.Location.X);
             Assert.AreEqual(CTRL_1_Y, _testControl1.Location.Y);
             Assert.AreEqual(CTRL_1_W, _testControl1.Size.Width);
@@ -253,7 +253,7 @@ namespace NUnitTests.NLib.Windows.Forms
 
             // Form2 Top
             SetUpControl1();
-            _testControl1.SnapToParent(SnapToSide.Top);
+            _testControl1.SnapToParent(SnapToSides.Top);
             Assert.AreEqual(CTRL_1_X, _testControl1.Location.X);
             Assert.AreEqual(9 + CTRL_1_MT, _testControl1.Location.Y);
             Assert.AreEqual(CTRL_1_W, _testControl1.Size.Width);
@@ -261,7 +261,7 @@ namespace NUnitTests.NLib.Windows.Forms
 
             // Form2 Right
             SetUpControl1();
-            _testControl1.SnapToParent(SnapToSide.Right);
+            _testControl1.SnapToParent(SnapToSides.Right);
             Assert.AreEqual(FORM_2_W - CTRL_1_W - (9 + CTRL_1_MR), _testControl1.Location.X);
             Assert.AreEqual(CTRL_1_Y, _testControl1.Location.Y);
             Assert.AreEqual(CTRL_1_W, _testControl1.Size.Width);
@@ -269,7 +269,7 @@ namespace NUnitTests.NLib.Windows.Forms
 
             // Form2 Bottom
             SetUpControl1();
-            _testControl1.SnapToParent(SnapToSide.Bottom);
+            _testControl1.SnapToParent(SnapToSides.Bottom);
             Assert.AreEqual(CTRL_1_X, _testControl1.Location.X);
             Assert.AreEqual(FORM_2_H - CTRL_1_H - (9 + CTRL_1_MB), _testControl1.Location.Y);
             Assert.AreEqual(CTRL_1_W, _testControl1.Size.Width);
@@ -277,7 +277,7 @@ namespace NUnitTests.NLib.Windows.Forms
 
             // Control1 Left
             SetUpControls();
-            _testControl2.SnapToParent(SnapToSide.Left);
+            _testControl2.SnapToParent(SnapToSides.Left);
             Assert.AreEqual(CTRL_1_X + CTRL_2_ML, _testControl2.Location.X);
             Assert.AreEqual(CTRL_2_Y, _testControl2.Location.Y);
             Assert.AreEqual(CTRL_2_W, _testControl2.Size.Width);
@@ -285,7 +285,7 @@ namespace NUnitTests.NLib.Windows.Forms
 
             // Control1 Top
             SetUpControls();
-            _testControl2.SnapToParent(SnapToSide.Top);
+            _testControl2.SnapToParent(SnapToSides.Top);
             Assert.AreEqual(CTRL_2_X, _testControl2.Location.X);
             Assert.AreEqual(CTRL_1_Y + CTRL_2_MT, _testControl2.Location.Y);
             Assert.AreEqual(CTRL_2_W, _testControl2.Size.Width);
@@ -293,7 +293,7 @@ namespace NUnitTests.NLib.Windows.Forms
 
             // Control1 Right
             SetUpControls();
-            _testControl2.SnapToParent(SnapToSide.Right);
+            _testControl2.SnapToParent(SnapToSides.Right);
             Assert.AreEqual(CTRL_1_R - CTRL_2_W - CTRL_2_MR, _testControl2.Location.X);
             Assert.AreEqual(CTRL_2_Y, _testControl2.Location.Y);
             Assert.AreEqual(CTRL_2_W, _testControl2.Size.Width);
@@ -301,7 +301,7 @@ namespace NUnitTests.NLib.Windows.Forms
 
             // Control1 Bottom
             SetUpControls();
-            _testControl2.SnapToParent(SnapToSide.Bottom);
+            _testControl2.SnapToParent(SnapToSides.Bottom);
             Assert.AreEqual(CTRL_2_X, _testControl2.Location.X);
             Assert.AreEqual(CTRL_1_B - CTRL_2_H - CTRL_2_MB, _testControl2.Location.Y);
             Assert.AreEqual(CTRL_2_W, _testControl2.Size.Width);
@@ -313,7 +313,7 @@ namespace NUnitTests.NLib.Windows.Forms
         {
             // Top to Top
             SetUpControls();
-            _testControl2.SnapToSibling(SnapToSide.Top, SnapToSide.Top, _testControl1);
+            _testControl2.SnapToSibling(SnapToSides.Top, SnapToSides.Top, _testControl1);
             Assert.AreEqual(CTRL_1_X, _testControl1.Location.X);
             Assert.AreEqual(CTRL_1_Y, _testControl1.Location.Y);
             Assert.AreEqual(CTRL_1_W, _testControl1.Size.Width);
@@ -324,7 +324,7 @@ namespace NUnitTests.NLib.Windows.Forms
             Assert.AreEqual(CTRL_2_H, _testControl2.Size.Height);
 
             SetUpControls();
-            _testControl1.SnapToSibling(SnapToSide.Top, SnapToSide.Top, _testControl2);
+            _testControl1.SnapToSibling(SnapToSides.Top, SnapToSides.Top, _testControl2);
             Assert.AreEqual(CTRL_1_X, _testControl1.Location.X);
             Assert.AreEqual(CTRL_2_Y, _testControl1.Location.Y);
             Assert.AreEqual(CTRL_1_W, _testControl1.Size.Width);
@@ -336,7 +336,7 @@ namespace NUnitTests.NLib.Windows.Forms
 
             // Bottom to Bottom
             SetUpControls();
-            _testControl2.SnapToSibling(SnapToSide.Bottom, SnapToSide.Bottom, _testControl1);
+            _testControl2.SnapToSibling(SnapToSides.Bottom, SnapToSides.Bottom, _testControl1);
             Assert.AreEqual(CTRL_1_X, _testControl1.Location.X);
             Assert.AreEqual(CTRL_1_Y, _testControl1.Location.Y);
             Assert.AreEqual(CTRL_1_W, _testControl1.Size.Width);
@@ -347,7 +347,7 @@ namespace NUnitTests.NLib.Windows.Forms
             Assert.AreEqual(CTRL_2_H, _testControl2.Size.Height);
 
             SetUpControls();
-            _testControl1.SnapToSibling(SnapToSide.Bottom, SnapToSide.Bottom, _testControl2);
+            _testControl1.SnapToSibling(SnapToSides.Bottom, SnapToSides.Bottom, _testControl2);
             Assert.AreEqual(CTRL_1_X, _testControl1.Location.X);
             Assert.AreEqual(CTRL_2_B - CTRL_1_H, _testControl1.Location.Y);
             Assert.AreEqual(CTRL_1_W, _testControl1.Size.Width);
@@ -359,7 +359,7 @@ namespace NUnitTests.NLib.Windows.Forms
 
             // Top to Bottom
             SetUpControls();
-            _testControl2.SnapToSibling(SnapToSide.Top, SnapToSide.Bottom, _testControl1);
+            _testControl2.SnapToSibling(SnapToSides.Top, SnapToSides.Bottom, _testControl1);
             Assert.AreEqual(CTRL_1_X, _testControl1.Location.X);
             Assert.AreEqual(CTRL_1_Y, _testControl1.Location.Y);
             Assert.AreEqual(CTRL_1_W, _testControl1.Size.Width);
@@ -370,7 +370,7 @@ namespace NUnitTests.NLib.Windows.Forms
             Assert.AreEqual(CTRL_2_H, _testControl2.Size.Height);
 
             SetUpControls();
-            _testControl1.SnapToSibling(SnapToSide.Top, SnapToSide.Bottom, _testControl2);
+            _testControl1.SnapToSibling(SnapToSides.Top, SnapToSides.Bottom, _testControl2);
             Assert.AreEqual(CTRL_1_X, _testControl1.Location.X);
             Assert.AreEqual(CTRL_2_B + (CTRL_2_MB + CTRL_1_MT), _testControl1.Location.Y);
             Assert.AreEqual(CTRL_1_W, _testControl1.Size.Width);
@@ -382,7 +382,7 @@ namespace NUnitTests.NLib.Windows.Forms
 
             // Bottom to Top
             SetUpControls();
-            _testControl2.SnapToSibling(SnapToSide.Bottom, SnapToSide.Top, _testControl1);
+            _testControl2.SnapToSibling(SnapToSides.Bottom, SnapToSides.Top, _testControl1);
             Assert.AreEqual(CTRL_1_X, _testControl1.Location.X);
             Assert.AreEqual(CTRL_1_Y, _testControl1.Location.Y);
             Assert.AreEqual(CTRL_1_W, _testControl1.Size.Width);
@@ -393,7 +393,7 @@ namespace NUnitTests.NLib.Windows.Forms
             Assert.AreEqual(CTRL_2_H, _testControl2.Size.Height);
 
             SetUpControls();
-            _testControl1.SnapToSibling(SnapToSide.Bottom, SnapToSide.Top, _testControl2);
+            _testControl1.SnapToSibling(SnapToSides.Bottom, SnapToSides.Top, _testControl2);
             Assert.AreEqual(CTRL_1_X, _testControl1.Location.X);
             Assert.AreEqual(CTRL_2_Y - CTRL_1_H - (CTRL_1_MB + CTRL_2_MT), _testControl1.Location.Y);
             Assert.AreEqual(CTRL_1_W, _testControl1.Size.Width);
@@ -405,7 +405,7 @@ namespace NUnitTests.NLib.Windows.Forms
 
             // Left to Left
             SetUpControls();
-            _testControl2.SnapToSibling(SnapToSide.Left, SnapToSide.Left, _testControl1);
+            _testControl2.SnapToSibling(SnapToSides.Left, SnapToSides.Left, _testControl1);
             Assert.AreEqual(CTRL_1_X, _testControl1.Location.X);
             Assert.AreEqual(CTRL_1_Y, _testControl1.Location.Y);
             Assert.AreEqual(CTRL_1_W, _testControl1.Size.Width);
@@ -416,7 +416,7 @@ namespace NUnitTests.NLib.Windows.Forms
             Assert.AreEqual(CTRL_2_H, _testControl2.Size.Height);
 
             SetUpControls();
-            _testControl1.SnapToSibling(SnapToSide.Left, SnapToSide.Left, _testControl2);
+            _testControl1.SnapToSibling(SnapToSides.Left, SnapToSides.Left, _testControl2);
             Assert.AreEqual(CTRL_2_X, _testControl1.Location.X);
             Assert.AreEqual(CTRL_1_Y, _testControl1.Location.Y);
             Assert.AreEqual(CTRL_1_W, _testControl1.Size.Width);
@@ -428,7 +428,7 @@ namespace NUnitTests.NLib.Windows.Forms
 
             // Right to Right
             SetUpControls();
-            _testControl2.SnapToSibling(SnapToSide.Right, SnapToSide.Right, _testControl1);
+            _testControl2.SnapToSibling(SnapToSides.Right, SnapToSides.Right, _testControl1);
             Assert.AreEqual(CTRL_1_X, _testControl1.Location.X);
             Assert.AreEqual(CTRL_1_Y, _testControl1.Location.Y);
             Assert.AreEqual(CTRL_1_W, _testControl1.Size.Width);
@@ -439,7 +439,7 @@ namespace NUnitTests.NLib.Windows.Forms
             Assert.AreEqual(CTRL_2_H, _testControl2.Size.Height);
 
             SetUpControls();
-            _testControl1.SnapToSibling(SnapToSide.Right, SnapToSide.Right, _testControl2);
+            _testControl1.SnapToSibling(SnapToSides.Right, SnapToSides.Right, _testControl2);
             Assert.AreEqual(CTRL_2_R - CTRL_1_W, _testControl1.Location.X);
             Assert.AreEqual(CTRL_1_Y, _testControl1.Location.Y);
             Assert.AreEqual(CTRL_1_W, _testControl1.Size.Width);
@@ -451,7 +451,7 @@ namespace NUnitTests.NLib.Windows.Forms
 
             // Left to Right
             SetUpControls();
-            _testControl2.SnapToSibling(SnapToSide.Left, SnapToSide.Right, _testControl1);
+            _testControl2.SnapToSibling(SnapToSides.Left, SnapToSides.Right, _testControl1);
             Assert.AreEqual(CTRL_1_X, _testControl1.Location.X);
             Assert.AreEqual(CTRL_1_Y, _testControl1.Location.Y);
             Assert.AreEqual(CTRL_1_W, _testControl1.Size.Width);
@@ -462,7 +462,7 @@ namespace NUnitTests.NLib.Windows.Forms
             Assert.AreEqual(CTRL_2_H, _testControl2.Size.Height);
 
             SetUpControls();
-            _testControl1.SnapToSibling(SnapToSide.Left, SnapToSide.Right, _testControl2);
+            _testControl1.SnapToSibling(SnapToSides.Left, SnapToSides.Right, _testControl2);
             Assert.AreEqual(CTRL_2_R + (CTRL_1_ML + CTRL_2_MR), _testControl1.Location.X);
             Assert.AreEqual(CTRL_1_Y, _testControl1.Location.Y);
             Assert.AreEqual(CTRL_1_W, _testControl1.Size.Width);
@@ -474,7 +474,7 @@ namespace NUnitTests.NLib.Windows.Forms
 
             // Right to Left
             SetUpControls();
-            _testControl2.SnapToSibling(SnapToSide.Right, SnapToSide.Left, _testControl1);
+            _testControl2.SnapToSibling(SnapToSides.Right, SnapToSides.Left, _testControl1);
             Assert.AreEqual(CTRL_1_X, _testControl1.Location.X);
             Assert.AreEqual(CTRL_1_Y, _testControl1.Location.Y);
             Assert.AreEqual(CTRL_1_W, _testControl1.Size.Width);
@@ -485,7 +485,7 @@ namespace NUnitTests.NLib.Windows.Forms
             Assert.AreEqual(CTRL_2_H, _testControl2.Size.Height);
 
             SetUpControls();
-            _testControl1.SnapToSibling(SnapToSide.Right, SnapToSide.Left, _testControl2);
+            _testControl1.SnapToSibling(SnapToSides.Right, SnapToSides.Left, _testControl2);
             Assert.AreEqual(CTRL_2_X - CTRL_1_W - (CTRL_1_MR + CTRL_2_ML), _testControl1.Location.X);
             Assert.AreEqual(CTRL_1_Y, _testControl1.Location.Y);
             Assert.AreEqual(CTRL_1_W, _testControl1.Size.Width);

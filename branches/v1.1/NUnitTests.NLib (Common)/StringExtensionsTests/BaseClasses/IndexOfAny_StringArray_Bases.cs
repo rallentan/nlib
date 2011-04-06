@@ -5,161 +5,112 @@ using NUnit.Framework;
 using System.Threading;
 using System.Globalization;
 
-namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
+namespace NUnitTests.NLib.StringExtensionsTests.StringArrayBases
 {
-    public class StringMethodGroupModel
+    public class XIndexOfXAny_Model
     {
         //--- Public Readonly Fields ---
+
         public readonly string CULTURE_SENSITIVE_STRING_1 = "oe";
         public readonly string CULTURE_SENSITIVE_STRING_2 = "\x131";
         public readonly string LENGTH_4_STRING = "oxox";
 
-        //--- Private Readonly Fields ---
-        readonly TestedMethodDisambiguator TESTED_METHOD_DISAMBIGUATOR;
 
         //--- Public Fields ---
+
         public bool OverloadHasStartIndexParam;
         public bool OverloadHasCountParam;
         public bool OverloadHasComparisonTypeParam;
         public bool MethodUsesStringArray;
-        public bool IsLastIndexOf;
+
+
+        //--- Private Fields ---
+
+        public StringComparison _comparisonType = (StringComparison)(-1);
         
         //--- Constructors ---
 
-        public StringMethodGroupModel(
-                TestedMethodDisambiguator testedMethod,
-                bool overloadHasStartIndexParam,
-                bool overloadHasCountParam,
-                bool overloadHasComparisonTypeParam,
-                bool isLastIndexOf)
-            : this(overloadHasStartIndexParam, overloadHasCountParam, overloadHasComparisonTypeParam, isLastIndexOf)
-        {
-            TESTED_METHOD_DISAMBIGUATOR = testedMethod;
-        }
-
-        public StringMethodGroupModel(StringMethodGroupModel model)
-            : this(
-                model.OverloadHasComparisonTypeParam,
-                model.OverloadHasCountParam,
-                model.OverloadHasComparisonTypeParam,
-                model.IsLastIndexOf)
-        {
-            TESTED_METHOD_DISAMBIGUATOR = model.TESTED_METHOD_DISAMBIGUATOR;
-        }
-
-        StringMethodGroupModel(
+        public XIndexOfXAny_Model(
+            TestedMethod testedMethod,
             bool overloadHasStartIndexParam,
             bool overloadHasCountParam,
-            bool overloadHasComparisonTypeParam,
-            bool isLastIndexOf)
+            bool overloadHasComparisonTypeParam)
         {
+            TestedMethod = testedMethod;
             OverloadHasStartIndexParam = overloadHasStartIndexParam;
             OverloadHasCountParam = overloadHasCountParam;
             OverloadHasComparisonTypeParam = overloadHasComparisonTypeParam;
-            IsLastIndexOf = isLastIndexOf;
 
-            EMPTY_VALUE_ARRAY = new char[0];
-            LENGTH_4_VALUE_ARRAY = new char[4];
-            CULTURE_SENSITIVE_VALUE_ARRAY_1 = new char[] { '\x153' };
-            CULTURE_SENSITIVE_VALUE_ARRAY_2 = new char[] { 'I' };
+            EMPTY_VALUE_ARRAY = new string[0];
+            LENGTH_4_VALUE_ARRAY = new string[4];
+            CULTURE_SENSITIVE_VALUE_ARRAY_1 = new string[] { "\x153" };
+            CULTURE_SENSITIVE_VALUE_ARRAY_2 = new string[] { "I" };
         }
 
-        //--- Public Methods ---
-
-        public int TestedMethod(string source, char[] anyOf, int startIndex, int length, StringComparison comparisonType)
-        {
-            return TESTED_METHOD_DISAMBIGUATOR.TestedMethod(source, anyOf, startIndex, length, comparisonType);
-        }
-
-        public int TestedMethod(string source, string[] anyOf, int startIndex, int length, StringComparison comparisonType)
-        {
-            return TESTED_METHOD_DISAMBIGUATOR.TestedMethod(source, anyOf, startIndex, length, comparisonType);
-        }
 
         //--- Public Properties ---
 
-        public char[] EMPTY_VALUE_ARRAY { get; private set; }
+        public TestedMethod TestedMethod { get; private set; }
 
-        public char[] LENGTH_4_VALUE_ARRAY { get; private set; }
+        public StringComparison ComparisonType
+        {
+            get
+            {
+                if (_comparisonType == (StringComparison)(-1))
+                {
+                    throw new Exception("Property has not been initialized.");
+                }
+                return _comparisonType;
+            }
+            set
+            {
+                _comparisonType = value;
+            }
+        }
 
-        public char[] CULTURE_SENSITIVE_VALUE_ARRAY_1 { get; private set; }
+        public string[] EMPTY_VALUE_ARRAY { get; private set; }
 
-        public char[] CULTURE_SENSITIVE_VALUE_ARRAY_2 { get; private set; }
+        public string[] LENGTH_4_VALUE_ARRAY { get; private set; }
+
+        public string[] CULTURE_SENSITIVE_VALUE_ARRAY_1 { get; private set; }
+
+        public string[] CULTURE_SENSITIVE_VALUE_ARRAY_2 { get; private set; }
     }
 
-    public class XIndexOfXAny_Model
+    public class XIndexOfXAny_Model2 : XIndexOfXAny_Model
     {
-        //--- Public Readonly Fields ---
-        public readonly StringMethodGroupModel GROUP_MODEL;
-
         //--- Constructors ---
 
-        public XIndexOfXAny_Model(
-                StringMethodGroupModel groupModel,
-                StringComparison comparisonType)
+        public XIndexOfXAny_Model2(XIndexOfXAny_Model baseModel, StringComparison comparisonType)
+            : base(baseModel.TestedMethod, baseModel.OverloadHasStartIndexParam, baseModel.OverloadHasCountParam, baseModel.OverloadHasComparisonTypeParam)
         {
-            GROUP_MODEL = groupModel;
             ComparisonType = comparisonType;
         }
 
-        //--- Public Methods ---
-
-        public int TestedMethod(string source, char[] anyOf, int startIndex, int length, StringComparison comparisonType)
-        {
-            return GROUP_MODEL.TestedMethod(source, anyOf, startIndex, length, comparisonType);
-        }
-
-        public int TestedMethod(string source, string[] anyOf, int startIndex, int length, StringComparison comparisonType)
-        {
-            return GROUP_MODEL.TestedMethod(source, anyOf, startIndex, length, comparisonType);
-        }
 
         //--- Public Properties ---
 
         public StringComparison ComparisonType { get; private set; }
-
-        public bool OverloadHasStartIndexParam { get { return GROUP_MODEL.OverloadHasStartIndexParam; } }
-
-        public bool OverloadHasCountParam { get { return GROUP_MODEL.OverloadHasCountParam; } }
-
-        public bool OverloadHasComparisonTypeParam { get { return GROUP_MODEL.OverloadHasComparisonTypeParam; } }
-
-        public bool IsLastIndexOf { get { return GROUP_MODEL.IsLastIndexOf; } }
-
-        public char[] EMPTY_VALUE_ARRAY { get { return GROUP_MODEL.EMPTY_VALUE_ARRAY; } }
-
-        public char[] LENGTH_4_VALUE_ARRAY { get { return GROUP_MODEL.LENGTH_4_VALUE_ARRAY; } }
-
-        public char[] CULTURE_SENSITIVE_VALUE_ARRAY_1 { get { return GROUP_MODEL.CULTURE_SENSITIVE_VALUE_ARRAY_1; } }
-
-        public char[] CULTURE_SENSITIVE_VALUE_ARRAY_2 { get { return GROUP_MODEL.CULTURE_SENSITIVE_VALUE_ARRAY_2; } }
-
-        public string CULTURE_SENSITIVE_STRING_1 { get { return GROUP_MODEL.CULTURE_SENSITIVE_STRING_1; } }
-
-        public string CULTURE_SENSITIVE_STRING_2 { get { return GROUP_MODEL.CULTURE_SENSITIVE_STRING_2; } }
-
-        public string LENGTH_4_STRING { get { return GROUP_MODEL.LENGTH_4_STRING; } }
     }
 
-    public class XIndexOfAny_Model : XIndexOfXAny_Model
+    public class XIndexOfAny_Model : XIndexOfXAny_Model2
     {
         //--- Public Fields ---
+
         public string SourceString;
         public int StartIndex;
         public int Count;
         public int CorrectResult;
-
+        public bool IsLastIndexOf;
+        
+        
         //--- Constructors ---
 
-        public XIndexOfAny_Model(StringMethodGroupModel groupModel, StringComparison comparisonType)
-            : base(groupModel, comparisonType)
+        public XIndexOfAny_Model(XIndexOfXAny_Model2 baseModel, bool isLastIndexOf)
+            : base(baseModel, baseModel.ComparisonType)
         {
-            Initialize();
-        }
-
-        public void Initialize()
-        {
-            if (!IsLastIndexOf)
+            IsLastIndexOf = isLastIndexOf;
+            if (!isLastIndexOf)
             {
                 if (OverloadHasStartIndexParam)
                 {
@@ -216,34 +167,6 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
         }
     }
 
-    public class XIndexOfNotAny_Model : XIndexOfAny_Model
-    {
-        //--- Public Fields ---
-        public string SourceStringForCharArrayLength1NoMatch;
-
-        //--- Constructors ---
-
-        public XIndexOfNotAny_Model(StringMethodGroupModel groupModel, StringComparison comparisonType)
-            : base(groupModel, comparisonType)
-        {
-            if (GROUP_MODEL.OverloadHasStartIndexParam)
-            {
-                if (GROUP_MODEL.OverloadHasCountParam)
-                {
-                    SourceStringForCharArrayLength1NoMatch = "xoooooooooa";
-                }
-                else
-                {
-                    SourceStringForCharArrayLength1NoMatch = "xooooooooo";
-                }
-            }
-            else
-            {
-                SourceStringForCharArrayLength1NoMatch = "ooooooooo";
-            }
-        }
-    }
-
     public class TestValuesModel
     {
         //--- Constructors ---
@@ -269,12 +192,12 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
     {
          //--- Public Readonly Fields ---
 
-        public readonly StringMethodGroupModel MODEL;
+        public readonly XIndexOfXAny_Model MODEL;
 
 
         //--- Constructors ---
 
-        public Root0Base(StringMethodGroupModel model)
+        public Root0Base(XIndexOfXAny_Model model)
         {
             MODEL = model;
         }
@@ -284,12 +207,12 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
     {
         //--- Public Readonly Fields ---
 
-        public readonly StringMethodGroupModel MODEL;
+        public readonly XIndexOfXAny_Model MODEL;
 
 
         //--- Constructors ---
 
-        public Root0Base_with_comparisonType(StringMethodGroupModel model)
+        public Root0Base_with_comparisonType(XIndexOfXAny_Model model)
         {
             MODEL = model;
         }
@@ -301,21 +224,16 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void Where_comparisonType_is_invalid_throws_ArgumentOutOfRangeException()
         {
-            MODEL.TestedMethod(MODEL.LENGTH_4_STRING, MODEL.EMPTY_VALUE_ARRAY, 0, 0, (StringComparison)(-1));
+            MODEL.TestedMethod(MODEL.LENGTH_4_STRING, MODEL.EMPTY_VALUE_ARRAY, 0, 0, (StringComparison)(-1));  // !!! COMMENTED OUT TO ALLOW COMPILE; FIX ASAP !!!
         }
     }
 
     public abstract class Root1Base
     {
         //--- Public Fields ---
+
         public XIndexOfXAny_Model Model;
 
-        //--- Constructors ---
-
-        public Root1Base(XIndexOfXAny_Model model)
-        {
-            Model = model;
-        }
 
         //--- Tests ---
 
@@ -323,13 +241,13 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
         [ExpectedException(typeof(ArgumentNullException))]
         public void When_anyOf_is_null_throws_ArgumentNullException()
         {
-            Model.TestedMethod(string.Empty, (char[])null, 0, 0, Model.ComparisonType);
+            Model.TestedMethod(string.Empty, (string[])null, 0, 0, Model.ComparisonType);
         }
 
         [Test]
         public virtual void When_sourceString_is_empty_returns_negative_one()
         {
-            int result = Model.TestedMethod(string.Empty, Model.LENGTH_4_VALUE_ARRAY, 0, 0, Model.ComparisonType);
+            int result = Model.TestedMethod(string.Empty, Model.LENGTH_4_VALUE_ARRAY, 0, 0, Model.ComparisonType);  // !!! COMMENTED OUT TO ALLOW COMPILE; FIX ASAP !!!
             Assert.AreEqual(-1, result);
         }
 
@@ -337,7 +255,7 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
         [ExpectedException(typeof(ArgumentNullException))]
         public void When_sourceString_is_null_throws_ArgumentNullException()
         {
-            Model.TestedMethod(null, Model.EMPTY_VALUE_ARRAY, 0, 0, Model.ComparisonType);
+            Model.TestedMethod(null, Model.EMPTY_VALUE_ARRAY, 0, 0, Model.ComparisonType);  // !!! COMMENTED OUT TO ALLOW COMPILE; FIX ASAP !!!
         }
     }
 
@@ -346,8 +264,8 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
         //--- Constructors ---
 
         public Root1Base_XOfXAny(XIndexOfXAny_Model model)
-            : base(model)
         {
+            Model = model;
         }
 
 
@@ -542,7 +460,7 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
     {
         //--- Constructors ---
 
-        public Root1Base_OfAny(XIndexOfAny_Model model)
+        public Root1Base_OfAny(XIndexOfAny_CharArray_Model model)
             : base(model)
         {
         }
@@ -646,7 +564,7 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
     {
         //--- Constructors ---
 
-        public Root1Base_OfAny_with_Neither_startIndex_nor_count(XIndexOfAny_Model model)
+        public Root1Base_OfAny_with_Neither_startIndex_nor_count(XIndexOfAny_CharArray_Model model)
             : base(model)
         {
         }
@@ -679,7 +597,7 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
     {
         //--- Constructors ---
 
-        public Root1Base_OfAny_with_startIndex_Without_count(XIndexOfAny_Model model)
+        public Root1Base_OfAny_with_startIndex_Without_count(XIndexOfAny_CharArray_Model model)
             : base(model)
         {
         }
@@ -707,7 +625,7 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
     {
         //--- Constructors ---
 
-        public Root1Base_OfAny_with_startIndex_and_count(XIndexOfAny_Model model)
+        public Root1Base_OfAny_with_startIndex_and_count(XIndexOfAny_CharArray_Model model)
             : base(model)
         {
         }
@@ -730,7 +648,7 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
     {
          //--- Constructors ---
 
-        public Root1Base_OfNotAny_with_Neither_startIndex_nor_count(XIndexOfNotAny_Model model)
+        public Root1Base_OfNotAny_with_Neither_startIndex_nor_count(XIndexOfXAny_Model model)
             : base(model)
         {
         }
@@ -763,7 +681,7 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
     {
         //--- Constructors ---
 
-        public Root1Base_OfNotAny_with_startIndex_Without_count(XIndexOfNotAny_Model model)
+        public Root1Base_OfNotAny_with_startIndex_Without_count(XIndexOfXAny_Model model)
             : base(model)
         {
         }
@@ -786,7 +704,7 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
     {
         //--- Constructors ---
 
-        public Root1Base_OfNotAny_with_startIndex_and_count(XIndexOfNotAny_Model model)
+        public Root1Base_OfNotAny_with_startIndex_and_count(XIndexOfXAny_Model model)
             : base(model)
         {
         }
@@ -804,7 +722,7 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
     {
         //--- Constructors ---
 
-        public Root1Base_LastOfAny_with_Neither_startIndex_nor_count(XIndexOfAny_Model model)
+        public Root1Base_LastOfAny_with_Neither_startIndex_nor_count(XIndexOfXAny_Model model)
             : base(model)
         {
         }
@@ -842,7 +760,7 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
     {
         //--- Constructors ---
 
-        public Root1Base_LastOfAny_with_startIndex_Without_count(XIndexOfAny_Model model)
+        public Root1Base_LastOfAny_with_startIndex_Without_count(XIndexOfAny_CharArray_Model model)
             : base(model)
         {
         }
@@ -870,7 +788,7 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
     {
         //--- Constructors ---
 
-        public Root1Base_LastOfAny_with_startIndex_and_count(XIndexOfAny_Model model)
+        public Root1Base_LastOfAny_with_startIndex_and_count(XIndexOfAny_CharArray_Model model)
             : base(model)
         {
         }
@@ -893,7 +811,7 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
     {
         //--- Constructors ---
 
-        public Root1Base_LastOfNotAny_with_Neither_startIndex_nor_count(XIndexOfNotAny_Model model)
+        public Root1Base_LastOfNotAny_with_Neither_startIndex_nor_count(XIndexOfXAny_Model model)
             : base(model)
         {
         }
@@ -931,7 +849,7 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
     {
         //--- Constructors ---
 
-        public Root1Base_LastOfNotAny_with_startIndex_Without_count(XIndexOfNotAny_Model model)
+        public Root1Base_LastOfNotAny_with_startIndex_Without_count(XIndexOfAny_CharArray_Model model)
             : base(model)
         {
         }
@@ -959,7 +877,7 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
     {
         //--- Constructors ---
 
-        public Root1Base_LastOfNotAny_with_startIndex_and_count(XIndexOfNotAny_Model model)
+        public Root1Base_LastOfNotAny_with_startIndex_and_count(XIndexOfAny_CharArray_Model model)
             : base(model)
         {
         }
@@ -987,7 +905,7 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
 
         //--- Constructors ---
 
-        public When_length_of_anyOf_Base_Base(XIndexOfAny_Model model)
+        public When_length_of_anyOf_Base_Base(XIndexOfAny_CharArray_Model model)
         {
             Model = model;
             CORRECT_RESULT_FOR_CASE_DIFF = -1;
@@ -1044,7 +962,7 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
 
         //--- Public Properties ---
 
-        public XIndexOfAny_Model Model { get; set; }
+        public XIndexOfAny_CharArray_Model Model { get; set; }
         
         public TestValuesModel TestValuesModel { get; set; }
     }
@@ -1053,7 +971,7 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
     {
         //--- Constructors ---
 
-        public When_length_of_anyOf_Base(XIndexOfAny_Model model)
+        public When_length_of_anyOf_Base(XIndexOfAny_CharArray_Model model)
             : base(model)
         {
         }
@@ -1063,7 +981,7 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
     {
         //--- Constructors ---
 
-        public When_length_of_anyNotOf_Base(XIndexOfNotAny_Model model)
+        public When_length_of_anyNotOf_Base(XIndexOfNotAny_CharArray_Model model)
             : base(model)
         {
             if (CORRECT_RESULT_FOR_CASE_DIFF == -1)
@@ -1073,11 +991,11 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
 
         //--- Public Properties ---
 
-        public new XIndexOfNotAny_Model Model
+        public new XIndexOfNotAny_CharArray_Model Model
         {
             get
             {
-                return (XIndexOfNotAny_Model)base.Model;
+                return (XIndexOfNotAny_CharArray_Model)base.Model;
             }
             set
             {
@@ -1097,7 +1015,7 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
 
         //--- Constructors ---
 
-        public When_length_of_anyOf_is_1_Base(XIndexOfAny_Model model)
+        public When_length_of_anyOf_is_1_Base(XIndexOfAny_CharArray_Model model)
             : base(model)
         {
             base.TestValuesModel = new TestValuesModel(CHAR_ARRAY_LOWER, CHAR_ARRAY_UPPER, CHAR_ARRAY_NO_MATCH);
@@ -1115,7 +1033,7 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
 
         //--- Constructors ---
 
-        public When_length_of_anyOf_is_between_2_and_3_inclusively_Base(XIndexOfAny_Model model)
+        public When_length_of_anyOf_is_between_2_and_3_inclusively_Base(XIndexOfAny_CharArray_Model model)
             : base(model)
         {
             base.TestValuesModel = new TestValuesModel(CHAR_ARRAY_LOWER, CHAR_ARRAY_UPPER, CHAR_ARRAY_NO_MATCH);
@@ -1133,7 +1051,7 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
 
         //--- Constructors ---
 
-        public When_length_of_anyOf_is_4_Base(XIndexOfAny_Model model)
+        public When_length_of_anyOf_is_4_Base(XIndexOfAny_CharArray_Model model)
             : base(model)
         {
             base.TestValuesModel = new TestValuesModel(CHAR_ARRAY_LOWER, CHAR_ARRAY_UPPER, CHAR_ARRAY_NO_MATCH);
@@ -1151,7 +1069,7 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
 
         //--- Constructors ---
 
-        public When_length_of_anyOf_is_5_Base(XIndexOfAny_Model model)
+        public When_length_of_anyOf_is_5_Base(XIndexOfAny_CharArray_Model model)
             : base(model)
         {
             base.TestValuesModel = new TestValuesModel(CHAR_ARRAY_LOWER, CHAR_ARRAY_UPPER, CHAR_ARRAY_NO_MATCH);
@@ -1169,7 +1087,7 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
 
         //--- Constructors ---
 
-        public When_length_of_anyOf_is_between_6_and_7_Base(XIndexOfAny_Model model)
+        public When_length_of_anyOf_is_between_6_and_7_Base(XIndexOfAny_CharArray_Model model)
             : base(model)
         {
             base.TestValuesModel = new TestValuesModel(CHAR_ARRAY_LOWER, CHAR_ARRAY_UPPER, CHAR_ARRAY_NO_MATCH);
@@ -1187,7 +1105,7 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
 
         //--- Constructors ---
 
-        public When_length_of_anyOf_is_8_Base(XIndexOfAny_Model model)
+        public When_length_of_anyOf_is_8_Base(XIndexOfAny_CharArray_Model model)
             : base(model)
         {
             base.TestValuesModel = new TestValuesModel(CHAR_ARRAY_LOWER, CHAR_ARRAY_UPPER, CHAR_ARRAY_NO_MATCH);
@@ -1205,7 +1123,7 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
 
         //--- Constructors ---
 
-        public When_length_of_anyOf_is_9_Base(XIndexOfAny_Model model)
+        public When_length_of_anyOf_is_9_Base(XIndexOfAny_CharArray_Model model)
             : base(model)
         {
             base.TestValuesModel = new TestValuesModel(CHAR_ARRAY_LOWER, CHAR_ARRAY_UPPER, CHAR_ARRAY_NO_MATCH);
@@ -1223,167 +1141,7 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
 
         //--- Constructors ---
 
-        public When_length_of_anyOf_is_greater_than_or_equal_to_10_Base(XIndexOfAny_Model model)
-            : base(model)
-        {
-            base.TestValuesModel = new TestValuesModel(CHAR_ARRAY_LOWER, CHAR_ARRAY_UPPER, CHAR_ARRAY_NO_MATCH);
-        }
-    }
-
-    public abstract class When_length_of_anyNotOf_is_1_Base : When_length_of_anyNotOf_Base
-    {
-        //--- Readonly Fields ---
-
-        public readonly char[] CHAR_ARRAY_LOWER = new char[] { 'o' };
-        public readonly char[] CHAR_ARRAY_UPPER = new char[] { 'O' };
-        public readonly char[] CHAR_ARRAY_NO_MATCH = new char[] { 'o' };
-
-
-        //--- Constructors ---
-
-        public When_length_of_anyNotOf_is_1_Base(XIndexOfNotAny_Model model)
-            : base(model)
-        {
-            TestValuesModel = new TestValuesModel(CHAR_ARRAY_LOWER, CHAR_ARRAY_UPPER, CHAR_ARRAY_NO_MATCH);
-        }
-
-
-        //--- Tests ---
-
-        [Test]
-        public override void When_a_match_does_not_exist_returns_negative_one()
-        {
-            int result = Model.TestedMethod(
-                Model.SourceStringForCharArrayLength1NoMatch,
-                TestValuesModel.CharArrayNoMatch,
-                Model.StartIndex,
-                Model.Count,
-                Model.ComparisonType);
-
-            Assert.AreEqual(-1, result, Helper.GetMessageForAnyNotOfLen1NoMatchSourceString(Model, TestValuesModel));
-        }
-    }
-
-    public abstract class When_length_of_anyNotOf_is_between_2_and_3_inclusively_Base : When_length_of_anyNotOf_Base
-    {
-        //--- Readonly Fields ---
-
-        public readonly char[] CHAR_ARRAY_LOWER = new char[] { 'o', 'p', 'q' };
-        public readonly char[] CHAR_ARRAY_UPPER = new char[] { 'O', 'P', 'Q' };
-        public readonly char[] CHAR_ARRAY_NO_MATCH = new char[] { 'o', 'p', 'x' };
-
-
-        //--- Constructors ---
-
-        public When_length_of_anyNotOf_is_between_2_and_3_inclusively_Base(XIndexOfNotAny_Model model)
-            : base(model)
-        {
-            base.TestValuesModel = new TestValuesModel(CHAR_ARRAY_LOWER, CHAR_ARRAY_UPPER, CHAR_ARRAY_NO_MATCH);
-        }
-    }
-
-    public abstract class When_length_of_anyNotOf_is_4_Base : When_length_of_anyNotOf_Base
-    {
-        //--- Readonly Fields ---
-
-        public readonly char[] CHAR_ARRAY_LOWER = new char[] { 'o', 'p', 'q', 'r' };
-        public readonly char[] CHAR_ARRAY_UPPER = new char[] { 'O', 'P', 'Q', 'R' };
-        public readonly char[] CHAR_ARRAY_NO_MATCH = new char[] { 'o', 'p', 'q', 'x' };
-
-
-        //--- Constructors ---
-
-        public When_length_of_anyNotOf_is_4_Base(XIndexOfNotAny_Model model)
-            : base(model)
-        {
-            base.TestValuesModel = new TestValuesModel(CHAR_ARRAY_LOWER, CHAR_ARRAY_UPPER, CHAR_ARRAY_NO_MATCH);
-        }
-    }
-
-    public abstract class When_length_of_anyNotOf_is_5_Base : When_length_of_anyNotOf_Base
-    {
-        //--- Readonly Fields ---
-
-        public readonly char[] CHAR_ARRAY_LOWER = new char[] { 'o', 'p', 'q', 'r', 's' };
-        public readonly char[] CHAR_ARRAY_UPPER = new char[] { 'O', 'P', 'Q', 'R', 'S' };
-        public readonly char[] CHAR_ARRAY_NO_MATCH = new char[] { 'o', 'p', 'q', 'r', 'x' };
-
-
-        //--- Constructors ---
-
-        public When_length_of_anyNotOf_is_5_Base(XIndexOfNotAny_Model model)
-            : base(model)
-        {
-            base.TestValuesModel = new TestValuesModel(CHAR_ARRAY_LOWER, CHAR_ARRAY_UPPER, CHAR_ARRAY_NO_MATCH);
-        }
-    }
-
-    public abstract class When_length_of_anyNotOf_is_between_6_and_7_Base : When_length_of_anyNotOf_Base
-    {
-        //--- Readonly Fields ---
-
-        public readonly char[] CHAR_ARRAY_LOWER = new char[] { 'o', 'p', 'q', 'r', 's', 't', 'u' };
-        public readonly char[] CHAR_ARRAY_UPPER = new char[] { 'O', 'P', 'Q', 'R', 'S', 'T', 'U' };
-        public readonly char[] CHAR_ARRAY_NO_MATCH = new char[] { 'o', 'p', 'q', 'r', 's', 't', 'x' };
-
-
-        //--- Constructors ---
-
-        public When_length_of_anyNotOf_is_between_6_and_7_Base(XIndexOfNotAny_Model model)
-            : base(model)
-        {
-            base.TestValuesModel = new TestValuesModel(CHAR_ARRAY_LOWER, CHAR_ARRAY_UPPER, CHAR_ARRAY_NO_MATCH);
-        }
-    }
-
-    public abstract class When_length_of_anyNotOf_is_8_Base : When_length_of_anyNotOf_Base
-    {
-        //--- Readonly Fields ---
-
-        public readonly char[] CHAR_ARRAY_LOWER = new char[] { 'o', 'p', 'q', 'r', 's', 't', 'u', 'v' };
-        public readonly char[] CHAR_ARRAY_UPPER = new char[] { 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V' };
-        public readonly char[] CHAR_ARRAY_NO_MATCH = new char[] { 'o', 'p', 'q', 'r', 's', 't', 'u', 'x' };
-
-
-        //--- Constructors ---
-
-        public When_length_of_anyNotOf_is_8_Base(XIndexOfNotAny_Model model)
-            : base(model)
-        {
-            base.TestValuesModel = new TestValuesModel(CHAR_ARRAY_LOWER, CHAR_ARRAY_UPPER, CHAR_ARRAY_NO_MATCH);
-        }
-    }
-
-    public abstract class When_length_of_anyNotOf_is_9_Base : When_length_of_anyNotOf_Base
-    {
-        //--- Readonly Fields ---
-
-        public readonly char[] CHAR_ARRAY_LOWER = new char[] { 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w' };
-        public readonly char[] CHAR_ARRAY_UPPER = new char[] { 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W' };
-        public readonly char[] CHAR_ARRAY_NO_MATCH = new char[] { 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'x' };
-
-
-        //--- Constructors ---
-
-        public When_length_of_anyNotOf_is_9_Base(XIndexOfNotAny_Model model)
-            : base(model)
-        {
-            base.TestValuesModel = new TestValuesModel(CHAR_ARRAY_LOWER, CHAR_ARRAY_UPPER, CHAR_ARRAY_NO_MATCH);
-        }
-    }
-
-    public abstract class When_length_of_anyNotOf_is_greater_than_or_equal_to_10_Base : When_length_of_anyNotOf_Base
-    {
-        //--- Readonly Fields ---
-
-        public readonly char[] CHAR_ARRAY_LOWER = new char[] { 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'y' };
-        public readonly char[] CHAR_ARRAY_UPPER = new char[] { 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'Y' };
-        public readonly char[] CHAR_ARRAY_NO_MATCH = new char[] { 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x' };
-
-
-        //--- Constructors ---
-
-        public When_length_of_anyNotOf_is_greater_than_or_equal_to_10_Base(XIndexOfNotAny_Model model)
+        public When_length_of_anyOf_is_greater_than_or_equal_to_10_Base(XIndexOfAny_CharArray_Model model)
             : base(model)
         {
             base.TestValuesModel = new TestValuesModel(CHAR_ARRAY_LOWER, CHAR_ARRAY_UPPER, CHAR_ARRAY_NO_MATCH);
@@ -1396,63 +1154,7 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
         {
             return "Source string: " + model.SourceString + "; StartIndex: " + model.StartIndex + "; Count: " + model.Count + "; Test value count: " + testValuesModel.CharArrayNoMatch.Length + "; Test values preview: " + testValuesModel.CharArrayNoMatch[0];
         }
-
-        public static string GetMessageForAnyNotOfLen1NoMatchSourceString(XIndexOfNotAny_Model model, TestValuesModel testValuesModel)
-        {
-            return "Source string: " + model.SourceStringForCharArrayLength1NoMatch + "; StartIndex: " + model.StartIndex + "; Count: " + model.Count + "; Test value count: " + testValuesModel.CharArrayNoMatch.Length + "; Test values preview: " + testValuesModel.CharArrayNoMatch[0];
-        }
     }
 
-    public class TestedMethodDisambiguator
-    {
-        //--- Readonly Fields ---
-        readonly TestedMethodTypes TESTED_METHOD_TYPE;
-
-        //--- Constructors ---
-
-        public TestedMethodDisambiguator(TestedMethodForAnyOfCharArray testedMethod)
-        {
-            TESTED_METHOD_TYPE = TestedMethodTypes.CharArray;
-            TestedMethodForCharArray = testedMethod;
-        }
-
-        public TestedMethodDisambiguator(TestedMethodForAnyOfStringArray testedMethod)
-        {
-            TESTED_METHOD_TYPE = TestedMethodTypes.StringArray;
-            TestedMethodForStringArray = testedMethod;
-        }
-
-        //--- Public Methods ---
-
-        public int TestedMethod(string source, char[] anyOf, int startIndex, int length, StringComparison comparisonType)
-        {
-            if (TESTED_METHOD_TYPE != TestedMethodTypes.CharArray)
-                throw new InvalidOperationException("Wrong tested method type");
-            return TestedMethodForCharArray(source, anyOf, startIndex, length, comparisonType);
-        }
-
-        public int TestedMethod(string source, string[] anyOf, int startIndex, int length, StringComparison comparisonType)
-        {
-            if (TESTED_METHOD_TYPE != TestedMethodTypes.StringArray)
-                throw new InvalidOperationException("Wrong tested method type");
-            return TestedMethodForStringArray(source, anyOf, startIndex, length, comparisonType);
-        }
-
-        //--- Private Properties ---
-
-        TestedMethodForAnyOfCharArray TestedMethodForCharArray { get; set; }
-
-        TestedMethodForAnyOfStringArray TestedMethodForStringArray { get; set; }
-    }
-
-    public class UnitTestException : Exception { }
-
-    enum TestedMethodTypes
-    {
-        CharArray,
-        StringArray
-    }
- 
-    public delegate int TestedMethodForAnyOfCharArray(string source, char[] anyOf, int startIndex, int length, StringComparison comparisonType);
-    public delegate int TestedMethodForAnyOfStringArray(string source, string[] anyOf, int startIndex, int length, StringComparison comparisonType);
+    public delegate int TestedMethod(string source, string[] anyOf, int startIndex, int length, StringComparison comparisonType);
 }
