@@ -426,36 +426,43 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
         {
             StringComparison comparisonTypePerformed = StringComparison.Ordinal;  // Does not include the case-sensitivity of the comparison-type
 
-            int result = Model.TestedMethod(
-                Model.CULTURE_SENSITIVE_STRING_1,
-                Model.CULTURE_SENSITIVE_VALUE_ARRAY_1,
-                0,
-                Model.CULTURE_SENSITIVE_STRING_1.Length,
-                Model.ComparisonType);
-
-            if (result != -1)
+            var prevCulture = Thread.CurrentThread.CurrentCulture;
+            try
             {
-                StringComparison caseInsensitiveComparisonType = Model.ComparisonType;
-                if ((int)caseInsensitiveComparisonType % 2 == 0)
-                    caseInsensitiveComparisonType++;
+                Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US", false);
 
-                var prevCulture = Thread.CurrentThread.CurrentCulture;
-                Thread.CurrentThread.CurrentCulture = new CultureInfo("tr-TR", false);
-
-                if (Model.TestedMethod(
-                    Model.CULTURE_SENSITIVE_STRING_2,
-                    Model.CULTURE_SENSITIVE_VALUE_ARRAY_2,
+                int result = Model.TestedMethod(
+                    Model.CULTURE_SENSITIVE_STRING_1,
+                    Model.CULTURE_SENSITIVE_VALUE_ARRAY_1,
                     0,
-                    Model.CULTURE_SENSITIVE_STRING_2.Length,
-                    caseInsensitiveComparisonType) == -1)
-                {
-                    comparisonTypePerformed = StringComparison.InvariantCulture;
-                }
-                else
-                {
-                    comparisonTypePerformed = StringComparison.CurrentCulture;
-                }
+                    Model.CULTURE_SENSITIVE_STRING_1.Length,
+                    Model.ComparisonType);
 
+                if (result != -1)
+                {
+                    StringComparison caseInsensitiveComparisonType = Model.ComparisonType;
+                    if ((int)caseInsensitiveComparisonType % 2 == 0)
+                        caseInsensitiveComparisonType++;
+
+                    Thread.CurrentThread.CurrentCulture = new CultureInfo("tr-TR", false);
+
+                    if (Model.TestedMethod(
+                        Model.CULTURE_SENSITIVE_STRING_2,
+                        Model.CULTURE_SENSITIVE_VALUE_ARRAY_2,
+                        0,
+                        Model.CULTURE_SENSITIVE_STRING_2.Length,
+                        caseInsensitiveComparisonType) == -1)
+                    {
+                        comparisonTypePerformed = StringComparison.InvariantCulture;
+                    }
+                    else
+                    {
+                        comparisonTypePerformed = StringComparison.CurrentCulture;
+                    }
+                }
+            }
+            finally
+            {
                 Thread.CurrentThread.CurrentCulture = prevCulture;
             }
 

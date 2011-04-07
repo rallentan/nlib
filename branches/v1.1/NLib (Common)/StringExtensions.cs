@@ -31,7 +31,7 @@ namespace NLib
     /// </summary>
     public static partial class StringExtensions
     {
-        //--- Fields ---
+        //--- Constants ---
 
         const string ARGNAME_SOURCE = "source";
         const string ARGNAME_VALUE = "value";
@@ -44,6 +44,7 @@ namespace NLib
         const string EXCMSG_CANNOT_CONTAIN_NULL_OR_EMPTY = "Parameter cannot contain null or zero-length strings.";
         const string EXCMSG_MUST_BE_LESS_THAN_INT32_MAXVALUE = "Parameter must be less than Int32.MaxValue.";
         const string EXCMSG_INVALID_ENUMERATION_VALUE = "Parameter is an invalid enumeration value.";
+        const int NPOS = -1;
         
         //--- Public Static Methods ---
 
@@ -1081,32 +1082,28 @@ namespace NLib
                 throw new ArgumentOutOfRangeException(ARGNAME_COMPARISONTYPE, EXCMSG_INVALID_ENUMERATION_VALUE);
 
             int anyOfLength = anyOf.Length;
-            string[] sa = new string[anyOfLength];
+            int sourceLength = source.Length;
+            string strB;
 
+            string anyOfElement;
             for (int i = 0; i < anyOfLength; i++)
             {
-                if (anyOf[i] == null || anyOf[i].Length == 0)
+                anyOfElement = anyOf[i];
+                if (anyOfElement == null || anyOfElement.Length == 0)
                     throw new ArgumentException(EXCMSG_CANNOT_CONTAIN_NULL_OR_EMPTY, ARGNAME_ANYOF);
-                sa[i] = anyOf[i].Substring(0, 1);
             }
 
-            int p = startIndex;
-            int end = startIndex + count;
-            while (true)
+            for (int sourceIndex = 0; sourceIndex < sourceLength; sourceIndex++)
             {
-                p = IndexOfAnyString1CompareType(source, sa, p, end - p, comparisonType);
-                if (p == -1)
-                    return p;
-                for (int i = 0; i < anyOfLength; i++)
+                for (int anyOfIndex = 0; anyOfIndex < anyOfLength; anyOfIndex++)
                 {
-                    int length = anyOf[i].Length;
-                    if (p + length > end)
-                        continue;
-                    if (string.Compare(source, p, anyOf[i], 0, length, comparisonType) == 0)
-                        return p;
+                    strB = anyOf[anyOfIndex];
+                    if (string.Compare(source, sourceIndex, strB, 0, strB.Length, comparisonType) == 0)
+                        return sourceIndex;
                 }
-                p++;
             }
+
+            return NPOS;
         }
         
         static unsafe int IndexOfNotAnyOrdinal(string source, char[] anyOf, int startIndex, int count)

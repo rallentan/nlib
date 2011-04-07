@@ -150,7 +150,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
 
                 [Test]
                 [ExpectedException(typeof(ArgumentException))]
-                public void When_anyOf_contains_a_null_returns_throws_ArgumentException()
+                public void When_anyOf_contains_a_null_throws_ArgumentException()
                 {
                     int result = Root0.TestedMethodAdapter(Root0.SIMPLE_STRING, Root0.STRING_ARRAY_WITH_NULL, 0, 4, COMPARISON_TYPE);
                     Assert.AreEqual(-1, result);
@@ -167,38 +167,48 @@ namespace NUnitTests.NLib.StringExtensionsTests
                 [Test]
                 public void When_search_is_culture_sensitive_returns_according_to_comparisonType()
                 {
-                    StringComparison comparisonTypePerformed = StringComparison.Ordinal;  // Does not include the case-sensitivity of the comparison-type
+                    StringComparison comparisonTypePerformed;  // Does not include the case-sensitivity of the comparison-type
 
-                    int result = Root0.TestedMethodAdapter(
-                        Root0.CULTURE_SENSITIVE_STRING_1,
-                        Root0.CULTURE_SENSITIVE_STRING_ARRAY_1,
-                        0,
-                        Root0.CULTURE_SENSITIVE_STRING_1.Length,
-                        COMPARISON_TYPE);
-
-                    if (result != -1)
+                    var prevCulture = Thread.CurrentThread.CurrentCulture;
+                    Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US", false);
+                    try
                     {
-                        StringComparison caseInsensitiveComparisonType = COMPARISON_TYPE;
-                        if ((int)caseInsensitiveComparisonType % 2 == 0)
-                            caseInsensitiveComparisonType++;
-
-                        var prevCulture = Thread.CurrentThread.CurrentCulture;
-                        Thread.CurrentThread.CurrentCulture = new CultureInfo("tr-TR", false);
-
-                        if (Root0.TestedMethodAdapter(
-                            Root0.CULTURE_SENSITIVE_STRING_2,
-                            Root0.CULTURE_SENSITIVE_STRING_ARRAY_2,
+                        int result = Root0.TestedMethodAdapter(
+                            Root0.CULTURE_SENSITIVE_STRING_1,
+                            Root0.CULTURE_SENSITIVE_STRING_ARRAY_1,
                             0,
-                            Root0.CULTURE_SENSITIVE_STRING_2.Length,
-                            caseInsensitiveComparisonType) == -1)
+                            Root0.CULTURE_SENSITIVE_STRING_1.Length,
+                            COMPARISON_TYPE);
+
+                        if (result == -1)
                         {
-                            comparisonTypePerformed = StringComparison.InvariantCulture;
+                            comparisonTypePerformed = StringComparison.Ordinal;
                         }
                         else
                         {
-                            comparisonTypePerformed = StringComparison.CurrentCulture;
-                        }
+                            StringComparison caseInsensitiveComparisonType = COMPARISON_TYPE;
+                            if ((int)caseInsensitiveComparisonType % 2 == 0)
+                                caseInsensitiveComparisonType++;
 
+                            Thread.CurrentThread.CurrentCulture = new CultureInfo("tr-TR", false);
+
+                            if (Root0.TestedMethodAdapter(
+                                Root0.CULTURE_SENSITIVE_STRING_2,
+                                Root0.CULTURE_SENSITIVE_STRING_ARRAY_2,
+                                0,
+                                Root0.CULTURE_SENSITIVE_STRING_2.Length,
+                                caseInsensitiveComparisonType) == -1)
+                            {
+                                comparisonTypePerformed = StringComparison.InvariantCulture;
+                            }
+                            else
+                            {
+                                comparisonTypePerformed = StringComparison.CurrentCulture;
+                            }
+                        }
+                    }
+                    finally
+                    {
                         Thread.CurrentThread.CurrentCulture = prevCulture;
                     }
 

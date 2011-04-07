@@ -22,6 +22,8 @@ namespace NUnitTests.NLib
             RunUInt16ExtensionsTests();
             RunUInt32ExtensionsTests();
             RunUInt64ExtensionsTests();
+
+            RunStringExtensionsTests();
         }
 
         public static void RunByteExtensionsTests()
@@ -104,5 +106,15 @@ namespace NUnitTests.NLib
         //    var test = new BitStreamTest();
         //    test.ReadIntTests();
         //}
+
+        public static void RunStringExtensionsTests()
+        {
+            var testObject = new
+                StringExtensionsTests
+                .IndexOfAny_String_StringArray_Int32_Int32_StringComparison.When_comparisonType_is_CurrentCulture
+                .Root1();
+
+            testObject.When_search_is_culture_sensitive_returns_according_to_comparisonType();
+        }
     }
 }
