@@ -1074,6 +1074,8 @@ namespace NLib
                 throw new ArgumentNullException(ARGNAME_SOURCE);
             if (anyOf == null)
                 throw new ArgumentNullException(ARGNAME_ANYOF);
+            if (source.Length == 0)
+                return -1;
             if (startIndex < 0 || startIndex > source.Length)
                 throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex > source.Length - count)
@@ -1098,7 +1100,7 @@ namespace NLib
                 for (int anyOfIndex = 0; anyOfIndex < anyOfLength; anyOfIndex++)
                 {
                     strB = anyOf[anyOfIndex];
-                    if (string.Compare(source, sourceIndex, strB, 0, strB.Length, comparisonType) == 0)
+                    if (string.Compare(source, sourceIndex, strB, 0, sourceLength - sourceIndex, comparisonType) == 0)
                         return sourceIndex;
                 }
             }

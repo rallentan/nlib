@@ -22,6 +22,7 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
         public bool OverloadHasCountParam;
         public bool OverloadHasComparisonTypeParam;
         public bool MethodUsesStringArray;
+        public bool AnyOfTypeIsStringArray;
         public bool IsLastIndexOf;
         
         //--- Constructors ---
@@ -31,17 +32,24 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
                 bool overloadHasStartIndexParam,
                 bool overloadHasCountParam,
                 bool overloadHasComparisonTypeParam,
+                bool anyOfTypeIsStringArray,
                 bool isLastIndexOf)
-            : this(overloadHasStartIndexParam, overloadHasCountParam, overloadHasComparisonTypeParam, isLastIndexOf)
+            : this(
+                overloadHasStartIndexParam,
+                overloadHasCountParam,
+                overloadHasComparisonTypeParam,
+                anyOfTypeIsStringArray,
+                isLastIndexOf)
         {
             TESTED_METHOD_DISAMBIGUATOR = testedMethod;
         }
 
         public StringMethodGroupModel(StringMethodGroupModel model)
             : this(
-                model.OverloadHasComparisonTypeParam,
+                model.OverloadHasStartIndexParam,
                 model.OverloadHasCountParam,
                 model.OverloadHasComparisonTypeParam,
+                model.AnyOfTypeIsStringArray,
                 model.IsLastIndexOf)
         {
             TESTED_METHOD_DISAMBIGUATOR = model.TESTED_METHOD_DISAMBIGUATOR;
@@ -51,40 +59,50 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
             bool overloadHasStartIndexParam,
             bool overloadHasCountParam,
             bool overloadHasComparisonTypeParam,
+            bool anyOfTypeIsStringArray,
             bool isLastIndexOf)
         {
             OverloadHasStartIndexParam = overloadHasStartIndexParam;
             OverloadHasCountParam = overloadHasCountParam;
             OverloadHasComparisonTypeParam = overloadHasComparisonTypeParam;
+            AnyOfTypeIsStringArray = anyOfTypeIsStringArray;
             IsLastIndexOf = isLastIndexOf;
 
-            EMPTY_VALUE_ARRAY = new char[0];
-            LENGTH_4_VALUE_ARRAY = new char[4];
-            CULTURE_SENSITIVE_VALUE_ARRAY_1 = new char[] { '\x153' };
-            CULTURE_SENSITIVE_VALUE_ARRAY_2 = new char[] { 'I' };
+            if (anyOfTypeIsStringArray)
+            {
+                EMPTY_VALUE_ARRAY = new string[0];
+                LENGTH_4_VALUE_ARRAY = new string[4];
+                CULTURE_SENSITIVE_VALUE_ARRAY_1 = new string[] { "\x153" };
+                CULTURE_SENSITIVE_VALUE_ARRAY_2 = new string[] { "I" };
+            }
+            else
+            {
+                EMPTY_VALUE_ARRAY = new char[0];
+                LENGTH_4_VALUE_ARRAY = new char[4];
+                CULTURE_SENSITIVE_VALUE_ARRAY_1 = new char[] { '\x153' };
+                CULTURE_SENSITIVE_VALUE_ARRAY_2 = new char[] { 'I' };
+            }
         }
 
         //--- Public Methods ---
 
-        public int TestedMethod(string source, char[] anyOf, int startIndex, int length, StringComparison comparisonType)
+        public int TestedMethod(string source, object anyOf, int startIndex, int length, StringComparison comparisonType)
         {
-            return TESTED_METHOD_DISAMBIGUATOR.TestedMethod(source, anyOf, startIndex, length, comparisonType);
-        }
-
-        public int TestedMethod(string source, string[] anyOf, int startIndex, int length, StringComparison comparisonType)
-        {
-            return TESTED_METHOD_DISAMBIGUATOR.TestedMethod(source, anyOf, startIndex, length, comparisonType);
+            if (AnyOfTypeIsStringArray)
+                return TESTED_METHOD_DISAMBIGUATOR.TestedMethod(source, (string[])anyOf, startIndex, length, comparisonType);
+            else
+                return TESTED_METHOD_DISAMBIGUATOR.TestedMethod(source, (char[])anyOf, startIndex, length, comparisonType);
         }
 
         //--- Public Properties ---
 
-        public char[] EMPTY_VALUE_ARRAY { get; private set; }
+        public object EMPTY_VALUE_ARRAY { get; private set; }
 
-        public char[] LENGTH_4_VALUE_ARRAY { get; private set; }
+        public object LENGTH_4_VALUE_ARRAY { get; private set; }
 
-        public char[] CULTURE_SENSITIVE_VALUE_ARRAY_1 { get; private set; }
+        public object CULTURE_SENSITIVE_VALUE_ARRAY_1 { get; private set; }
 
-        public char[] CULTURE_SENSITIVE_VALUE_ARRAY_2 { get; private set; }
+        public object CULTURE_SENSITIVE_VALUE_ARRAY_2 { get; private set; }
     }
 
     public class XIndexOfXAny_Model
@@ -104,12 +122,7 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
 
         //--- Public Methods ---
 
-        public int TestedMethod(string source, char[] anyOf, int startIndex, int length, StringComparison comparisonType)
-        {
-            return GROUP_MODEL.TestedMethod(source, anyOf, startIndex, length, comparisonType);
-        }
-
-        public int TestedMethod(string source, string[] anyOf, int startIndex, int length, StringComparison comparisonType)
+        public int TestedMethod(string source, object anyOf, int startIndex, int length, StringComparison comparisonType)
         {
             return GROUP_MODEL.TestedMethod(source, anyOf, startIndex, length, comparisonType);
         }
@@ -126,13 +139,13 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
 
         public bool IsLastIndexOf { get { return GROUP_MODEL.IsLastIndexOf; } }
 
-        public char[] EMPTY_VALUE_ARRAY { get { return GROUP_MODEL.EMPTY_VALUE_ARRAY; } }
+        public object EMPTY_VALUE_ARRAY { get { return GROUP_MODEL.EMPTY_VALUE_ARRAY; } }
 
-        public char[] LENGTH_4_VALUE_ARRAY { get { return GROUP_MODEL.LENGTH_4_VALUE_ARRAY; } }
+        public object LENGTH_4_VALUE_ARRAY { get { return GROUP_MODEL.LENGTH_4_VALUE_ARRAY; } }
 
-        public char[] CULTURE_SENSITIVE_VALUE_ARRAY_1 { get { return GROUP_MODEL.CULTURE_SENSITIVE_VALUE_ARRAY_1; } }
+        public object CULTURE_SENSITIVE_VALUE_ARRAY_1 { get { return GROUP_MODEL.CULTURE_SENSITIVE_VALUE_ARRAY_1; } }
 
-        public char[] CULTURE_SENSITIVE_VALUE_ARRAY_2 { get { return GROUP_MODEL.CULTURE_SENSITIVE_VALUE_ARRAY_2; } }
+        public object CULTURE_SENSITIVE_VALUE_ARRAY_2 { get { return GROUP_MODEL.CULTURE_SENSITIVE_VALUE_ARRAY_2; } }
 
         public string CULTURE_SENSITIVE_STRING_1 { get { return GROUP_MODEL.CULTURE_SENSITIVE_STRING_1; } }
 
@@ -299,7 +312,7 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
 
         [Test]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void Where_comparisonType_is_invalid_throws_ArgumentOutOfRangeException()
+        public void When_comparisonType_is_invalid_throws_ArgumentOutOfRangeException()
         {
             MODEL.TestedMethod(MODEL.LENGTH_4_STRING, MODEL.EMPTY_VALUE_ARRAY, 0, 0, (StringComparison)(-1));
         }
@@ -357,14 +370,14 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public virtual void When_startIndex_is_negative_throws_ArgumentOutOfRangeException()
         {
-            Model.TestedMethod(string.Empty, Model.EMPTY_VALUE_ARRAY, -1, 0, Model.ComparisonType);
+            Model.TestedMethod(Model.LENGTH_4_STRING, Model.EMPTY_VALUE_ARRAY, -1, 0, Model.ComparisonType);
         }
 
         [Test]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public virtual void When_startIndex_is_greater_than_length_of_sourceString_throws_ArgumentOutOfRangeException()
         {
-            Model.TestedMethod(string.Empty, Model.LENGTH_4_VALUE_ARRAY, 5, 0, Model.ComparisonType);
+            Model.TestedMethod(Model.LENGTH_4_STRING, Model.LENGTH_4_VALUE_ARRAY, 5, 0, Model.ComparisonType);
         }
 
         [Test]
@@ -385,7 +398,7 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public virtual void When_startIndex_plus_count_is_greater_than_length_of_sourceString_throws_ArgumentOutOfRangeException()
         {
-            Model.TestedMethod(string.Empty, Model.LENGTH_4_VALUE_ARRAY, 3, 2, Model.ComparisonType);
+            Model.TestedMethod(Model.LENGTH_4_STRING, Model.LENGTH_4_VALUE_ARRAY, 3, 2, Model.ComparisonType);
         }
 
         [Test]
@@ -991,7 +1004,6 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
 
         public int CORRECT_RESULT_FOR_CASE_DIFF;
 
-
         //--- Constructors ---
 
         public When_length_of_anyOf_Base_Base(XIndexOfAny_Model model)
@@ -1005,7 +1017,6 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
                 CORRECT_RESULT_FOR_CASE_DIFF = model.CorrectResult;
             }
         }
-
 
         //--- Tests ---
 
@@ -1048,13 +1059,14 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
             Assert.AreEqual(CORRECT_RESULT_FOR_CASE_DIFF, result);
         }
 
-
         //--- Public Properties ---
 
         public XIndexOfAny_Model Model { get; set; }
         
         public TestValuesModel TestValuesModel { get; set; }
     }
+
+    //--- CharArray Tests ---
 
     public abstract class When_length_of_anyOf_Base : When_length_of_anyOf_Base_Base
     {
@@ -1396,6 +1408,30 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
             base.TestValuesModel = new TestValuesModel(CHAR_ARRAY_LOWER, CHAR_ARRAY_UPPER, CHAR_ARRAY_NO_MATCH);
         }
     }
+
+    //--- StringArray Tests ---
+
+    public abstract class When_length_of_source_is_1
+    {
+    }
+
+    public abstract class When_length_of_source_is_greater_than_or_equal_to_2
+    {
+    }
+
+    public abstract class When_length_of_anyOf_is_0
+    {
+    }
+
+    public abstract class When_length_of_anyOf_is_1
+    {
+    }
+
+    public abstract class When_length_of_anyOf_is_greater_than_or_equal_to_2
+    {
+    }
+
+    //--- Helpers ---
 
     static class Helper
     {

@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Base String
+// NUnitTests.NLib.TestRunner
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -109,12 +112,24 @@ namespace NUnitTests.NLib
 
         public static void RunStringExtensionsTests()
         {
-            var testObject = new
-                StringExtensionsTests
-                .IndexOfAny_String_StringArray_Int32_Int32_StringComparison.When_comparisonType_is_CurrentCulture
-                .Root1();
+            {
+                var testObject = new
+                    StringExtensionsTests
+                    .IndexOfAny_String_StringArray_Int32_Int32_StringComparison
+                    .Root0();
 
-            testObject.When_search_is_culture_sensitive_returns_according_to_comparisonType();
+                testObject.When_comparisonType_is_invalid_throws_ArgumentOutOfRangeException();
+            }
+
+            {
+                var testObject = new
+                    StringExtensionsTests
+                    .IndexOfAny_String_StringArray_Int32_Int32_StringComparison.When_comparisonType_is_CurrentCulture
+                    .Root1();
+
+                testObject.When_sourceString_is_empty_returns_negative_one();
+                testObject.When_search_is_culture_sensitive_returns_according_to_comparisonType();
+            }
         }
     }
 }
