@@ -1,19 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual C# Express 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLib.NET4", "NLib.NET4\NLib.NET4.csproj", "{51E27017-FB1F-4FDD-B87E-65609AF4D38A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLib (.NET2)", "NLib (.NET2)\NLib (.NET2).csproj", "{F736DC08-FF79-4A9F-A774-4CC4BD552285}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLib.NET2", "NLib.NET2\NLib.NET2.csproj", "{F736DC08-FF79-4A9F-A774-4CC4BD552285}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLib (.NET3.5 CP)", "NLib (.NET3.5 CP)\NLib (.NET3.5 CP).csproj", "{772F3EC8-4BE3-4E99-AADC-CED45359CC64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLib.NET3", "NLib.NET3\NLib.NET3.csproj", "{3B47AB4F-5063-486D-AF71-441959CC73E5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLib (Common)", "NLib (Common)\NLib (Common).csproj", "{5E5DA851-A5A3-4D50-BE4D-C9096EB766B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLib.NET35CP", "NLib.NET35CP\NLib.NET35CP.csproj", "{772F3EC8-4BE3-4E99-AADC-CED45359CC64}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLib (.NET4 CP)", "NLib (.NET4 CP)\NLib (.NET4 CP).csproj", "{FB7AB6ED-7E2D-4401-97E5-3E961B6D0FEA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLib.NET35", "NLib.NET35\NLib.NET35.csproj", "{E525497A-161F-44D7-B9FB-332C5F4EA245}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitTests.NLib (.NET2)", "NUnitTests.NLib (.NET2)\NUnitTests.NLib (.NET2).csproj", "{94FC0DE5-FBE6-40EE-AA98-6F09E58C708E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLib.Common", "NLib.Common\NLib.Common.csproj", "{5E5DA851-A5A3-4D50-BE4D-C9096EB766B6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitTests.NLib (.NET3.5 CP)", "NUnitTests.NLib (.NET3.5 CP)\NUnitTests.NLib (.NET3.5 CP).csproj", "{F897BE87-5582-49D0-B923-A2F1A148A120}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLib.NET4CP", "NLib.NET4CP\NLib.NET4CP.csproj", "{FB7AB6ED-7E2D-4401-97E5-3E961B6D0FEA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitTests.NLib (.NET4 CP)", "NUnitTests.NLib (.NET4 CP)\NUnitTests.NLib (.NET4 CP).csproj", "{24FC6730-D539-4C08-AFEC-201C987BA626}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitTests.NLib_NET2", "NUnitTests.NLib_NET2\NUnitTests.NLib_NET2.csproj", "{94FC0DE5-FBE6-40EE-AA98-6F09E58C708E}"
 EndProject
@@ -32,33 +32,29 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Release Without Documentation|Any CPU = Release Without Documentation|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{51E27017-FB1F-4FDD-B87E-65609AF4D38A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{51E27017-FB1F-4FDD-B87E-65609AF4D38A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{51E27017-FB1F-4FDD-B87E-65609AF4D38A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{51E27017-FB1F-4FDD-B87E-65609AF4D38A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F736DC08-FF79-4A9F-A774-4CC4BD552285}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F736DC08-FF79-4A9F-A774-4CC4BD552285}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F736DC08-FF79-4A9F-A774-4CC4BD552285}.Release Without Documentation|Any CPU.ActiveCfg = Release Without Documentation|Any CPU
+		{F736DC08-FF79-4A9F-A774-4CC4BD552285}.Release Without Documentation|Any CPU.Build.0 = Release Without Documentation|Any CPU
 		{F736DC08-FF79-4A9F-A774-4CC4BD552285}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F736DC08-FF79-4A9F-A774-4CC4BD552285}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3B47AB4F-5063-486D-AF71-441959CC73E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3B47AB4F-5063-486D-AF71-441959CC73E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3B47AB4F-5063-486D-AF71-441959CC73E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3B47AB4F-5063-486D-AF71-441959CC73E5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{772F3EC8-4BE3-4E99-AADC-CED45359CC64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{772F3EC8-4BE3-4E99-AADC-CED45359CC64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{772F3EC8-4BE3-4E99-AADC-CED45359CC64}.Release Without Documentation|Any CPU.ActiveCfg = Release Without Documentation|Any CPU
+		{772F3EC8-4BE3-4E99-AADC-CED45359CC64}.Release Without Documentation|Any CPU.Build.0 = Release Without Documentation|Any CPU
 		{772F3EC8-4BE3-4E99-AADC-CED45359CC64}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{772F3EC8-4BE3-4E99-AADC-CED45359CC64}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E525497A-161F-44D7-B9FB-332C5F4EA245}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E525497A-161F-44D7-B9FB-332C5F4EA245}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E525497A-161F-44D7-B9FB-332C5F4EA245}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E525497A-161F-44D7-B9FB-332C5F4EA245}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5E5DA851-A5A3-4D50-BE4D-C9096EB766B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E5DA851-A5A3-4D50-BE4D-C9096EB766B6}.Release Without Documentation|Any CPU.ActiveCfg = Release|Any CPU
 		{5E5DA851-A5A3-4D50-BE4D-C9096EB766B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB7AB6ED-7E2D-4401-97E5-3E961B6D0FEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FB7AB6ED-7E2D-4401-97E5-3E961B6D0FEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB7AB6ED-7E2D-4401-97E5-3E961B6D0FEA}.Release Without Documentation|Any CPU.ActiveCfg = Release Without Documentation|Any CPU
+		{FB7AB6ED-7E2D-4401-97E5-3E961B6D0FEA}.Release Without Documentation|Any CPU.Build.0 = Release Without Documentation|Any CPU
 		{FB7AB6ED-7E2D-4401-97E5-3E961B6D0FEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB7AB6ED-7E2D-4401-97E5-3E961B6D0FEA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{94FC0DE5-FBE6-40EE-AA98-6F09E58C708E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU

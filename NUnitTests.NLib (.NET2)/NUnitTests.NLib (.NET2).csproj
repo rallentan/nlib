@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{94FC0DE5-FBE6-40EE-AA98-6F09E58C708E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NUnitTests.NLib_NET2</RootNamespace>
+    <AssemblyName>NUnitTests.NLib %28.NET2%29</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="nunit.framework, Version=2.5.7.10213, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\..\Program Files (x86)\NUnit 2.5.7\bin\net-2.0\framework\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\ByteExtensionsTests.cs">
+      <Link>ByteExtensionsTests.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\GenericDelegatesTests.cs">
+      <Link>GenericDelegatesTests.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\Int16ExtensionsTests.cs">
+      <Link>Int16ExtensionsTests.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\Int32ExtensionsTests.cs">
+      <Link>Int32ExtensionsTests.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\Int64ExtensionsTests.cs">
+      <Link>Int64ExtensionsTests.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\RandomExtensionsTests.cs">
+      <Link>RandomExtensionsTests.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\BaseClasses\IndexOfAny_CharArray_Bases.cs">
+      <Link>StringExtensionsTests\BaseClasses\IndexOfAny_CharArray_Bases.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\IndexOfAny_String_StringArray.cs">
+      <Link>StringExtensionsTests\IndexOfAny_String_StringArray.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\IndexOfAny_String_StringArray_Int32.cs">
+      <Link>StringExtensionsTests\IndexOfAny_String_StringArray_Int32.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\IndexOfAny_String_StringArray_Int32_Int32.cs">
+      <Link>StringExtensionsTests\IndexOfAny_String_StringArray_Int32_Int32.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\IndexOfAny_String_StringArray_Int32_Int32_StringComparison.cs">
+      <Link>StringExtensionsTests\IndexOfAny_String_StringArray_Int32_Int32_StringComparison.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\IndexOfAny_String_StringArray_Int32_StringComparison.cs">
+      <Link>StringExtensionsTests\IndexOfAny_String_StringArray_Int32_StringComparison.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\IndexOfAny_String_StringArray_StringComparison.cs">
+      <Link>StringExtensionsTests\IndexOfAny_String_StringArray_StringComparison.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\IndexOfNotAny_String_CharArray.cs">
+      <Link>StringExtensionsTests\IndexOfNotAny_String_CharArray.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\IndexOfNotAny_String_CharArray_Int32.cs">
+      <Link>StringExtensionsTests\IndexOfNotAny_String_CharArray_Int32.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\IndexOfNotAny_String_CharArray_Int32_Int32.cs">
+      <Link>StringExtensionsTests\IndexOfNotAny_String_CharArray_Int32_Int32.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\LastIndexOfNotAny_String_CharArray.cs">
+      <Link>StringExtensionsTests\LastIndexOfNotAny_String_CharArray.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\LastIndexOfNotAny_String_CharArray_Int32.cs">
+      <Link>StringExtensionsTests\LastIndexOfNotAny_String_CharArray_Int32.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\LastIndexOfNotAny_String_CharArray_Int32_Int32.cs">
+      <Link>StringExtensionsTests\LastIndexOfNotAny_String_CharArray_Int32_Int32.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\TestRunner.cs">
+      <Link>TestRunner.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\UInt16ExtensionsTests.cs">
+      <Link>UInt16ExtensionsTests.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\UInt32ExtensionsTests.cs">
+      <Link>UInt32ExtensionsTests.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\UInt64ExtensionsTests.cs">
+      <Link>UInt64ExtensionsTests.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NLib %28.NET2%29\NLib %28.NET2%29.csproj">
+      <Project>{F736DC08-FF79-4A9F-A774-4CC4BD552285}</Project>
+      <Name>NLib %28.NET2%29</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
