@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FABAC704-4DA2-42EA-A314-9530D0C6721C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NLib.Windows.Forms</RootNamespace>
+    <AssemblyName>NLib.Windows.Forms</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release Without Documentation|x86'">
+    <OutputPath>bin\x86\Release Without Documentation\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release Without Documentation|AnyCPU'">
+    <OutputPath>bin\Release Without Documentation\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\NLib.Windows.Forms %28Common%29\ControlExtensions.cs">
+      <Link>ControlExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\NLib.Windows.Forms %28Common%29\LabeledLabel.cs">
+      <Link>LabeledLabel.cs</Link>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="..\NLib.Windows.Forms %28Common%29\LabeledLabel2.cs">
+      <Link>LabeledLabel2.cs</Link>
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="..\NLib.Windows.Forms %28Common%29\LabeledLabel2.designer.cs">
+      <Link>LabeledLabel2.designer.cs</Link>
+      <DependentUpon>LabeledLabel2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\NLib.Windows.Forms %28Common%29\LabeledLabel2ControlDesigner.cs">
+      <Link>LabeledLabel2ControlDesigner.cs</Link>
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="..\NLib.Windows.Forms %28Common%29\LabeledLabelControlDesigner.cs">
+      <Link>LabeledLabelControlDesigner.cs</Link>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="..\NLib.Windows.Forms %28Common%29\LabeledTextBox.cs">
+      <Link>LabeledTextBox.cs</Link>
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="..\NLib.Windows.Forms %28Common%29\LabeledTextBox.designer.cs">
+      <Link>LabeledTextBox.designer.cs</Link>
+      <DependentUpon>LabeledTextBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="..\NLib.Windows.Forms %28Common%29\LabeledTextBoxControlDesigner.cs">
+      <Link>LabeledTextBoxControlDesigner.cs</Link>
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="..\NLib.Windows.Forms %28Common%29\SnapToSide.cs">
+      <Link>SnapToSide.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="..\NLib.Windows.Forms %28Common%29\LabeledLabel2.resx">
+      <Link>LabeledLabel2.resx</Link>
+      <DependentUpon>LabeledLabel2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\NLib.Windows.Forms %28Common%29\LabeledTextBox.resx">
+      <Link>LabeledTextBox.resx</Link>
+      <DependentUpon>LabeledTextBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>SET netTarget=NET4
+SET configName=$(ConfigurationName)
+IF NOT "%25configName:Debug=%25" == "$(ConfigurationName)" GOTO debug
+
+:release
+ECHO.
+ECHO --- Running Post-Build Events For Release ---
+
+ECHO.
+ECHO --- Ensuring Output Path Exists ---
+IF EXIST ..\..\..\Output GOTO OUTPUT_DIR_EXISTS
+ECHO MKDIR ..\..\..\Output
+MKDIR ..\..\..\Output
+:OUTPUT_DIR_EXISTS
+IF EXIST ..\..\..\Output\%25netTarget%25 GOTO NET_DIR_EXISTS
+ECHO MKDIR ..\..\..\Output\%25netTarget%25
+MKDIR ..\..\..\Output\%25netTarget%25
+:NET_DIR_EXISTS
+
+ECHO.
+ECHO --- Copying to Output ---
+ECHO COPY /Y "$(TargetFileName)" ..\..\..\Output\%25netTarget%25
+COPY /Y "$(TargetFileName)" ..\..\..\Output\%25netTarget%25
+
+IF NOT "%25configName:Without Documentation=%25" == "$(ConfigurationName)" GOTO no_documentation
+
+ECHO.
+ECHO --- Generating Documentation ---
+ECHO %25SystemRoot%25\Microsoft.NET\Framework\v3.5\MSBuild.exe "..\..\$(ProjectName).shfbproj"
+%25SystemRoot%25\Microsoft.NET\Framework\v3.5\MSBuild.exe "..\..\$(ProjectName).shfbproj"
+
+ECHO.
+ECHO --- Moving CHM File to Bin Output ---
+ECHO MOVE /Y ..\..\..\Output\OnlineDocumentation\%25netTarget%25\$(TargetName)\Documentation.chm ..\..\..\Output\%25netTarget%25\$(TargetName).chm
+MOVE /Y ..\..\..\Output\OnlineDocumentation\%25netTarget%25\$(TargetName)\Documentation.chm ..\..\..\Output\%25netTarget%25\$(TargetName).chm
+
+:no_documentation
+
+ECHO.
+ECHO --- Finished Post-Build Events For Release ---
+ECHO.
+
+goto :exit
+
+:debug
+REM Debug configuration build event go here
+
+:exit
+</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
