@@ -56,6 +56,9 @@
     <Compile Include="..\NLib %28Common%29\ByteExtensions.cs">
       <Link>ByteExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\NLib %28Common%29\CharExtensions.cs">
+      <Link>CharExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\NLib %28Common%29\EasyThread.cs">
       <Link>EasyThread.cs</Link>
     </Compile>
@@ -86,6 +89,9 @@
     <Compile Include="..\NLib %28Common%29\StringExtensions.cs">
       <Link>StringExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\NLib %28Common%29\StringReader2.cs">
+      <Link>StringReader2.cs</Link>
+    </Compile>
     <Compile Include="..\NLib %28Common%29\UInt16Extensions.cs">
       <Link>UInt16Extensions.cs</Link>
     </Compile>
@@ -95,10 +101,14 @@
     <Compile Include="..\NLib %28Common%29\UInt64Extensions.cs">
       <Link>UInt64Extensions.cs</Link>
     </Compile>
+    <Compile Include="NewLineSequence.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="NLib.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
