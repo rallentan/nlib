@@ -31,8 +31,11 @@ namespace NLib
     /// </summary>
     public static partial class StringExtensions
     {
-        //--- Constants ---
+        //--- Public Constants ---
 
+        public const NewLineSequence DEFAULT_NEWLINE_SEQUENCE = NewLineSequence.Lf;
+
+        //--- Constants ---
         const string ARGNAME_SOURCE = "source";
         const string ARGNAME_VALUE = "value";
         const string ARGNAME_ANYOF = "anyOf";
@@ -45,7 +48,7 @@ namespace NLib
         const string EXCMSG_MUST_BE_LESS_THAN_INT32_MAXVALUE = "Parameter must be less than Int32.MaxValue.";
         const string EXCMSG_INVALID_ENUMERATION_VALUE = "Parameter is an invalid enumeration value.";
         const int NPOS = -1;
-        
+       
         //--- Public Static Methods ---
 
         /// <summary>
@@ -97,6 +100,11 @@ namespace NLib
                 throw new ArgumentNullException(ARGNAME_SOURCE);
 
             return source.IndexOf(value) != -1;
+        }
+
+        public static bool Contains(this string source, char value, bool ignoreCase)
+        {
+            return IndexOf(source, value, ignoreCase) != -1;
         }
 
         /// <summary>
@@ -198,6 +206,240 @@ namespace NLib
             result.Append(source, posCurrent, source.Length - posCurrent);
 
             return result.ToString();
+        }
+
+        /// <summary>
+        /// Returns the number of lines in a given string using a given newline 
+        /// character sequence.
+        /// </summary>
+        public static int GetLineCount(this string source)
+        {
+            return GetLineCount(source, DEFAULT_NEWLINE_SEQUENCE);
+        }
+        
+        /// <summary>
+        /// Returns the number of lines in a given string using a given newline 
+        /// character sequence.
+        /// </summary>
+        public static int GetLineCount(this string source, NewLineSequence newLineSeq)
+        {
+            if (source.Length == 0)
+                return 1;
+            int i = LineNumberOfIndex(source, source.Length - 1) + 1;
+            if (newLineSeq == NewLineSequence.Lf)
+            {
+                if (source[source.Length - 1] == '\n')
+                    i++;
+            }
+            else if (newLineSeq == NewLineSequence.Cr)
+            {
+                if (source[source.Length - 1] == '\r')
+                    i++;
+            }
+            else if (newLineSeq == NewLineSequence.CrLf)
+            {
+                if (source[source.Length - 2] == '\r' && source[source.Length - 1] == '\n')
+                    i++;
+            }
+            else if (newLineSeq == NewLineSequence.Any)
+            {
+                if (source[source.Length - 2] == '\r' && source[source.Length - 1] == '\n')
+                    i++;
+                else if (source[source.Length - 1] == '\n')
+                    i++;
+                else if (source[source.Length - 1] == '\r')
+                    i++;
+            }
+            return i;
+        }
+        
+        /// <summary>
+        /// Retrieves the zero-based line number from the specified zero-based character position within a specified System.String object.
+        /// </summary>
+        public static int LineNumberOfIndex(this string source, int index)
+        {
+            return LineNumberOfIndex(source, index, DEFAULT_NEWLINE_SEQUENCE);
+        }
+        
+        /// <summary>
+        /// Retrieves the zero-based line number from the specified zero-based character position within a specified System.String object.
+        /// </summary>
+        public static int LineNumberOfIndex(this string source, int index, NewLineSequence newLineSeq)
+        {
+            if (index < 0 || index > source.Length)
+                throw new ArgumentOutOfRangeException("index", "Index was out of range. Must be non-negative and less than or equal to the size of the collection.");
+            string[] strs;
+            string t = source.Substring(0, index);
+            if (newLineSeq == NewLineSequence.CrLf)
+                strs = t.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+            else if (newLineSeq == NewLineSequence.Lf)
+                strs = t.Split('\n');
+            else if (newLineSeq == NewLineSequence.Cr)
+                strs = t.Split('\r');
+            else
+                strs = t.Split(new string[] { "\r\n", "\n", "\r" }, StringSplitOptions.None);
+            return strs.Length - 1;
+        }
+        
+        /// <summary>
+        /// Retrieves the zero-based index of the first character of a given zero-based line.
+        /// </summary>
+        public static int FirstIndexOfLine(this string source, int line)
+        {
+            return FirstIndexOfLine(source, line, DEFAULT_NEWLINE_SEQUENCE);
+        }
+        
+        /// <summary>
+        /// Retrieves the zero-based index of the first character of a given zero-based line.
+        /// </summary>
+        public static int FirstIndexOfLine(this string source, int line, NewLineSequence newLineSeq)
+        {
+            if (line < 0)
+                throw new ArgumentOutOfRangeException("line", "Line was out of range. Must be non-negative.");
+            int p = 0;
+            if (newLineSeq == NewLineSequence.CrLf)
+            {
+                while (line > 0)
+                {
+                    if ((p = source.IndexOf("\r\n", p)) == -1)
+                        return -1;
+                    line--;
+                    p += 2;
+                    if (p == source.Length)  // Final NewLine sequence is ignored
+                        return -1;
+                }
+                return p;
+            }
+            else if (newLineSeq == NewLineSequence.Lf)
+            {
+                while (line > 0)
+                {
+                    if ((p = source.IndexOf("\n", p)) == -1)
+                        return -1;
+                    line--;
+                    p++;
+                    if (p == source.Length)  // Final NewLine sequence is ignored
+                        return -1;
+                }
+                return p;
+            }
+            else if (newLineSeq == NewLineSequence.Cr)
+            {
+                while (line > 0)
+                {
+                    if ((p = source.IndexOf("\r", p)) == -1)
+                        return -1;
+                    line--;
+                    p++;
+                    if (p == source.Length)  // Final NewLine sequence is ignored
+                        return -1;
+                }
+                return p;
+            }
+            else
+            {
+                while (line > 0)
+                {
+                    if ((p = source.IndexOfAny(new char[] { '\n', '\r' }, p)) == -1)
+                        return -1;
+                    line--;
+                    p++;
+                    if (source[p] == '\r' && source[p + 1] == '\n')
+                        p++;
+                    if (p == source.Length)  // Final NewLine sequence is ignored
+                        return -1;
+                }
+                return p;
+            }
+        }
+
+
+        // IndexOf:
+
+        public static int IndexOf(this string source, char value, bool ignoreCase)
+        {
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
+
+            if (ignoreCase)
+            {
+                return IndexOfIgnoreCase(source, value, 0, source.Length);
+            }
+            else
+            {
+                return source.IndexOf(value, 0, source.Length);
+            }
+        }
+
+        public static int IndexOf(this string source, char value, int startIndex, bool ignoreCase)
+        {
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
+
+            if (ignoreCase)
+            {
+                return IndexOfIgnoreCase(source, value, startIndex, source.Length - startIndex);
+            }
+            else
+            {
+                return source.IndexOf(value, startIndex, source.Length - startIndex);
+            }
+        }
+
+        public static int IndexOf(this string source, char value, int startIndex, int count, bool ignoreCase)
+        {
+            if (ignoreCase)
+                return IndexOfIgnoreCase(source, value, startIndex, count);
+            else
+            {
+                if (source == null)
+                    throw new ArgumentNullException(ARGNAME_SOURCE);
+                return source.IndexOf(value, startIndex, count);
+            }
+        }
+
+        // IndexOfAny(char[]):
+
+        public static int IndexOfAny(this string source, char[] anyOf, bool ignoreCase)
+        {
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
+
+            if (ignoreCase)
+            {
+                return IndexOfAnyIgnoreCase(source, anyOf, 0, source.Length);
+            }
+            else
+            {
+                return source.IndexOfAny(anyOf, 0, source.Length);
+            }
+        }
+
+        public static int IndexOfAny(this string source, char[] anyOf, int startIndex, bool ignoreCase)
+        {
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
+
+            if (ignoreCase)
+            {
+                return IndexOfAnyIgnoreCase(source, anyOf, startIndex, source.Length - startIndex);
+            }
+            else
+            {
+                return source.IndexOfAny(anyOf, startIndex, source.Length - startIndex);
+            }
+        }
+
+        public static int IndexOfAny(this string source, char[] anyOf, int startIndex, int count, bool ignoreCase)
+        {
+            if (ignoreCase)
+                return IndexOfAnyIgnoreCase(source, anyOf, startIndex, count);
+            else
+            {
+                if (source == null)
+                    throw new ArgumentNullException(ARGNAME_SOURCE);
+                return source.IndexOfAny(anyOf, startIndex, count);
+            }
         }
 
 
@@ -467,6 +709,35 @@ namespace NLib
 
         // IndexOfNotAny:
 
+        public static int IndexOfNotAny(this string source, char[] anyOf, bool ignoreCase)
+        {
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
+
+            if (ignoreCase)
+                return IndexOfNotAnyIgnoreCase(source, anyOf, 0, source.Length);
+            else
+                return IndexOfNotAnyOrdinal(source, anyOf, 0, source.Length);
+        }
+
+        public static int IndexOfNotAny(this string source, char[] anyOf, int startIndex, bool ignoreCase)
+        {
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
+
+            if (ignoreCase)
+                return IndexOfNotAnyIgnoreCase(source, anyOf, startIndex, source.Length - startIndex);
+            else
+                return IndexOfNotAnyOrdinal(source, anyOf, startIndex, source.Length - startIndex);
+        }
+
+        public static int IndexOfNotAny(this string source, char[] anyOf, int startIndex, int count, bool ignoreCase)
+        {
+            if (ignoreCase)
+                return IndexOfNotAnyIgnoreCase(source, anyOf, startIndex, count);
+            else
+                return IndexOfNotAnyOrdinal(source, anyOf, startIndex, count);
+        }
 
         /// <summary>
         ///     Reports the index of the first occurrence in this instance of any character
@@ -590,6 +861,44 @@ namespace NLib
         public static int IndexOfNotAny(this string source, char[] anyOf, int startIndex, int count)
         {
             return IndexOfNotAnyOrdinal(source, anyOf, startIndex, count);
+        }
+
+
+        // LastIndexOfAny:
+
+        public static int LastIndexOfAny(this string source, char[] anyOf, bool ignoreCase)
+        {
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
+
+            if (ignoreCase)
+                return LastIndexOfAnyIgnoreCase(source, anyOf, source.Length - 1, source.Length);
+            else
+                return source.LastIndexOfAny(anyOf, source.Length - 1, source.Length);
+        }
+
+        public static int LastIndexOfAny(this string source, char[] anyOf, int startIndex, bool ignoreCase)
+        {
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
+            if (startIndex == int.MaxValue)
+                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_MUST_BE_LESS_THAN_INT32_MAXVALUE);
+
+            if (ignoreCase)
+                return LastIndexOfAnyIgnoreCase(source, anyOf, startIndex, startIndex + 1);
+            else
+                return source.LastIndexOfAny(anyOf, startIndex, startIndex + 1);
+        }
+
+        public static int LastIndexOfAny(this string source, char[] anyOf, int startIndex, int count, bool ignoreCase)
+        {
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
+
+            if (ignoreCase)
+                return LastIndexOfAnyIgnoreCase(source, anyOf, startIndex, count);
+            else
+                return source.LastIndexOfAny(anyOf, startIndex, count);
         }
 
 
