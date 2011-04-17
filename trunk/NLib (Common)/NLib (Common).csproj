@@ -47,10 +47,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ByteExtensions.cs" />
+    <Compile Include="CharExtensions.cs" />
     <Compile Include="GenericDelegates_NET35.cs" />
     <Compile Include="GenericDelegates_NET2.cs" />
     <Compile Include="Int64Extensions.cs" />
     <Compile Include="StringExtensions.cs" />
+    <Compile Include="StringReader2.cs" />
     <Compile Include="UInt64Extensions.cs" />
     <Compile Include="UInt16Extensions.cs" />
     <Compile Include="UInt32Extensions.cs" />
