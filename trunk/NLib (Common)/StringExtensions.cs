@@ -866,6 +866,44 @@ namespace NLib
 
         // LastIndexOfAny:
 
+        public static int LastIndexOf(this string source, char value, bool ignoreCase)
+        {
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
+
+            if (ignoreCase)
+                return LastIndexOfIgnoreCase(source, value, source.Length - 1, source.Length);
+            else
+                return source.LastIndexOf(value, source.Length - 1, source.Length);
+        }
+
+        public static int LastIndexOf(this string source, char value, int startIndex, bool ignoreCase)
+        {
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
+            if (startIndex == int.MaxValue)
+                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_MUST_BE_LESS_THAN_INT32_MAXVALUE);
+
+            if (ignoreCase)
+                return LastIndexOfIgnoreCase(source, value, startIndex, startIndex + 1);
+            else
+                return source.LastIndexOf(value, startIndex, startIndex + 1);
+        }
+
+        public static int LastIndexOf(this string source, char value, int startIndex, int count, bool ignoreCase)
+        {
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
+
+            if (ignoreCase)
+                return LastIndexOfIgnoreCase(source, value, startIndex, count);
+            else
+                return source.LastIndexOf(value, startIndex, count);
+        }
+
+
+        // LastIndexOfAny:
+
         public static int LastIndexOfAny(this string source, char[] anyOf, bool ignoreCase)
         {
             if (source == null)
@@ -1621,6 +1659,49 @@ namespace NLib
             nextChar: ;
             }
             return -1;
+        }
+
+        static unsafe int LastIndexOfIgnoreCase(string source, char value, int startIndex, int count)
+        {
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
+            if (source.Length == 0)
+                return -1;
+            if (startIndex < 0 || startIndex >= source.Length)
+                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
+            if (count < 0 || startIndex - count + 1 < 0)
+                throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
+
+            value = char.ToUpperInvariant(value);
+
+            fixed (char* pSource = source)
+            {
+                char* pSourcePos = pSource + startIndex;
+                char* pSourceEnd = pSourcePos - count;
+                char* pSourceEndOfFolds = pSourceEnd + 9;
+                while (pSourcePos > pSourceEndOfFolds)
+                {
+                    if (char.ToUpperInvariant(*(pSourcePos--)) == value
+                        || char.ToUpperInvariant(*(pSourcePos--)) == value
+                        || char.ToUpperInvariant(*(pSourcePos--)) == value
+                        || char.ToUpperInvariant(*(pSourcePos--)) == value
+                        || char.ToUpperInvariant(*(pSourcePos--)) == value
+                        || char.ToUpperInvariant(*(pSourcePos--)) == value
+                        || char.ToUpperInvariant(*(pSourcePos--)) == value
+                        || char.ToUpperInvariant(*(pSourcePos--)) == value
+                        || char.ToUpperInvariant(*(pSourcePos--)) == value
+                        || char.ToUpperInvariant(*(pSourcePos--)) == value)
+                    {
+                        return (int)(pSourcePos - pSource + 1);
+                    }
+                }
+                while (pSourcePos > pSourceEnd)
+                {
+                    if (char.ToUpperInvariant(*(pSourcePos--)) == value)
+                        return (int)(pSourcePos - pSource + 1);
+                }
+                return -1;
+            }
         }
 
         static unsafe int LastIndexOfAnyIgnoreCase(string source, char[] anyOf, int startIndex, int count)
