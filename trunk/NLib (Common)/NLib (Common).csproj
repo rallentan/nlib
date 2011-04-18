@@ -51,6 +51,7 @@
     <Compile Include="GenericDelegates_NET35.cs" />
     <Compile Include="GenericDelegates_NET2.cs" />
     <Compile Include="Int64Extensions.cs" />
+    <Compile Include="NewLineSequence.cs" />
     <Compile Include="StringExtensions.cs" />
     <Compile Include="StringReader2.cs" />
     <Compile Include="UInt64Extensions.cs" />
