@@ -7,7 +7,7 @@ using System.IO;
 namespace NLib
 {
     [DebuggerDisplay("[0]: {(char)this[0]} [1]: {(char)this[1]} [2]: {(char)this[2]} [3]: {(char)this[3]}")]
-    public class StringReader2 : Stream, IDisposable
+    public class StringReader2 : IDisposable
     {
         //--- Constants ---
         const bool DEFAULT_IGNORECASE = true;
