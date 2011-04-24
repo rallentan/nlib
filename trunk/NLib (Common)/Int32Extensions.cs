@@ -16,6 +16,26 @@ namespace NLib
 
         //--- Public Static Methods ---
 
+        public static byte Byte0(this int value)
+        {
+            return (byte)value;
+        }
+
+        public static byte Byte1(this int value)
+        {
+            return (byte)(value >> 8);
+        }
+
+        public static byte Byte2(this int value)
+        {
+            return (byte)(value >> 16);
+        }
+
+        public static byte Byte3(this int value)
+        {
+            return (byte)(value >> 24);
+        }
+
         /// <summary>
         ///     Gets the eight high-order bits of the specified <see cref="Int32"/>.
         /// </summary>

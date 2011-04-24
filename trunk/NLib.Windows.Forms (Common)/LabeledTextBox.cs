@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Collections;
+using NLib.Windows.Forms;
+using System.Diagnostics;
 
 namespace NLib.Windows.Forms
 {
@@ -15,18 +17,23 @@ namespace NLib.Windows.Forms
         public LabeledTextBox()
         {
             InitializeComponent();
+
+            textBox.SnapToSibling(SnapToSides.Left, SnapToSides.Right, label);
+            textBox.StretchToParent(SnapToSides.Right);
         }
 
         //--- Public Properties ---
 
         public string LabelText
         {
-            get { return label.Text; }
+            get { return label.Text.Substring(0, label.Text.Length - 1); }
             set
             {
-                label.Text = value;
-                textBox.Left = label.Right + label.Margin.Right + textBox.Margin.Left;
-                Width = textBox.Right + 1;
+                label.Text = value + ':';
+                textBox.SnapToSibling(SnapToSides.Left, SnapToSides.Right, label);
+                textBox.StretchToParent(SnapToSides.Right);
+                //textBox.Left = label.Right + label.Margin.Right + textBox.Margin.Left;
+                //Width = textBox.Right + 1;
             }
         }
 
@@ -34,6 +41,12 @@ namespace NLib.Windows.Forms
         {
             get { return textBox.Text; }
             set { textBox.Text = value; }
+        }
+
+        public Font TextBoxFont
+        {
+            get { return textBox.Font; }
+            set { textBox.Font = value; }
         }
     }
 }

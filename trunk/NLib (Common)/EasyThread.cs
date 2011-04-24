@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Runtime.Remoting.Messaging;
 using System.Reflection;
+using System.Diagnostics;
 
 namespace NLib
 {
@@ -52,6 +53,7 @@ namespace NLib
 
         //--- Private Static Methods ---
 
+        [DebuggerNonUserCode]
         private static void ThreadCallback(IAsyncResult ar)
         {
             AsyncResult result = (AsyncResult)ar;

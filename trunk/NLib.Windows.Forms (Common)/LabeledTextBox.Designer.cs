@@ -37,7 +37,7 @@
             this.textBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox.Location = new System.Drawing.Point(41, 0);
+            this.textBox.Location = new System.Drawing.Point(42, 0);
             this.textBox.Name = "textBox";
             this.textBox.Size = new System.Drawing.Size(100, 20);
             this.textBox.TabIndex = 1;
@@ -49,9 +49,9 @@
             this.label.AutoSize = true;
             this.label.Location = new System.Drawing.Point(0, 3);
             this.label.Name = "label";
-            this.label.Size = new System.Drawing.Size(35, 13);
+            this.label.Size = new System.Drawing.Size(36, 13);
             this.label.TabIndex = 0;
-            this.label.Text = "label1";
+            this.label.Text = "Label:";
             // 
             // LabeledTextBox
             // 
@@ -60,7 +60,7 @@
             this.Controls.Add(this.label);
             this.Controls.Add(this.textBox);
             this.Name = "LabeledTextBox";
-            this.Size = new System.Drawing.Size(141, 20);
+            this.Size = new System.Drawing.Size(142, 20);
             this.ResumeLayout(false);
             this.PerformLayout();
 
