@@ -77,10 +77,10 @@ namespace NLib
             return _s.Substring(_pos, count);
         }
         
-        public int Read()
+        public char ReadChar()
         {
             if (EndOfStream)
-                return NPOS;
+                throw new EndOfStreamException();
             return _s[_pos++];
         }
         
@@ -168,7 +168,7 @@ namespace NLib
             _startIndex = startIndex;
         }
         
-        public void Skip() { Read(); }
+        public void Skip() { ReadChar(); }
         
         public void Skip(int count)
         {
