@@ -133,37 +133,37 @@ namespace NUnitTests.NLib.Windows.Forms
             // Add Control1 to Form1 for Explicitly Padded Form Testing
             _testForm1.Controls.Add(_testControl1);
 
-            Assert.Throws<ArgumentNullException>(() => { ControlExtensions.SnapToChild(null, SnapToSides.Right, _testControl1); });
-            Assert.Throws<ArgumentNullException>(() => { _testForm1.SnapToChild(SnapToSides.Right, null); });
-            Assert.Throws<ArgumentOutOfRangeException>(() => { _testForm1.SnapToChild(0, _testControl1); });
-            Assert.Throws<ArgumentOutOfRangeException>(() => { _testForm1.SnapToChild((SnapToSides)(-1), _testControl1); });
-            Assert.Throws<ArgumentOutOfRangeException>(() => { _testForm1.SnapToChild(SnapToSides.Top | SnapToSides.Right, _testControl1); });
+            Assert.Throws<ArgumentNullException>(() => { ControlExtensions.StretchToChild(null, SnapToSides.Right, _testControl1); });
+            Assert.Throws<ArgumentNullException>(() => { _testForm1.StretchToChild(SnapToSides.Right, null); });
+            Assert.Throws<ArgumentOutOfRangeException>(() => { _testForm1.StretchToChild(0, _testControl1); });
+            Assert.Throws<ArgumentOutOfRangeException>(() => { _testForm1.StretchToChild((SnapToSides)(-1), _testControl1); });
+            Assert.Throws<ArgumentOutOfRangeException>(() => { _testForm1.StretchToChild(SnapToSides.Top | SnapToSides.Right, _testControl1); });
 
             // Form1 Left
             SetUpForm1();
             SetUpControl1();
-            Assert.Throws<ArgumentOutOfRangeException>(() => { _testForm1.SnapToChild(SnapToSides.Left, _testControl1); });
+            Assert.Throws<ArgumentOutOfRangeException>(() => { _testForm1.StretchToChild(SnapToSides.Left, _testControl1); });
             Assert.AreEqual(FORM_1_W, _testForm1.Size.Width);
             Assert.AreEqual(FORM_1_H, _testForm1.Size.Height);
 
             // Form1 Top
             SetUpForm1();
             SetUpControl1();
-            Assert.Throws<ArgumentOutOfRangeException>(() => { _testForm1.SnapToChild(SnapToSides.Top, _testControl1); });
+            Assert.Throws<ArgumentOutOfRangeException>(() => { _testForm1.StretchToChild(SnapToSides.Top, _testControl1); });
             Assert.AreEqual(FORM_1_W, _testForm1.Size.Width);
             Assert.AreEqual(FORM_1_H, _testForm1.Size.Height);
 
             // Form1 Right
             SetUpForm1();
             SetUpControl1();
-            _testForm1.SnapToChild(SnapToSides.Right, _testControl1);
+            _testForm1.StretchToChild(SnapToSides.Right, _testControl1);
             Assert.AreEqual(CTRL_1_R + CTRL_1_MR + FORM_1_PR, _testForm1.Size.Width);
             Assert.AreEqual(FORM_1_H, _testForm1.Size.Height);
 
             // Form1 Bottom
             SetUpForm1();
             SetUpControl1();
-            _testForm1.SnapToChild(SnapToSides.Bottom, _testControl1);
+            _testForm1.StretchToChild(SnapToSides.Bottom, _testControl1);
             Assert.AreEqual(FORM_1_W, _testForm1.Size.Width);
             Assert.AreEqual(CTRL_1_B + CTRL_1_MB + FORM_1_PB, _testForm1.Size.Height);
 
@@ -174,27 +174,27 @@ namespace NUnitTests.NLib.Windows.Forms
             // Form2 Right
             SetUpForm2();
             SetUpControl1();
-            _testForm2.SnapToChild(SnapToSides.Right, _testControl1);
+            _testForm2.StretchToChild(SnapToSides.Right, _testControl1);
             Assert.AreEqual(CTRL_1_R + CTRL_1_MR + 9, _testForm2.Size.Width);
             Assert.AreEqual(FORM_2_H, _testForm2.Size.Height);
 
             // Form2 Bottom
             SetUpForm2();
             SetUpControl1();
-            _testForm2.SnapToChild(SnapToSides.Bottom, _testControl1);
+            _testForm2.StretchToChild(SnapToSides.Bottom, _testControl1);
             Assert.AreEqual(FORM_2_W, _testForm2.Size.Width);
             Assert.AreEqual(CTRL_1_B + CTRL_1_MB + 9, _testForm2.Size.Height);
 
 
             // Control1 Right
             SetUpControls();
-            _testControl1.SnapToChild(SnapToSides.Right, _testControl2);
+            _testControl1.StretchToChild(SnapToSides.Right, _testControl2);
             Assert.AreEqual(CTRL_2_R + CTRL_2_MR, _testControl1.Bounds.Width);
             Assert.AreEqual(CTRL_1_H, _testControl1.Size.Height);
 
             // Control1 Bottom
             SetUpControls();
-            _testControl1.SnapToChild(SnapToSides.Bottom, _testControl2);
+            _testControl1.StretchToChild(SnapToSides.Bottom, _testControl2);
             Assert.AreEqual(CTRL_1_W, _testControl1.Size.Width);
             Assert.AreEqual(CTRL_2_B + CTRL_2_MB, _testControl1.Bounds.Height);
         }

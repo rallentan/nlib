@@ -4,6 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Globalization;
+using System.Threading;
+using System.Diagnostics;
 
 namespace NUnitTests.NLib
 {
@@ -124,8 +127,18 @@ namespace NUnitTests.NLib
             {
                 var testObject = new
                     StringExtensionsTests
-                    .IndexOfAny_String_StringArray_Int32_Int32_StringComparison.When_comparisonType_is_CurrentCulture
+                    .IndexOfAny_String_StringArray_Int32_Int32_StringComparison
+                    .When_comparisonType_is_CurrentCulture
                     .Root1();
+
+                testObject.When_sourceString_is_empty_returns_negative_one();
+                testObject.When_search_is_culture_sensitive_returns_according_to_comparisonType();
+            }
+
+            {
+                var testObject = new
+                    StringExtensionsTests
+                    .IndexOfAny_String_StringArray.Root1();
 
                 testObject.When_sourceString_is_empty_returns_negative_one();
                 testObject.When_search_is_culture_sensitive_returns_according_to_comparisonType();
