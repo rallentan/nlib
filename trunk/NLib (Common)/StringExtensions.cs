@@ -475,8 +475,8 @@ namespace NLib
         {
             if (source == null)
                 throw new ArgumentNullException(ARGNAME_SOURCE);
-            
-            return IndexOfAnyOrdinal(source, anyOf, 0, source.Length);
+
+            return IndexOfAnyCompareType(source, anyOf, 0, source.Length, StringComparison.CurrentCulture);
         }
 
         /// <summary>
@@ -519,8 +519,8 @@ namespace NLib
         {
             if (source == null)
                 throw new ArgumentNullException(ARGNAME_SOURCE);
-            
-            return IndexOfAnyOrdinal(source, anyOf, startIndex, source.Length - startIndex);
+
+            return IndexOfAnyCompareType(source, anyOf, startIndex, source.Length - startIndex, StringComparison.CurrentCulture);
         }
 
         /// <summary>
@@ -555,7 +555,7 @@ namespace NLib
         /// </exception>
         public static int IndexOfAny(this string source, string[] anyOf, int startIndex, int count)
         {
-            return IndexOfAnyOrdinal(source, anyOf, startIndex, count);
+            return IndexOfAnyCompareType(source, anyOf, startIndex, count, StringComparison.CurrentCulture);
         }
 
 

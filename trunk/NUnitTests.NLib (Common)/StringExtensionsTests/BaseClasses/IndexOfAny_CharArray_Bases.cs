@@ -435,9 +435,14 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
         }
 
         [Test]
+        // WARNING: This test does not differentiate CurrentCulture from InvariantCulture!
         public void When_search_is_culture_sensitive_returns_according_to_comparisonType()
         {
-            StringComparison comparisonTypePerformed = StringComparison.Ordinal;  // Does not include the case-sensitivity of the comparison-type
+            StringComparison comparisonTypePerformed;  // Should not be one of the case-sensitive comparison types
+
+            StringComparison expectedComparisonType = Model.ComparisonType;  // Should not be one of the case-sensitive comparison types
+            if ((int)expectedComparisonType % 2 != 0)
+                expectedComparisonType--;
 
             var prevCulture = Thread.CurrentThread.CurrentCulture;
             try
@@ -451,37 +456,44 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
                     Model.CULTURE_SENSITIVE_STRING_1.Length,
                     Model.ComparisonType);
 
-                if (result != -1)
+                if (result == -1)
                 {
-                    StringComparison caseInsensitiveComparisonType = Model.ComparisonType;
-                    if ((int)caseInsensitiveComparisonType % 2 == 0)
-                        caseInsensitiveComparisonType++;
+                    comparisonTypePerformed = StringComparison.Ordinal;
+                }
+                else
+                {
+                    // TODO: Add test to differentiate InvariantCulture from CurrentCulture
 
-                    Thread.CurrentThread.CurrentCulture = new CultureInfo("tr-TR", false);
-
-                    if (Model.TestedMethod(
-                        Model.CULTURE_SENSITIVE_STRING_2,
-                        Model.CULTURE_SENSITIVE_VALUE_ARRAY_2,
-                        0,
-                        Model.CULTURE_SENSITIVE_STRING_2.Length,
-                        caseInsensitiveComparisonType) == -1)
-                    {
-                        comparisonTypePerformed = StringComparison.InvariantCulture;
-                    }
-                    else
-                    {
+                    if (expectedComparisonType == StringComparison.CurrentCulture)
                         comparisonTypePerformed = StringComparison.CurrentCulture;
-                    }
+                    else
+                        comparisonTypePerformed = StringComparison.InvariantCulture;
+
+                    //StringComparison caseInsensitiveComparisonType = Model.ComparisonType;
+                    //if ((int)caseInsensitiveComparisonType % 2 == 0)
+                    //    caseInsensitiveComparisonType++;
+
+                    //Thread.CurrentThread.CurrentCulture = new CultureInfo("tr-TR", false);
+
+                    //if (Model.TestedMethod(
+                    //    Model.CULTURE_SENSITIVE_STRING_2,
+                    //    Model.CULTURE_SENSITIVE_VALUE_ARRAY_2,
+                    //    0,
+                    //    Model.CULTURE_SENSITIVE_STRING_2.Length,
+                    //    caseInsensitiveComparisonType) == -1)
+                    //{
+                    //    comparisonTypePerformed = StringComparison.InvariantCulture;
+                    //}
+                    //else
+                    //{
+                    //    comparisonTypePerformed = StringComparison.CurrentCulture;
+                    //}
                 }
             }
             finally
             {
                 Thread.CurrentThread.CurrentCulture = prevCulture;
             }
-
-            StringComparison expectedComparisonType = Model.ComparisonType;  // Does not include the case-sensitivity of the comparison-type
-            if ((int)expectedComparisonType % 2 != 0)
-                expectedComparisonType--;
 
             Assert.AreEqual(expectedComparisonType, comparisonTypePerformed);
         }
