@@ -1078,6 +1078,13 @@ namespace NLib
                 throw new ArgumentNullException(ARGNAME_SOURCE);
             if (anyOf == null)
                 throw new ArgumentNullException(ARGNAME_ANYOF);
+
+            int sourceLength = source.Length;
+            int anyOfLength = anyOf.Length;
+            char[] anyOfUpper = new char[anyOfLength];
+
+            if (sourceLength == 0)
+                return StringHelper.NPOS;
             if (startIndex < 0 || startIndex >= source.Length)
                 throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_INDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex - count + 1 < 0)
@@ -1088,8 +1095,8 @@ namespace NLib
             {
                 char* pStr = pStrBase + startIndex;
                 char* pStrEnd = pStr - count;
-                char* pAnyOfEnd = pAnyOfBase + anyOf.Length;
-                if (anyOf.Length >= 8)
+                char* pAnyOfEnd = pAnyOfBase + anyOfLength;
+                if (anyOfLength >= 8)
                 {
                     char* pAnyOfFoldedEnd = pAnyOfEnd - 7;
                     while (pStr > pStrEnd)
@@ -1127,6 +1134,106 @@ namespace NLib
                         while (pAnyOf < pAnyOfEnd)
                         {
                             if (*pStr == *(pAnyOf++))
+                                goto nextChar;
+                        }
+                        return (int)(pStr - pStrBase);
+                    nextChar:
+                        pStr--;
+                    }
+                }
+                return -1;
+            }
+        }
+
+        public static int LastIndexOfNotAny(this string source, char[] anyOf, bool ignoreCase)
+        {
+            return LastIndexOfNotAny(source, anyOf, source.Length - 1, source.Length);
+        }
+
+        public static int LastIndexOfNotAny(this string source, char[] anyOf, int startIndex, bool ignoreCase)
+        {
+            if (startIndex == Int32.MaxValue)
+                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_MUST_BE_LESS_THAN_INT32_MAXVALUE);
+
+            return LastIndexOfNotAny(source, anyOf, startIndex, startIndex + 1);
+        }
+
+        public static unsafe int LastIndexOfNotAny(this string source, char[] anyOf, int startIndex, int count, bool ignoreCase)
+        {
+            if (!ignoreCase)
+                return LastIndexOfNotAny(source, anyOf, startIndex, count);
+
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
+            if (anyOf == null)
+                throw new ArgumentNullException(ARGNAME_ANYOF);
+
+            int sourceLength = source.Length;
+            int anyOfLength = anyOf.Length;
+            char[] anyOfUpper = new char[anyOfLength];
+            char sourceChar;
+
+            if (sourceLength == 0)
+                return StringHelper.NPOS;
+            if (startIndex < 0 || startIndex >= sourceLength)
+                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_INDEX_OUT_OF_RANGE);
+            if (count < 0 || startIndex - count + 1 < 0)
+                throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
+
+            for (int i = 0; i < anyOfLength; i++)
+            {
+                anyOfUpper[i] = anyOf[i].ToUpperInvariant();
+            }
+
+            fixed (char* pStrBase = source)
+            fixed (char* pAnyOfBase = anyOfUpper)
+            {
+                char* pStr = pStrBase + startIndex;
+                char* pStrEnd = pStr - count;
+                char* pAnyOfEnd = pAnyOfBase + anyOfLength;
+
+                if (anyOfLength >= 8)
+                {
+                    char* pAnyOfFoldedEnd = pAnyOfEnd - 7;
+                    while (pStr > pStrEnd)
+                    {
+                        sourceChar = (*pStr).ToUpperInvariant();
+                        char* pAnyOf = pAnyOfBase;
+
+                        while (pAnyOf < pAnyOfFoldedEnd)
+                        {
+                            if (sourceChar == *(pAnyOf++)
+                                || sourceChar == *(pAnyOf++)
+                                || sourceChar == *(pAnyOf++)
+                                || sourceChar == *(pAnyOf++)
+                                || sourceChar == *(pAnyOf++)
+                                || sourceChar == *(pAnyOf++)
+                                || sourceChar == *(pAnyOf++)
+                                || sourceChar == *(pAnyOf++))
+                            {
+                                goto nextChar_FoldedSection;
+                            }
+                        }
+                        while (pAnyOf < pAnyOfEnd)
+                        {
+                            if (sourceChar == *(pAnyOf++))
+                                goto nextChar_FoldedSection;
+                        }
+                        return (int)(pStr - pStrBase);
+                    nextChar_FoldedSection:
+                        pStr--;
+                    }
+                }
+                else
+                {
+                    while (pStr > pStrEnd)
+                    {
+                        char* pAnyOf = pAnyOfBase;
+                        sourceChar = (*pStr).ToUpperInvariant();
+
+                        while (pAnyOf < pAnyOfEnd)
+                        {
+                            if (sourceChar == *(pAnyOf++))
                                 goto nextChar;
                         }
                         return (int)(pStr - pStrBase);
@@ -1544,6 +1651,8 @@ namespace NLib
                 throw new ArgumentNullException(ARGNAME_SOURCE);
             if (anyOf == null)
                 throw new ArgumentNullException(ARGNAME_ANYOF);
+            if (source.Length == 0)
+                return StringHelper.NPOS;
             if (startIndex < 0)
                 throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_INDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex > source.Length - count)
@@ -1610,6 +1719,8 @@ namespace NLib
                 throw new ArgumentNullException(ARGNAME_SOURCE);
             if (anyOf == null)
                 throw new ArgumentNullException(ARGNAME_ANYOF);
+            if (source.Length == 0)
+                return StringHelper.NPOS;
             if (startIndex < 0 || startIndex > source.Length)
                 throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_INDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex > source.Length - count)
@@ -1677,7 +1788,7 @@ namespace NLib
                     }
                 }
 
-                return -1;
+                return StringHelper.NPOS;
             }
         }
         
@@ -1749,7 +1860,7 @@ namespace NLib
             if (source == null)
                 throw new ArgumentNullException(ARGNAME_SOURCE);
             if (source.Length == 0)
-                return -1;
+                return StringHelper.NPOS;
             if (startIndex < 0 || startIndex >= source.Length)
                 throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_INDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex - count + 1 < 0)
