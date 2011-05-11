@@ -94,6 +94,9 @@
     <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\BaseClasses\IndexOfAny_CharArray_Bases.cs">
       <Link>StringExtensionsTests\BaseClasses\IndexOfAny_CharArray_Bases.cs</Link>
     </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\Helper.cs">
+      <Link>StringExtensionsTests\Helper.cs</Link>
+    </Compile>
     <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\IndexOfAny_String_StringArray.cs">
       <Link>StringExtensionsTests\IndexOfAny_String_StringArray.cs</Link>
     </Compile>
@@ -129,6 +132,9 @@
     </Compile>
     <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\LastIndexOfNotAny_String_CharArray_Int32_Int32.cs">
       <Link>StringExtensionsTests\LastIndexOfNotAny_String_CharArray_Int32_Int32.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\VerboseStringArray.cs">
+      <Link>StringExtensionsTests\VerboseStringArray.cs</Link>
     </Compile>
     <Compile Include="..\NUnitTests.NLib %28Common%29\TestRunner.cs">
       <Link>TestRunner.cs</Link>
