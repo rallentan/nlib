@@ -148,6 +148,36 @@ namespace NUnitTests.NLib.StringExtensionsTests
             }
         }
 
+        IEnumerable<char[]> AnyOfCharSource_Normal
+        {
+            get
+            {
+                yield return new char[] { 'x' };  // When_length_of_anyOf_is_1
+                yield return new char[] { 'a', 'b', 'x' };  // When_length_of_anyOf_is_between_2_and_3_inclusively
+                yield return new char[] { 'a', 'b', 'c', 'x' };  // When_length_of_anyOf_is_4
+                yield return new char[] { 'a', 'b', 'c', 'd', 'x' };  // When_length_of_anyOf_is_5
+                yield return new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'x' };  // When_length_of_anyOf_is_between_6_and_7
+                yield return new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'x' };  // When_length_of_anyOf_is_8
+                yield return new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'x' };  // When_length_of_anyOf_is_9
+                yield return new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'x' };  // When_length_of_anyOf_is_greater_than_or_equal_to_10
+            }
+        }
+
+        IEnumerable<char[]> AnyOfCharSource_Capital
+        {
+            get
+            {
+                yield return new char[] { 'X' };  // When_length_of_anyOf_is_1
+                yield return new char[] { 'a', 'b', 'X' };  // When_length_of_anyOf_is_between_2_and_3_inclusively
+                yield return new char[] { 'a', 'b', 'c', 'X' };  // When_length_of_anyOf_is_4
+                yield return new char[] { 'a', 'b', 'c', 'd', 'X' };  // When_length_of_anyOf_is_5
+                yield return new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'X' };  // When_length_of_anyOf_is_between_6_and_7
+                yield return new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'X' };  // When_length_of_anyOf_is_8
+                yield return new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'X' };  // When_length_of_anyOf_is_9
+                yield return new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'X' };  // When_length_of_anyOf_is_greater_than_or_equal_to_10
+            }
+        }
+
         IEnumerable<StringComparison> StringComparisonSource
         {
             get
@@ -161,7 +191,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
             }
         }
 
-        IEnumerable<object> OverflowTestSource
+        IEnumerable<object[]> OverflowTestSource
         {
             get
             {
@@ -170,6 +200,17 @@ namespace NUnitTests.NLib.StringExtensionsTests
                     yield return new object[] { 1, int.MaxValue, comparisonType };
                     yield return new object[] { int.MaxValue, 1, comparisonType };
                 }
+            }
+        }
+
+        IEnumerable<object[]> IndexOfCharOverflowTestSource
+        {
+            get
+            {
+                yield return new object[] { 1, int.MaxValue, false };
+                yield return new object[] { int.MaxValue, 1, false };
+                yield return new object[] { 1, int.MaxValue, true };
+                yield return new object[] { int.MaxValue, 1, true };
             }
         }
     }
