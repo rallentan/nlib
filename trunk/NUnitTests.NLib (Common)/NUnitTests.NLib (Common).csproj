@@ -87,6 +87,7 @@
     <Compile Include="RandomExtensionsTests.cs" />
     <Compile Include="StringExtensionsTests\BaseClasses\IndexOfAny_StringArray_Bases.cs" />
     <Compile Include="StringExtensionsTests\BaseClasses\IndexOfAny_CharArray_Bases.cs" />
+    <Compile Include="StringExtensionsTests\Helper.cs" />
     <Compile Include="StringExtensionsTests\LastIndexOfNotAny_String_CharArray_Int32.cs" />
     <Compile Include="StringExtensionsTests\LastIndexOfNotAny_String_CharArray_Int32_Int32.cs" />
     <Compile Include="StringExtensionsTests\LastIndexOfNotAny_String_CharArray.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="StringExtensionsTests\IndexOfAny_String_StringArray_StringComparison.cs" />
     <Compile Include="StringExtensionsTests\IndexOfAny_String_StringArray_Int32_Int32_StringComparison.cs" />
     <Compile Include="StringExtensionsTests\IndexOfAny_String_StringArray_Int32_StringComparison.cs" />
+    <Compile Include="StringExtensionsTests\VerboseStringArray.cs" />
     <Compile Include="TestRunner.cs" />
     <Compile Include="UInt16ExtensionsTests.cs" />
     <Compile Include="UInt32ExtensionsTests.cs" />
