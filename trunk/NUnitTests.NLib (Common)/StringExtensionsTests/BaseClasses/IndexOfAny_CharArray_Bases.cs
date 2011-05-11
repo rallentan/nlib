@@ -1423,25 +1423,67 @@ namespace NUnitTests.NLib.StringExtensionsTests.CharArrayBases
 
     //--- StringArray Tests ---
 
-    public abstract class When_length_of_source_is_1
-    {
-    }
+    //public abstract class When_length_of_source_is_1_Base
+    //{
+    //    public void When_an_exact_match_exists_returns_correct_value(
+    //        Overload overload,
+    //        object anyOf,
+    //        int startIndex,
+    //        int count,
+    //        StringComparison comparisonType)
+    //    {
+    //        int result = TestedMethodAdapter(
+    //            SOURCE_STRING,
+    //            STRING_ARRAY_LOWER,
+    //            INNER_RANGE_START,
+    //            INNER_RANGE_LENGTH,
+    //            Root1.COMPARISON_TYPE);
 
-    public abstract class When_length_of_source_is_greater_than_or_equal_to_2
-    {
-    }
+    //        Assert.AreEqual(CORRECT_RESULT, result);
+    //    }
 
-    public abstract class When_length_of_anyOf_is_0
-    {
-    }
+    //    [Test]
+    //    public void When_the_first_and_other_chars_of_match_differ_by_case_returns_according_to_comparison_type()
+    //    {
+    //        int result = Root0.TestedMethodAdapter(
+    //            SOURCE_STRING,
+    //            STRING_ARRAY_UPPER,
+    //            INNER_RANGE_START,
+    //            INNER_RANGE_LENGTH,
+    //            Root1.COMPARISON_TYPE);
 
-    public abstract class When_length_of_anyOf_is_1
-    {
-    }
+    //        Assert.AreEqual(CORRECT_RESULT_FOR_CASE_DIFF, result);
+    //    }
 
-    public abstract class When_length_of_anyOf_is_greater_than_or_equal_to_2
-    {
-    }
+    //    [Test]
+    //    public void When_a_match_does_not_exist_returns_negative_one()
+    //    {
+    //        int result = Root0.TestedMethodAdapter(
+    //            SOURCE_STRING,
+    //            STRING_ARRAY_NO_MATCH,
+    //            INNER_RANGE_START,
+    //            INNER_RANGE_LENGTH,
+    //            Root1.COMPARISON_TYPE);
+
+    //        Assert.AreEqual(-1, result);
+    //    }
+    //}
+
+    //public abstract class When_length_of_source_is_greater_than_or_equal_to_2_Base
+    //{
+    //}
+
+    //public abstract class When_length_of_anyOf_is_0_Base
+    //{
+    //}
+
+    //public abstract class When_length_of_anyOf_is_1_Base
+    //{
+    //}
+
+    //public abstract class When_length_of_anyOf_is_greater_than_or_equal_to_2_Base
+    //{
+    //}
 
     //--- Helpers ---
 

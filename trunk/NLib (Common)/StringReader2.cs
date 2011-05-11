@@ -197,7 +197,7 @@ namespace NLib
 
         public bool SkipWhileAnyOf(char[] anyOf) { return SkipToCore(_s.IndexOfNotAny(anyOf, _pos, _ignoreCase)); }
 
-        public bool StartsWith(char c) { return ((char)this[0]).CompareTo(c, _ignoreCase); }
+        public bool StartsWith(char c) { return CharExtensions.Equals((char)this[0], c, _ignoreCase); }
 
         public bool StartsWith(string s) { return string.Compare(_s, _pos, s, 0, s.Length, _ignoreCase) == 0; }
         
