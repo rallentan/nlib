@@ -327,6 +327,13 @@ namespace NUnitTests.NLib.StringExtensionsTests
         }
 
         [Theory]
+        public void When_anyOf_is_empty_returns_NPOS(StringComparison comparisonType)
+        {
+            int result = TestedMethodAdapter(SIMPLE_STRING, EMPTY_STRING_ARRAY, 0, 0, comparisonType);
+            Assert.AreEqual(StringHelper.NPOS, result);
+        }
+
+        [Theory]
         [ExpectedException(typeof(ArgumentException))]
         public void When_anyOf_contains_a_null_throws_ArgumentException(StringComparison comparisonType)
         {
@@ -392,7 +399,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
             [ValueSource(typeof(Helper), "AnyOf_Source_FirstCharCapitalized")] VerboseStringArray anyOf,
             [ValueSource(typeof(Helper), "StringComparisonSource")] StringComparison comparisonType)
         {
-            int expectedResult = Helper.IsCaseSensitive(comparisonType) ? -1 : 8;
+            int expectedResult = Helper.IsCaseSensitive(comparisonType) ? StringHelper.NPOS : 8;
 
             int result = TestedMethodAdapter(source, anyOf, 0, 10, comparisonType);
 
@@ -405,7 +412,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
             [ValueSource(typeof(Helper), "AnyOf_Source_SecondCharCapitalized")] VerboseStringArray anyOf,
             [ValueSource(typeof(Helper), "StringComparisonSource")] StringComparison comparisonType)
         {
-            int expectedResult = Helper.IsCaseSensitive(comparisonType) ? -1 : 8;
+            int expectedResult = Helper.IsCaseSensitive(comparisonType) ? StringHelper.NPOS : 8;
 
             int result = TestedMethodAdapter(source, anyOf, 0, 10, comparisonType);
 
@@ -418,7 +425,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
             [ValueSource(typeof(Helper), "AnyOf_Source_BothCharsCapitalized")] VerboseStringArray anyOf,
             [ValueSource(typeof(Helper), "StringComparisonSource")] StringComparison comparisonType)
         {
-            int expectedResult = Helper.IsCaseSensitive(comparisonType) ? -1 : 8;
+            int expectedResult = Helper.IsCaseSensitive(comparisonType) ? StringHelper.NPOS : 8;
 
             int result = TestedMethodAdapter(source, anyOf, 0, 10, comparisonType);
 
@@ -432,7 +439,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
             [ValueSource(typeof(Helper), "StringComparisonSource")] StringComparison comparisonType)
         {
             int result = TestedMethodAdapter(source, anyOf, 0, 9, comparisonType);
-            Assert.AreEqual(-1, result);
+            Assert.AreEqual(StringHelper.NPOS, result);
         }
 
         [Theory]
