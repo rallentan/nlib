@@ -118,20 +118,41 @@
     <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\IndexOfNotAny_String_CharArray.cs">
       <Link>StringExtensionsTests\IndexOfNotAny_String_CharArray.cs</Link>
     </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\IndexOfNotAny_String_CharArray_Boolean.cs">
+      <Link>StringExtensionsTests\IndexOfNotAny_String_CharArray_Boolean.cs</Link>
+    </Compile>
     <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\IndexOfNotAny_String_CharArray_Int32.cs">
       <Link>StringExtensionsTests\IndexOfNotAny_String_CharArray_Int32.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\IndexOfNotAny_String_CharArray_Int32_Boolean.cs">
+      <Link>StringExtensionsTests\IndexOfNotAny_String_CharArray_Int32_Boolean.cs</Link>
     </Compile>
     <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\IndexOfNotAny_String_CharArray_Int32_Int32.cs">
       <Link>StringExtensionsTests\IndexOfNotAny_String_CharArray_Int32_Int32.cs</Link>
     </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\IndexOfNotAny_String_CharArray_Int32_Int32_Boolean.cs">
+      <Link>StringExtensionsTests\IndexOfNotAny_String_CharArray_Int32_Int32_Boolean.cs</Link>
+    </Compile>
     <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\LastIndexOfNotAny_String_CharArray.cs">
       <Link>StringExtensionsTests\LastIndexOfNotAny_String_CharArray.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\LastIndexOfNotAny_String_CharArray_Boolean.cs">
+      <Link>StringExtensionsTests\LastIndexOfNotAny_String_CharArray_Boolean.cs</Link>
     </Compile>
     <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\LastIndexOfNotAny_String_CharArray_Int32.cs">
       <Link>StringExtensionsTests\LastIndexOfNotAny_String_CharArray_Int32.cs</Link>
     </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\LastIndexOfNotAny_String_CharArray_Int32_Boolean.cs">
+      <Link>StringExtensionsTests\LastIndexOfNotAny_String_CharArray_Int32_Boolean.cs</Link>
+    </Compile>
     <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\LastIndexOfNotAny_String_CharArray_Int32_Int32.cs">
       <Link>StringExtensionsTests\LastIndexOfNotAny_String_CharArray_Int32_Int32.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\LastIndexOfNotAny_String_CharArray_Int32_Int32_Boolean.cs">
+      <Link>StringExtensionsTests\LastIndexOfNotAny_String_CharArray_Int32_Int32_Boolean.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\SelfCheck.cs">
+      <Link>StringExtensionsTests\SelfCheck.cs</Link>
     </Compile>
     <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\VerboseStringArray.cs">
       <Link>StringExtensionsTests\VerboseStringArray.cs</Link>

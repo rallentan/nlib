@@ -20,9 +20,9 @@ namespace NUnitTests.NLib.StringExtensionsTests
             string result = "{";
             foreach (var value in Value)
             {
-                result += '"' + value + '"';
+                result += '"' + value + "\",";
             }
-            result += '}';
+            result = result.Substring(0, result.Length - 1) + '}';
             return result;
         }
 

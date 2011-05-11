@@ -1,11 +1,4 @@
-﻿#define METHOD_ANYOF_TYPE_IS_STRINGARRAY
-//#define METHOD_IS_OFNOTANY
-//#define METHOD_IS_LASTINDEXOF
-#define OVERLOAD_HAS_STARTINDEX_PARAM
-#define OVERLOAD_HAS_COUNT_PARAM
-#define OVERLOAD_HAS_COMPARISONTYPE_PARAM
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using NUnit.Framework;
@@ -16,1181 +9,173 @@ using NUnitTests.NLib.StringExtensionsTests.CharArrayBases;
 
 namespace NUnitTests.NLib.StringExtensionsTests
 {
-    namespace IndexOfAny_String_StringArray_Int32_Int32_StringComparison_Old
+    [TestFixture]
+    class IndexOfAny_String_StringArray_Int32_Int32_StringComparison
     {
-        public class Root0
-#if OVERLOAD_HAS_COMPARISONTYPE_PARAM
-            : Root0Base_with_comparisonType
-#else
-            : Root0Base
-#endif
+        //--- Constants ---
+        const string LENGTH_4_STRING = "oxox";
+        const string SIMPLE_STRING = LENGTH_4_STRING;
+        const string SOURCE_STRING = "xoooooxxox";
+        const int START_INDEX = 1;
+        const int COUNT = 8;
+        const int FOUND_POS = 6;
+
+        //--- Readonly Fields ---
+        static readonly string[] EMPTY_STRING_ARRAY = new string[0];
+        static readonly string[] LENGTH_4_STRING_ARRAY = new string[4] { "a", "b", "c", "d" };
+        static readonly string[] SIMPLE_STRING_ARRAY = LENGTH_4_STRING_ARRAY;
+        static readonly string[] STRING_ARRAY_WITH_NULL = new string[] { "a", null };
+        static readonly string[] STRING_ARRAY_WITH_EMPTY = new string[] { "a", string.Empty };
+        
+        //--- Public Methods ---
+
+        static int TestedMethodAdapter(string source, string[] anyOf, int startIndex, int count, StringComparison comparisonType)
         {
-            //--- Constants ---
-
-#if METHOD_ANYOF_TYPE_IS_STRINGARRAY
-            public const bool ANYOF_TYPE_IS_STRINGARRAY = true;
-#else
-            public const bool ANYOF_TYPE_IS_STRINGARRAY = false;
-#endif
-#if METHOD_IS_LASTINDEXOF
-            public const bool IS_LASTINDEXOF = true;
-#else
-            public const bool IS_LASTINDEXOF = false;
-#endif
-#if OVERLOAD_HAS_STARTINDEX_PARAM
-            const bool OVERLOAD_HAS_STARTINDEX_PARAM = true;
-#else
-            const bool OVERLOAD_HAS_STARTINDEX_PARAM = false;
-#endif
-#if OVERLOAD_HAS_COUNT_PARAM
-            const bool OVERLOAD_HAS_COUNT_PARAM = true;
-#else
-            const bool OVERLOAD_HAS_COUNT_PARAM = false;
-#endif
-#if OVERLOAD_HAS_COMPARISONTYPE_PARAM
-            const bool OVERLOAD_HAS_COMPARISONTYPE_PARAM = true;
-#else
-            const bool OVERLOAD_HAS_COMPARISONTYPE_PARAM = false;
-#endif
-
-
-            //--- Public Static Readonly Fields ---
-
-            public static readonly StringMethodGroupModel model0 =
-                new StringMethodGroupModel(
-                    new TestedMethodDisambiguator(TestedMethodAdapter),
-                    OVERLOAD_HAS_STARTINDEX_PARAM,
-                    OVERLOAD_HAS_COUNT_PARAM,
-                    OVERLOAD_HAS_COMPARISONTYPE_PARAM,
-                    ANYOF_TYPE_IS_STRINGARRAY,
-                    IS_LASTINDEXOF);
-
-
-            //--- Constructors ---
-
-            public Root0()
-                : base(model0)
-            {
-            }
-
-
-            //--- Public Methods ---
-#if METHOD_ANYOF_TYPE_IS_STRINGARRAY
-            public static int TestedMethodAdapter(string source, string[] anyOf, int startIndex, int count, StringComparison comparisonType)
-#else
-            public static int TestedMethodAdapter(string source, char[] anyOf, int startIndex, int count, StringComparison comparisonType)
-#endif
-            {
-                return StringExtensions.IndexOfAny(source, anyOf, startIndex, count, comparisonType);
-            }
+            return StringExtensions.IndexOfAny(source, anyOf, startIndex, count, comparisonType);
         }
-
 
         //--- Tests ---
 
-        #region
-
-#if OVERLOAD_HAS_COMPARISONTYPE_PARAM
-        namespace When_comparisonType_is_CurrentCulture
+        [Theory]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void When_sourceString_is_null_throws_ArgumentNullException(StringComparison comparisonType)
         {
-#endif
-        [TestFixture]
-        public class Root1
-#if METHOD_IS_OFNOTANY
-#if OVERLOAD_HAS_STARTINDEX_PARAM
-#if OVERLOAD_HAS_COUNT_PARAM
-                : Root1Base_OfNotAny_with_startIndex_and_count
-#else
-                : Root1Base_OfNotAny_with_startIndex_Without_count
-#endif
-#else
-                : Root1Base_OfNotAny
-#endif
-#else
-#if OVERLOAD_HAS_STARTINDEX_PARAM
-#if OVERLOAD_HAS_COUNT_PARAM
-                : Root1Base_OfAny_with_startIndex_and_count
-#else
-                : Root1Base_OfAny_with_startIndex_Without_count
-#endif
-#else
-                : Root1Base_OfAny
-#endif
-#endif
-        {
-            //--- Constants ---
-
-            public const StringComparison COMPARISON_TYPE = StringComparison.CurrentCulture;
-
-
-            //--- Public Static Readonly Fields ---
-
-#if METHOD_IS_OFNOTANY
-            public static readonly XIndexOfNotAny_Model MODEL_1 = new XIndexOfNotAny_Model(Root0.model0, COMPARISON_TYPE);
-#else
-            public static readonly XIndexOfAny_Model MODEL_1 = new XIndexOfAny_Model(Root0.model0, COMPARISON_TYPE);
-#endif
-
-            //--- Constructors ---
-
-            public Root1()
-                : base(MODEL_1)
-            {
-            }
+            TestedMethodAdapter(null, EMPTY_STRING_ARRAY, 0, 0, comparisonType);
         }
 
-
-        #region
-
-        [TestFixture]
-        public class When_length_of_anyOf_is_1
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_1_Base
-#else
-            : When_length_of_anyOf_is_1_Base
-#endif
+        [Theory]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void When_anyOf_is_null_throws_ArgumentNullException(StringComparison comparisonType)
         {
-            //--- Constructors ---
-
-            public When_length_of_anyOf_is_1()
-                : base(Root1.MODEL_1)
-            {
-            }
+            TestedMethodAdapter(string.Empty, (string[])null, 0, 0, comparisonType);
         }
 
-        [TestFixture]
-        public class When_length_of_anyOf_is_between_2_and_3_inclusively
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_between_2_and_3_inclusively_Base
-#else
-            : When_length_of_anyOf_is_between_2_and_3_inclusively_Base
-#endif
+        [Theory]
+        public void When_anyOf_is_empty_returns_NPOS(StringComparison comparisonType)
         {
-            //--- Constructors ---
-
-            public When_length_of_anyOf_is_between_2_and_3_inclusively()
-                : base(Root1.MODEL_1)
-            {
-            }
+            int result = TestedMethodAdapter(SIMPLE_STRING, EMPTY_STRING_ARRAY, 0, 0, comparisonType);
+            Assert.AreEqual(StringHelper.NPOS, result);
         }
 
-        [TestFixture]
-        public class When_length_of_anyOf_is_4
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_4_Base
-#else
-            : When_length_of_anyOf_is_4_Base
-#endif
+        [Theory]
+        [ExpectedException(typeof(ArgumentException))]
+        public void When_anyOf_contains_a_null_throws_ArgumentException(StringComparison comparisonType)
         {
-            //--- Constructors ---
-
-            public When_length_of_anyOf_is_4()
-                : base(Root1.MODEL_1)
-            {
-            }
+            TestedMethodAdapter(SIMPLE_STRING, STRING_ARRAY_WITH_NULL, 0, 0, comparisonType);
         }
 
-        [TestFixture]
-        public class When_length_of_anyOf_is_5
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_5_Base
-#else
-            : When_length_of_anyOf_is_5_Base
-#endif
+        [Theory]
+        [ExpectedException(typeof(ArgumentException))]
+        public void When_anyOf_contains_an_empty_string_returns_zero(StringComparison comparisonType)
         {
-            //--- Constructors ---
-
-            public When_length_of_anyOf_is_5()
-                : base(Root1.MODEL_1)
-            {
-            }
+            TestedMethodAdapter(SIMPLE_STRING, STRING_ARRAY_WITH_EMPTY, 0, 0, comparisonType);
         }
 
-        [TestFixture]
-        public class When_length_of_anyOf_is_between_6_and_7
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_between_6_and_7_Base
-#else
-            : When_length_of_anyOf_is_between_6_and_7_Base
-#endif
+        [Theory]
+        public void When_source_string_is_empty_returns_NPOS_regardless_of_range_params(StringComparison comparisonType)
         {
-            //--- Constructors ---
-
-            public When_length_of_anyOf_is_between_6_and_7()
-                : base(Root1.MODEL_1)
-            {
-            }
+            int result = TestedMethodAdapter(string.Empty, EMPTY_STRING_ARRAY, -4, -2, comparisonType);
+            Assert.AreEqual(StringHelper.NPOS, result);
         }
 
-        [TestFixture]
-        public class When_length_of_anyOf_is_8
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_8_Base
-#else
-            : When_length_of_anyOf_is_8_Base
-#endif
+        [Theory]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void When_count_is_negative_throws_ArgumentOutOfRangeException(StringComparison comparisonType)
         {
-            //--- Constructors ---
-
-            public When_length_of_anyOf_is_8()
-                : base(Root1.MODEL_1)
-            {
-            }
+            TestedMethodAdapter(SIMPLE_STRING, EMPTY_STRING_ARRAY, 1, -1, comparisonType);
         }
 
-        [TestFixture]
-        public class When_length_of_anyOf_is_9
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_9_Base
-#else
-            : When_length_of_anyOf_is_9_Base
-#endif
+        [Theory]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void When_startIndex_plus_count_is_greater_than_length_of_sourceString_throws_ArgumentOutOfRangeException(
+            StringComparison comparisonType)
         {
-            //--- Constructors ---
-
-            public When_length_of_anyOf_is_9()
-                : base(Root1.MODEL_1)
-            {
-            }
+            TestedMethodAdapter(LENGTH_4_STRING, EMPTY_STRING_ARRAY, 3, 2, comparisonType);
         }
 
-        [TestFixture]
-        public class When_length_of_anyOf_is_greater_than_or_equal_to_10
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_greater_than_or_equal_to_10_Base
-#else
-            : When_length_of_anyOf_is_greater_than_or_equal_to_10_Base
-#endif
+        [Theory]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void When_startIndex_is_negative_throws_ArgumentOutOfRangeException(StringComparison comparisonType)
         {
-            //--- Constructors ---
-
-            public When_length_of_anyOf_is_greater_than_or_equal_to_10()
-                : base(Root1.MODEL_1)
-            {
-            }
+            TestedMethodAdapter(SIMPLE_STRING, EMPTY_STRING_ARRAY, -1, 0, comparisonType);
         }
 
-        #endregion
-#if OVERLOAD_HAS_COMPARISONTYPE_PARAM
-        }
-
-
-        namespace When_comparisonType_is_CurrentCultureIgnoreCase
+        [Test]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void When_comparisonType_is_invalid_throws_ArgumentOutOfRangeException()
         {
-            [TestFixture]
-            public class Root1
-#if METHOD_IS_OFNOTANY
-#if OVERLOAD_HAS_STARTINDEX_PARAM
-#if OVERLOAD_HAS_COUNT_PARAM
-                : Root1Base_OfNotAny_with_startIndex_and_count
-#else
-                : Root1Base_OfNotAny_with_startIndex_Without_count
-#endif
-#else
-                : Root1Base_OfNotAny
-#endif
-#else
-#if OVERLOAD_HAS_STARTINDEX_PARAM
-#if OVERLOAD_HAS_COUNT_PARAM
-                : Root1Base_OfAny_with_startIndex_and_count
-#else
-                : Root1Base_OfAny_with_startIndex_Without_count
-#endif
-#else
-                : Root1Base_OfAny
-#endif
-#endif
-            {
-                //--- Constants ---
-
-                public const StringComparison COMPARISON_TYPE = StringComparison.CurrentCultureIgnoreCase;
-
-
-                //--- Public Static Readonly Fields ---
-
-#if METHOD_IS_OFNOTANY
-                public static readonly XIndexOfNotAny_Model MODEL_1 = new XIndexOfNotAny_Model(Root0.model0, COMPARISON_TYPE);
-#else
-                public static readonly XIndexOfAny_Model MODEL_1 = new XIndexOfAny_Model(Root0.model0, COMPARISON_TYPE);
-#endif
-
-
-                //--- Constructors ---
-
-                public Root1()
-                    : base(MODEL_1)
-                {
-                }
-            }
-
-
-            #region
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_1
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_1_Base
-#else
- : When_length_of_anyOf_is_1_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_1()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_between_2_and_3_inclusively
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_between_2_and_3_inclusively_Base
-#else
- : When_length_of_anyOf_is_between_2_and_3_inclusively_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_between_2_and_3_inclusively()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_4
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_4_Base
-#else
- : When_length_of_anyOf_is_4_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_4()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_5
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_5_Base
-#else
- : When_length_of_anyOf_is_5_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_5()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_between_6_and_7
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_between_6_and_7_Base
-#else
- : When_length_of_anyOf_is_between_6_and_7_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_between_6_and_7()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_8
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_8_Base
-#else
- : When_length_of_anyOf_is_8_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_8()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_9
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_9_Base
-#else
- : When_length_of_anyOf_is_9_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_9()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_greater_than_or_equal_to_10
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_greater_than_or_equal_to_10_Base
-#else
- : When_length_of_anyOf_is_greater_than_or_equal_to_10_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_greater_than_or_equal_to_10()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            #endregion
+            TestedMethodAdapter(SIMPLE_STRING, EMPTY_STRING_ARRAY, 0, 0, (StringComparison)(-1));
         }
 
-
-        namespace When_comparisonType_is_InvariantCulture
+        [Test]
+        public void When_an_exact_match_exists_returns_correct_value(
+            [Values(SOURCE_STRING)] string source,
+            [ValueSource(typeof(Helper), "AnyOf_Source_Normal")] VerboseStringArray anyOf,
+            [ValueSource(typeof(Helper), "StringComparisonSource")] StringComparison comparisonType)
         {
-            [TestFixture]
-            public class Root1
-#if METHOD_IS_OFNOTANY
-#if OVERLOAD_HAS_STARTINDEX_PARAM
-#if OVERLOAD_HAS_COUNT_PARAM
-                : Root1Base_OfNotAny_with_startIndex_and_count
-#else
-                : Root1Base_OfNotAny_with_startIndex_Without_count
-#endif
-#else
-                : Root1Base_OfNotAny
-#endif
-#else
-#if OVERLOAD_HAS_STARTINDEX_PARAM
-#if OVERLOAD_HAS_COUNT_PARAM
- : Root1Base_OfAny_with_startIndex_and_count
-#else
-                : Root1Base_OfAny_with_startIndex_Without_count
-#endif
-#else
-                : Root1Base_OfAny
-#endif
-#endif
-            {
-                //--- Constants ---
-
-                public const StringComparison COMPARISON_TYPE = StringComparison.InvariantCulture;
-
-
-                //--- Public Static Readonly Fields ---
-
-#if METHOD_IS_OFNOTANY
-                public static readonly XIndexOfNotAny_Model MODEL_1 = new XIndexOfNotAny_Model(Root0.model0, COMPARISON_TYPE);
-#else
-                public static readonly XIndexOfAny_Model MODEL_1 = new XIndexOfAny_Model(Root0.model0, COMPARISON_TYPE);
-#endif
-
-
-                //--- Constructors ---
-
-                public Root1()
-                    : base(MODEL_1)
-                {
-                }
-            }
-
-
-            #region
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_1
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_1_Base
-#else
- : When_length_of_anyOf_is_1_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_1()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_between_2_and_3_inclusively
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_between_2_and_3_inclusively_Base
-#else
- : When_length_of_anyOf_is_between_2_and_3_inclusively_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_between_2_and_3_inclusively()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_4
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_4_Base
-#else
- : When_length_of_anyOf_is_4_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_4()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_5
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_5_Base
-#else
- : When_length_of_anyOf_is_5_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_5()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_between_6_and_7
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_between_6_and_7_Base
-#else
- : When_length_of_anyOf_is_between_6_and_7_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_between_6_and_7()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_8
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_8_Base
-#else
- : When_length_of_anyOf_is_8_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_8()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_9
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_9_Base
-#else
- : When_length_of_anyOf_is_9_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_9()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_greater_than_or_equal_to_10
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_greater_than_or_equal_to_10_Base
-#else
- : When_length_of_anyOf_is_greater_than_or_equal_to_10_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_greater_than_or_equal_to_10()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            #endregion
+            int result = TestedMethodAdapter(source, anyOf, START_INDEX, COUNT, comparisonType);
+            Assert.AreEqual(FOUND_POS, result);
         }
 
-
-        namespace When_comparisonType_is_InvariantCultureIgnoreCase
+        [Test]
+        public void When_the_first_char_of_match_differs_by_case_returns_according_to_comparison_type(
+            [Values(SOURCE_STRING)] string source,
+            [ValueSource(typeof(Helper), "AnyOf_Source_FirstCharCapitalized")] VerboseStringArray anyOf,
+            [ValueSource(typeof(Helper), "StringComparisonSource")] StringComparison comparisonType)
         {
-            [TestFixture]
-            public class Root1
-#if METHOD_IS_OFNOTANY
-#if OVERLOAD_HAS_STARTINDEX_PARAM
-#if OVERLOAD_HAS_COUNT_PARAM
-                : Root1Base_OfNotAny_with_startIndex_and_count
-#else
-                : Root1Base_OfNotAny_with_startIndex_Without_count
-#endif
-#else
-                : Root1Base_OfNotAny
-#endif
-#else
-#if OVERLOAD_HAS_STARTINDEX_PARAM
-#if OVERLOAD_HAS_COUNT_PARAM
- : Root1Base_OfAny_with_startIndex_and_count
-#else
-                : Root1Base_OfAny_with_startIndex_Without_count
-#endif
-#else
-                : Root1Base_OfAny
-#endif
-#endif
-            {
-                //--- Constants ---
-
-                public const StringComparison COMPARISON_TYPE = StringComparison.InvariantCultureIgnoreCase;
-
-
-                //--- Public Static Readonly Fields ---
-
-#if METHOD_IS_OFNOTANY
-                public static readonly XIndexOfNotAny_Model MODEL_1 = new XIndexOfNotAny_Model(Root0.model0, COMPARISON_TYPE);
-#else
-                public static readonly XIndexOfAny_Model MODEL_1 = new XIndexOfAny_Model(Root0.model0, COMPARISON_TYPE);
-#endif
-
-
-                //--- Constructors ---
-
-                public Root1()
-                    : base(MODEL_1)
-                {
-                }
-            }
-
-
-            #region
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_1
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_1_Base
-#else
- : When_length_of_anyOf_is_1_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_1()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_between_2_and_3_inclusively
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_between_2_and_3_inclusively_Base
-#else
- : When_length_of_anyOf_is_between_2_and_3_inclusively_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_between_2_and_3_inclusively()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_4
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_4_Base
-#else
- : When_length_of_anyOf_is_4_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_4()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_5
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_5_Base
-#else
- : When_length_of_anyOf_is_5_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_5()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_between_6_and_7
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_between_6_and_7_Base
-#else
- : When_length_of_anyOf_is_between_6_and_7_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_between_6_and_7()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_8
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_8_Base
-#else
- : When_length_of_anyOf_is_8_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_8()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_9
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_9_Base
-#else
- : When_length_of_anyOf_is_9_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_9()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_greater_than_or_equal_to_10
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_greater_than_or_equal_to_10_Base
-#else
- : When_length_of_anyOf_is_greater_than_or_equal_to_10_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_greater_than_or_equal_to_10()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            #endregion
+            int expectedResult = Helper.IsCaseSensitive(comparisonType) ? StringHelper.NPOS : FOUND_POS;
+            int result = TestedMethodAdapter(source, anyOf, START_INDEX, COUNT, comparisonType);
+            Assert.AreEqual(expectedResult, result);  // Default comparison type should be CurrentCulture
         }
 
-
-        namespace When_comparisonType_is_Ordinal
+        [Test]
+        public void When_a_nonfirst_char_of_match_differs_by_case_returns_according_to_comparison_type(
+            [Values(SOURCE_STRING)] string source,
+            [ValueSource(typeof(Helper), "AnyOf_Source_SecondCharCapitalized")] VerboseStringArray anyOf,
+            [ValueSource(typeof(Helper), "StringComparisonSource")] StringComparison comparisonType)
         {
-            [TestFixture]
-            public class Root1
-#if METHOD_IS_OFNOTANY
-#if OVERLOAD_HAS_STARTINDEX_PARAM
-#if OVERLOAD_HAS_COUNT_PARAM
-                : Root1Base_OfNotAny_with_startIndex_and_count
-#else
-                : Root1Base_OfNotAny_with_startIndex_Without_count
-#endif
-#else
-                : Root1Base_OfNotAny
-#endif
-#else
-#if OVERLOAD_HAS_STARTINDEX_PARAM
-#if OVERLOAD_HAS_COUNT_PARAM
- : Root1Base_OfAny_with_startIndex_and_count
-#else
-                : Root1Base_OfAny_with_startIndex_Without_count
-#endif
-#else
-                : Root1Base_OfAny
-#endif
-#endif
-            {
-                //--- Constants ---
-
-                public const StringComparison COMPARISON_TYPE = StringComparison.Ordinal;
-
-
-                //--- Public Static Readonly Fields ---
-
-#if METHOD_IS_OFNOTANY
-                public static readonly XIndexOfNotAny_Model MODEL_1 = new XIndexOfNotAny_Model(Root0.model0, COMPARISON_TYPE);
-#else
-                public static readonly XIndexOfAny_Model MODEL_1 = new XIndexOfAny_Model(Root0.model0, COMPARISON_TYPE);
-#endif
-
-
-                //--- Constructors ---
-
-                public Root1()
-                    : base(MODEL_1)
-                {
-                }
-            }
-
-
-            #region
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_1
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_1_Base
-#else
- : When_length_of_anyOf_is_1_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_1()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_between_2_and_3_inclusively
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_between_2_and_3_inclusively_Base
-#else
- : When_length_of_anyOf_is_between_2_and_3_inclusively_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_between_2_and_3_inclusively()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_4
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_4_Base
-#else
- : When_length_of_anyOf_is_4_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_4()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_5
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_5_Base
-#else
- : When_length_of_anyOf_is_5_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_5()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_between_6_and_7
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_between_6_and_7_Base
-#else
- : When_length_of_anyOf_is_between_6_and_7_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_between_6_and_7()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_8
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_8_Base
-#else
- : When_length_of_anyOf_is_8_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_8()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_9
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_9_Base
-#else
- : When_length_of_anyOf_is_9_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_9()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_greater_than_or_equal_to_10
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_greater_than_or_equal_to_10_Base
-#else
- : When_length_of_anyOf_is_greater_than_or_equal_to_10_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_greater_than_or_equal_to_10()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            #endregion
+            int expectedResult = Helper.IsCaseSensitive(comparisonType) ? StringHelper.NPOS : FOUND_POS;
+            int result = TestedMethodAdapter(source, anyOf, START_INDEX, COUNT, comparisonType);
+            Assert.AreEqual(expectedResult, result);  // Default comparison type should be CurrentCulture
         }
 
-
-        namespace When_comparisonType_is_OrdinalIgnoreCase
+        [Test]
+        public void When_the_first_and_a_nonfirst_char_of_match_differs_by_case_returns_according_to_comparison_type(
+            [Values(SOURCE_STRING)] string source,
+            [ValueSource(typeof(Helper), "AnyOf_Source_BothCharsCapitalized")] VerboseStringArray anyOf,
+            [ValueSource(typeof(Helper), "StringComparisonSource")] StringComparison comparisonType)
         {
-            [TestFixture]
-            public class Root1
-#if METHOD_IS_OFNOTANY
-#if OVERLOAD_HAS_STARTINDEX_PARAM
-#if OVERLOAD_HAS_COUNT_PARAM
-                : Root1Base_OfNotAny_with_startIndex_and_count
-#else
-                : Root1Base_OfNotAny_with_startIndex_Without_count
-#endif
-#else
-                : Root1Base_OfNotAny
-#endif
-#else
-#if OVERLOAD_HAS_STARTINDEX_PARAM
-#if OVERLOAD_HAS_COUNT_PARAM
- : Root1Base_OfAny_with_startIndex_and_count
-#else
-                : Root1Base_OfAny_with_startIndex_Without_count
-#endif
-#else
-                : Root1Base_OfAny
-#endif
-#endif
-            {
-                //--- Constants ---
-
-                public const StringComparison COMPARISON_TYPE = StringComparison.OrdinalIgnoreCase;
-
-
-                //--- Public Static Readonly Fields ---
-
-#if METHOD_IS_OFNOTANY
-                public static readonly XIndexOfNotAny_Model MODEL_1 = new XIndexOfNotAny_Model(Root0.model0, COMPARISON_TYPE);
-#else
-                public static readonly XIndexOfAny_Model MODEL_1 = new XIndexOfAny_Model(Root0.model0, COMPARISON_TYPE);
-#endif
-
-
-                //--- Constructors ---
-
-                public Root1()
-                    : base(MODEL_1)
-                {
-                }
-            }
-
-
-            #region
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_1
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_1_Base
-#else
- : When_length_of_anyOf_is_1_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_1()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_between_2_and_3_inclusively
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_between_2_and_3_inclusively_Base
-#else
- : When_length_of_anyOf_is_between_2_and_3_inclusively_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_between_2_and_3_inclusively()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_4
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_4_Base
-#else
- : When_length_of_anyOf_is_4_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_4()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_5
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_5_Base
-#else
- : When_length_of_anyOf_is_5_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_5()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_between_6_and_7
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_between_6_and_7_Base
-#else
- : When_length_of_anyOf_is_between_6_and_7_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_between_6_and_7()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_8
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_8_Base
-#else
- : When_length_of_anyOf_is_8_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_8()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_9
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_9_Base
-#else
- : When_length_of_anyOf_is_9_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_9()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            [TestFixture]
-            public class When_length_of_anyOf_is_greater_than_or_equal_to_10
-#if METHOD_IS_ANYNOTOF
-            : When_length_of_anyNotOf_is_greater_than_or_equal_to_10_Base
-#else
- : When_length_of_anyOf_is_greater_than_or_equal_to_10_Base
-#endif
-            {
-                //--- Constructors ---
-
-                public When_length_of_anyOf_is_greater_than_or_equal_to_10()
-                    : base(Root1.MODEL_1)
-                {
-                }
-            }
-
-            #endregion
+            int expectedResult = Helper.IsCaseSensitive(comparisonType) ? StringHelper.NPOS : FOUND_POS;
+            int result = TestedMethodAdapter(source, anyOf, START_INDEX, COUNT, comparisonType);
+            Assert.AreEqual(expectedResult, result);  // Default comparison type should be CurrentCulture
         }
 
-#endif
+        [Test]
+        public void When_a_match_does_not_exist_returns_NPOS(
+            [Values(SOURCE_STRING)] string source,
+            [ValueSource(typeof(Helper), "AnyOf_Source_NotFound")] VerboseStringArray anyOf,
+            [ValueSource(typeof(Helper), "StringComparisonSource")] StringComparison comparisonType)
+        {
+            int result = TestedMethodAdapter(source, anyOf, START_INDEX, COUNT, comparisonType);
+            Assert.AreEqual(StringHelper.NPOS, result);
+        }
 
-        #endregion
+        [Theory]
+        public void When_search_is_culture_sensitive_returns_according_to_comparisonType(StringComparison comparisonType)
+        {
+            var testedMethodAdapter = new TestedMethodAdapter(TestedMethodAdapter);
+            var comparisonTypePerformed = Helper.GetComparisonTypePerformed(testedMethodAdapter, comparisonType);
+            Assert.AreEqual(comparisonType, comparisonTypePerformed);
+        }
+
+        [TestCaseSource(typeof(Helper), "OverflowTestSource")]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void When_startIndex_plus_count_is_greater_than_maximum_integer_value_does_not_throw_OverflowException(
+            int startIndex,
+            int count,
+            StringComparison comparisonType)
+        {
+            TestedMethodAdapter(SIMPLE_STRING, SIMPLE_STRING_ARRAY, startIndex, count, comparisonType);
+        }
     }
 }

@@ -1147,7 +1147,7 @@ namespace NLib
 
         public static int LastIndexOfNotAny(this string source, char[] anyOf, bool ignoreCase)
         {
-            return LastIndexOfNotAny(source, anyOf, source.Length - 1, source.Length);
+            return LastIndexOfNotAny(source, anyOf, source.Length - 1, source.Length, ignoreCase);
         }
 
         public static int LastIndexOfNotAny(this string source, char[] anyOf, int startIndex, bool ignoreCase)
@@ -1155,7 +1155,7 @@ namespace NLib
             if (startIndex == Int32.MaxValue)
                 throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_MUST_BE_LESS_THAN_INT32_MAXVALUE);
 
-            return LastIndexOfNotAny(source, anyOf, startIndex, startIndex + 1);
+            return LastIndexOfNotAny(source, anyOf, startIndex, startIndex + 1, ignoreCase);
         }
 
         public static unsafe int LastIndexOfNotAny(this string source, char[] anyOf, int startIndex, int count, bool ignoreCase)

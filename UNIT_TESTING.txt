@@ -1,0 +1,5 @@
+Use the following settings when running the unit tests in NUnit:
+
+[Test Loader -> Assembly Isolation]
+Default Process Model:  Run tests directly in the NUnit process
+Default Domain Usage:  Use a separate AppDomain per assembly
