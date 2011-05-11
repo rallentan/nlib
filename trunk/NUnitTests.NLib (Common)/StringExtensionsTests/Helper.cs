@@ -22,7 +22,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
             return true;
         }
 
-        public static StringComparison GetComparisonTypeUsed(TestedMethodAdapterDelegate testedMethodAdapter, StringComparison comparisonType)
+        public static StringComparison GetComparisonTypePerformed(TestedMethodAdapter testedMethodAdapter, StringComparison comparisonType)
         {
             StringComparison comparisonTypePerformed;
 
@@ -31,10 +31,14 @@ namespace NUnitTests.NLib.StringExtensionsTests
             {
                 Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US", false);
 
+                // Test if method performs an Ordinal search
                 int result = testedMethodAdapter("œ", new string[] { "oe" }, 0, 1, comparisonType);
+
                 if (result == StringHelper.NPOS)
                 {
                     result = testedMethodAdapter("a", new string[] { "A" }, 0, 1, comparisonType);
+
+                    // Test if method performs a case-sensitive search
                     if (result == StringHelper.NPOS)
                         comparisonTypePerformed = StringComparison.Ordinal;
                     else
@@ -44,10 +48,14 @@ namespace NUnitTests.NLib.StringExtensionsTests
                 {
                     Thread.CurrentThread.CurrentCulture = new CultureInfo("sq-AL", false);
 
+                    // Test if method uses CurrentCulture or InvariantCulture
                     result = testedMethodAdapter("ll", new string[] { "l" }, 0, 2, comparisonType);
+
                     if (result == StringHelper.NPOS)
                     {
+                        // Test if method performs a case-sensitive search
                         result = testedMethodAdapter("a", new string[] { "A" }, 0, 1, comparisonType);
+
                         if (result == StringHelper.NPOS)
                             comparisonTypePerformed = StringComparison.CurrentCulture;
                         else
@@ -55,7 +63,9 @@ namespace NUnitTests.NLib.StringExtensionsTests
                     }
                     else
                     {
+                        // Test if method performs a case-sensitive search
                         result = testedMethodAdapter("a", new string[] { "A" }, 0, 1, comparisonType);
+
                         if (result == StringHelper.NPOS)
                             comparisonTypePerformed = StringComparison.InvariantCulture;
                         else
@@ -215,5 +225,5 @@ namespace NUnitTests.NLib.StringExtensionsTests
         }
     }
 
-    delegate int TestedMethodAdapterDelegate(string source, string[] anyOf, int startIndex, int count, StringComparison comparisonType);
+    delegate int TestedMethodAdapter(string source, string[] anyOf, int startIndex, int count, StringComparison comparisonType);
 }
