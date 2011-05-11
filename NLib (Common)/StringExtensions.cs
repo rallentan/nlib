@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Globalization;
 
 namespace NLib
 {
@@ -42,12 +43,11 @@ namespace NLib
         const string ARGNAME_STARTINDEX = "startIndex";
         const string ARGNAME_COUNT = "count";
         const string ARGNAME_COMPARISONTYPE = "comparisonType";
-        const string EXCMSG_STARTINDEX_OUT_OF_RANGE = "Index was out of range. Must be non-negative and less than the size of the collection.";
+        const string EXCMSG_INDEX_OUT_OF_RANGE = "Index was out of range. Must be non-negative and less than the size of the collection.";
         const string EXCMSG_COUNT_OUT_OF_RANGE = "Count must be positive and count must refer to a location within the string/array/collection.";
         const string EXCMSG_CANNOT_CONTAIN_NULL_OR_EMPTY = "Parameter cannot contain null or zero-length strings.";
         const string EXCMSG_MUST_BE_LESS_THAN_INT32_MAXVALUE = "Parameter must be less than Int32.MaxValue.";
         const string EXCMSG_INVALID_ENUMERATION_VALUE = "Parameter is an invalid enumeration value.";
-        const int NPOS = -1;
        
         //--- Public Static Methods ---
 
@@ -105,6 +105,16 @@ namespace NLib
         public static bool Contains(this string source, char value, bool ignoreCase)
         {
             return IndexOf(source, value, ignoreCase) != -1;
+        }
+
+        public static bool ContainsAny(this string source, char[] anyOf)
+        {
+            return source.IndexOfAny(anyOf) != -1;
+        }
+
+        public static bool ContainsAny(this string source, char[] anyOf, bool ignoreCase)
+        {
+            return IndexOfAny(source, anyOf, ignoreCase) != -1;
         }
 
         /// <summary>
@@ -1069,7 +1079,7 @@ namespace NLib
             if (anyOf == null)
                 throw new ArgumentNullException(ARGNAME_ANYOF);
             if (startIndex < 0 || startIndex >= source.Length)
-                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_INDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex - count + 1 < 0)
                 throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
 
@@ -1136,7 +1146,7 @@ namespace NLib
             if (source == null)
                 throw new ArgumentNullException(ARGNAME_SOURCE);
             if (startIndex < 0 || startIndex > source.Length)
-                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_INDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex > source.Length - count)
                 throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
 
@@ -1177,7 +1187,7 @@ namespace NLib
             if (source == null)
                 throw new ArgumentNullException(ARGNAME_SOURCE);
             if (startIndex < 0 || startIndex > source.Length)
-                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_INDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex + count > source.Length)
                 throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
             if (!Enum.IsDefined(typeof(StringComparison), comparisonType))
@@ -1222,7 +1232,7 @@ namespace NLib
             if (anyOf == null)
                 throw new ArgumentNullException(ARGNAME_ANYOF);
             if (startIndex < 0 || startIndex > source.Length)
-                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_INDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex + count > source.Length)
                 throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
 
@@ -1290,7 +1300,7 @@ namespace NLib
             if (anyOf == null)
                 throw new ArgumentNullException(ARGNAME_ANYOF);
             if (startIndex < 0 || startIndex > source.Length)
-                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_INDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex + count > source.Length)
                 throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
             if (!Enum.IsDefined(typeof(StringComparison), comparisonType))
@@ -1347,8 +1357,10 @@ namespace NLib
                 throw new ArgumentNullException(ARGNAME_SOURCE);
             if (anyOf == null)
                 throw new ArgumentNullException(ARGNAME_ANYOF);
+            if (source.Length == 0)
+                return StringHelper.NPOS;
             if (startIndex < 0)
-                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_INDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex > source.Length - count)
                 throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
 
@@ -1383,8 +1395,12 @@ namespace NLib
 
         static int IndexOfAnyIgnoreCase(string source, string[] anyOf, int startIndex, int count)
         {
+            if (source == null)
+                throw new ArgumentNullException(ARGNAME_SOURCE);
             if (anyOf == null)
                 throw new ArgumentNullException(ARGNAME_ANYOF);
+            if (source.Length == 0)
+                return StringHelper.NPOS;
 
             int anyOfLength = anyOf.Length;
             char[] ca = new char[anyOfLength];
@@ -1422,9 +1438,9 @@ namespace NLib
             if (anyOf == null)
                 throw new ArgumentNullException(ARGNAME_ANYOF);
             if (source.Length == 0)
-                return -1;
+                return StringHelper.NPOS;
             if (startIndex < 0 || startIndex > source.Length)
-                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_INDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex > source.Length - count)
                 throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
             if (!Enum.IsDefined(typeof(StringComparison), comparisonType))
@@ -1432,27 +1448,94 @@ namespace NLib
 
             int anyOfLength = anyOf.Length;
             int sourceLength = source.Length;
-            string strB;
-
+            int sourceEnd = startIndex + count;
             string anyOfElement;
+            int[] anyOfElementLengths = new int[anyOf.Length];
+            int maxElementLength = int.MaxValue;
+            
             for (int i = 0; i < anyOfLength; i++)
             {
                 anyOfElement = anyOf[i];
-                if (anyOfElement == null || anyOfElement.Length == 0)
+                if (anyOfElement == null ||
+                    (anyOfElementLengths[i] = anyOfElement.Length) == 0)  // <-- Assignment
+                {
                     throw new ArgumentException(EXCMSG_CANNOT_CONTAIN_NULL_OR_EMPTY, ARGNAME_ANYOF);
+                }
+
+                if (maxElementLength > anyOfElementLengths[i])
+                    maxElementLength = anyOfElementLengths[i];
             }
 
-            for (int sourceIndex = 0; sourceIndex < sourceLength; sourceIndex++)
+            CompareInfo compareInfo;
+            CompareOptions compareOptions;
+
+            switch (comparisonType)
+            {
+                case StringComparison.CurrentCulture:
+                    compareInfo = CultureInfo.CurrentCulture.CompareInfo;
+                    compareOptions = CompareOptions.None;
+                    break;
+
+                case StringComparison.CurrentCultureIgnoreCase:
+                    compareInfo = CultureInfo.CurrentCulture.CompareInfo;
+                    compareOptions = CompareOptions.IgnoreCase;
+                    break;
+
+                case StringComparison.InvariantCulture:
+                    compareInfo = CultureInfo.InvariantCulture.CompareInfo;
+                    compareOptions = CompareOptions.None;
+                    break;
+
+                case StringComparison.InvariantCultureIgnoreCase:
+                    compareInfo = CultureInfo.InvariantCulture.CompareInfo;
+                    compareOptions = CompareOptions.IgnoreCase;
+                    break;
+
+                default:
+                    throw new ArgumentException();
+            }
+
+            int sourceStride = 256;  // Must be greater than zero and less than or equal to 1,073,741,823
+
+            for (int sourceIndex = startIndex; sourceIndex < sourceEnd; sourceIndex += sourceStride)
             {
                 for (int anyOfIndex = 0; anyOfIndex < anyOfLength; anyOfIndex++)
                 {
-                    strB = anyOf[anyOfIndex];
-                    if (string.Compare(source, sourceIndex, strB, 0, sourceLength - sourceIndex, comparisonType) == 0)
-                        return sourceIndex;
+                    // Because the maximum integer value is 2,147,483,647 and the maximum length of a
+                    // System.String is 1,073,741,823 (limited by maximum object size of 2 GB), this
+                    // will never overflow.
+                    int searchLength = sourceStride + anyOfElementLengths[anyOfIndex] - 1;
+                    if (searchLength > sourceEnd - sourceIndex)
+                        searchLength = sourceEnd - sourceIndex;
+
+                    int result = compareInfo.IndexOf(source, anyOf[anyOfIndex], sourceIndex, searchLength, compareOptions);
+                    if (result != -1)
+                        return result;
                 }
             }
 
-            return NPOS;
+            return StringHelper.NPOS;
+        }
+
+        static int InternalNonOrdinalCompare(string strA, int indexA, string strB, int count, StringComparison comparisonType)
+        {
+            switch (comparisonType)
+            {
+                case StringComparison.CurrentCulture:
+                    return CultureInfo.CurrentCulture.CompareInfo.IndexOf(strA, strB, indexA, count, CompareOptions.None);
+
+                case StringComparison.CurrentCultureIgnoreCase:
+                    return CultureInfo.CurrentCulture.CompareInfo.IndexOf(strA, strB, indexA, count, CompareOptions.IgnoreCase);
+
+                case StringComparison.InvariantCulture:
+                    return CultureInfo.InvariantCulture.CompareInfo.IndexOf(strA, strB, indexA, count, CompareOptions.None);
+
+                case StringComparison.InvariantCultureIgnoreCase:
+                    return CultureInfo.InvariantCulture.CompareInfo.IndexOf(strA, strB, indexA, count, CompareOptions.IgnoreCase);
+
+                default:
+                    throw new ArgumentException();
+            }
         }
         
         static unsafe int IndexOfNotAnyOrdinal(string source, char[] anyOf, int startIndex, int count)
@@ -1462,7 +1545,7 @@ namespace NLib
             if (anyOf == null)
                 throw new ArgumentNullException(ARGNAME_ANYOF);
             if (startIndex < 0)
-                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_INDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex > source.Length - count)
                 throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
 
@@ -1528,7 +1611,7 @@ namespace NLib
             if (anyOf == null)
                 throw new ArgumentNullException(ARGNAME_ANYOF);
             if (startIndex < 0 || startIndex > source.Length)
-                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_INDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex > source.Length - count)
                 throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
 
@@ -1625,7 +1708,7 @@ namespace NLib
             if (anyOf == null)
                 throw new ArgumentNullException(ARGNAME_ANYOF);
             if (startIndex < 0 || startIndex > source.Length)
-                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_INDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex > source.Length - count)
                 throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
             if (!Enum.IsDefined(typeof(StringComparison), comparisonType))
@@ -1668,7 +1751,7 @@ namespace NLib
             if (source.Length == 0)
                 return -1;
             if (startIndex < 0 || startIndex >= source.Length)
-                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_INDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex - count + 1 < 0)
                 throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
 
@@ -1713,7 +1796,7 @@ namespace NLib
             if (source.Length == 0)
                 return -1;
             if (startIndex < 0 || startIndex >= source.Length)
-                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_INDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex - count + 1 < 0)
                 throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
 
@@ -1780,7 +1863,7 @@ namespace NLib
             if (source.Length == 0)
                 return -1;
             if (startIndex < 0 || startIndex >= source.Length)
-                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_STARTINDEX_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_INDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex - count < -1)
                 throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
             if (!Enum.IsDefined(typeof(StringComparison), comparisonType))

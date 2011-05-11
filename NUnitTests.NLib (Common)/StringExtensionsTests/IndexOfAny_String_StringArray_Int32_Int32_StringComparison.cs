@@ -16,7 +16,7 @@ using NUnitTests.NLib.StringExtensionsTests.CharArrayBases;
 
 namespace NUnitTests.NLib.StringExtensionsTests
 {
-    namespace IndexOfAny_String_StringArray_Int32_Int32_StringComparison
+    namespace IndexOfAny_String_StringArray_Int32_Int32_StringComparison_Old
     {
         public class Root0
 #if OVERLOAD_HAS_COMPARISONTYPE_PARAM

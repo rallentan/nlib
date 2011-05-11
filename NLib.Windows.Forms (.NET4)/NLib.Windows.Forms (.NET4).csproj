@@ -102,6 +102,12 @@
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>NLib.Windows.Forms.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -156,6 +162,7 @@
     </Compile>
     <Compile Include="..\NLib.Windows.Forms %28Common%29\TextBox2.cs">
       <Link>TextBox2.cs</Link>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="..\NLib.Windows.Forms %28Common%29\LabeledLabel2.resx">
@@ -177,6 +184,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
+    <None Include="NLib.Windows.Forms.snk" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -218,6 +226,11 @@ IF NOT "%25configName:Debug=%25" == "$(ConfigurationName)" GOTO debug
 :release
 ECHO.
 ECHO --- Running Post-Build Events For Release ---
+
+ECHO.
+ECHO --- Registering Assembly in the GAC ---
+ECHO gacutil -I "$(TargetFileName)"
+gacutil -I "$(TargetFileName)"
 
 ECHO.
 ECHO --- Ensuring Output Path Exists ---

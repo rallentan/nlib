@@ -1,0 +1,20 @@
+[Troubleshooting the Build Process]
+
+PROBLEM:
+Receive error "Failure adding assembly to the cache: This assembly is built by a runtime newer than the currently loaded runtime and cannot be loaded."
+
+CAUSE:
+The post-build event is trying to register the assembly in the GAC using an older version of gacutil.exe.
+
+SOLUTION:
+Ensure your PATH environment variable points to the most recent version of gacutil.exe. At the time of this writing, GacUtil v4.0.30319.1 is known to work. An example path to this version of GacUtil is "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\NETFX 4.0 Tools\gacutil.exe" on Windows 7 64-bit. Remember to restart Visual Studio after for changes to environment variables to take effect.
+
+
+PROBLEM:
+Receive error "Failure adding assembly to the cache: Administrator permissions are needed to use the selected options. Use an administrator command prompt to complete these tasks."
+
+CAUSE:
+The post-build event is trying to register the assembly in the GAC using gacutil.exe, but requires administrative privileges to do so.
+
+SOLUTION:
+Run Visual Studio as an Administrator to build Releases.
