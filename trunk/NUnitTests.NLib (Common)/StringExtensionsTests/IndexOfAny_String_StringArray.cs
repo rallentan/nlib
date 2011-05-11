@@ -20,8 +20,6 @@ namespace NUnitTests.NLib.StringExtensionsTests
 
         public const string LENGTH_4_STRING = "oxox";
         public const string SIMPLE_STRING = LENGTH_4_STRING;
-        public const string CULTURE_SENSITIVE_STRING_1 = "oe";
-        public const string CULTURE_SENSITIVE_STRING_2 = "\x131";
 
 
         //--- Readonly Fields ---
@@ -31,8 +29,6 @@ namespace NUnitTests.NLib.StringExtensionsTests
         public static readonly string[] SIMPLE_STRING_ARRAY = LENGTH_4_STRING_ARRAY;
         public static readonly string[] STRING_ARRAY_WITH_NULL = new string[] { "a", null };
         public static readonly string[] STRING_ARRAY_WITH_EMPTY = new string[] { "a", string.Empty };
-        public static readonly string[] CULTURE_SENSITIVE_STRING_ARRAY_1 = new string[] { "\x153" };
-        public static readonly string[] CULTURE_SENSITIVE_STRING_ARRAY_2 = new string[] { "I" };
 
 
         //--- Public Methods ---
