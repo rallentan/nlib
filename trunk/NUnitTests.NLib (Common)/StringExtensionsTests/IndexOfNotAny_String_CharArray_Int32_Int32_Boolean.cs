@@ -93,6 +93,30 @@ namespace NUnitTests.NLib.StringExtensionsTests
             TestedMethodAdapter(SIMPLE_STRING, EMPTY_CHAR_ARRAY, -1, 0, ignoreCase);
         }
 
+        [Theory]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void When_startIndex_is_maximum_integer_value_does_not_throw_OverflowException(bool ignoreCase)
+        {
+            TestedMethodAdapter(SIMPLE_STRING, SIMPLE_CHAR_ARRAY, int.MaxValue, 0, ignoreCase);
+        }
+
+        [Theory]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void When_count_is_maximum_integer_value_does_not_throw_OverflowException(bool ignoreCase)
+        {
+            TestedMethodAdapter(SIMPLE_STRING, SIMPLE_CHAR_ARRAY, 0, int.MaxValue, ignoreCase);
+        }
+
+        [TestCaseSource(typeof(Helper), "IndexOfCharOverflowTestSource")]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void When_startIndex_plus_count_is_greater_than_maximum_integer_value_does_not_throw_OverflowException(
+            int startIndex,
+            int count,
+            bool ignoreCase)
+        {
+            TestedMethodAdapter(SIMPLE_STRING, SIMPLE_CHAR_ARRAY, startIndex, count, ignoreCase);
+        }
+
         [Test]
         public void When_an_exact_match_exists_returns_correct_value(
             [Values(SOURCE_STRING)] string source,
@@ -122,16 +146,6 @@ namespace NUnitTests.NLib.StringExtensionsTests
         {
             int result = TestedMethodAdapter(source, anyOf, START_INDEX, COUNT, ignoreCase);
             Assert.AreEqual(StringHelper.NPOS, result);
-        }
-
-        [TestCaseSource(typeof(Helper), "IndexOfCharOverflowTestSource")]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void When_startIndex_plus_count_is_greater_than_maximum_integer_value_does_not_throw_OverflowException(
-            int startIndex,
-            int count,
-            bool ignoreCase)
-        {
-            TestedMethodAdapter(SIMPLE_STRING, SIMPLE_CHAR_ARRAY, startIndex, count, ignoreCase);
         }
     }
 }

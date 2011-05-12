@@ -8,7 +8,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
     {
         //--- Constructors ---
 
-        public VerboseStringArray(string[] value)
+        public VerboseStringArray(params string[] value)
         {
             Value = value;
         }

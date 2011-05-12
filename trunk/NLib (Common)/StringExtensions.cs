@@ -1147,6 +1147,9 @@ namespace NLib
 
         public static int LastIndexOfNotAny(this string source, char[] anyOf, bool ignoreCase)
         {
+            if (source == null)
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
+
             return LastIndexOfNotAny(source, anyOf, source.Length - 1, source.Length, ignoreCase);
         }
 

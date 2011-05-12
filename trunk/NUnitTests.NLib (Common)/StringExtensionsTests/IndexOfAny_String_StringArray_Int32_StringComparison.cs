@@ -64,7 +64,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
 
         [Theory]
         [ExpectedException(typeof(ArgumentException))]
-        public void When_anyOf_contains_an_empty_string_returns_zero(StringComparison comparisonType)
+        public void When_anyOf_contains_an_empty_string_returns_throws_ArgumentException(StringComparison comparisonType)
         {
             TestedMethodAdapter(SIMPLE_STRING, STRING_ARRAY_WITH_EMPTY, 0, 0, comparisonType);
         }
@@ -81,6 +81,13 @@ namespace NUnitTests.NLib.StringExtensionsTests
         public void When_startIndex_is_negative_throws_ArgumentOutOfRangeException(StringComparison comparisonType)
         {
             TestedMethodAdapter(SIMPLE_STRING, EMPTY_STRING_ARRAY, -1, 0, comparisonType);
+        }
+
+        [Theory]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void When_startIndex_is_maximum_integer_value_does_not_throw_OverflowException(StringComparison comparisonType)
+        {
+            TestedMethodAdapter(SIMPLE_STRING, SIMPLE_STRING_ARRAY, int.MaxValue, 0, comparisonType);
         }
 
         [Test]
@@ -101,7 +108,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
         }
 
         [Test]
-        public void When_the_first_char_of_match_differs_by_case_returns_according_to_comparison_type(
+        public void When_the_first_char_of_match_differs_by_case_returns_according_to_comparisonType(
             [Values(SOURCE_STRING)] string source,
             [ValueSource(typeof(Helper), "AnyOf_Source_FirstCharCapitalized")] VerboseStringArray anyOf,
             [ValueSource(typeof(Helper), "StringComparisonSource")] StringComparison comparisonType)
@@ -112,7 +119,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
         }
 
         [Test]
-        public void When_a_nonfirst_char_of_match_differs_by_case_returns_according_to_comparison_type(
+        public void When_a_nonfirst_char_of_match_differs_by_case_returns_according_to_comparisonType(
             [Values(SOURCE_STRING)] string source,
             [ValueSource(typeof(Helper), "AnyOf_Source_SecondCharCapitalized")] VerboseStringArray anyOf,
             [ValueSource(typeof(Helper), "StringComparisonSource")] StringComparison comparisonType)
@@ -123,7 +130,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
         }
 
         [Test]
-        public void When_the_first_and_a_nonfirst_char_of_match_differs_by_case_returns_according_to_comparison_type(
+        public void When_the_first_and_a_nonfirst_char_of_match_differs_by_case_returns_according_to_comparisonType(
             [Values(SOURCE_STRING)] string source,
             [ValueSource(typeof(Helper), "AnyOf_Source_BothCharsCapitalized")] VerboseStringArray anyOf,
             [ValueSource(typeof(Helper), "StringComparisonSource")] StringComparison comparisonType)

@@ -69,7 +69,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
 
         [Theory]
         [ExpectedException(typeof(ArgumentException))]
-        public void When_anyOf_contains_an_empty_string_returns_zero()
+        public void When_anyOf_contains_an_empty_string_returns_throws_ArgumentException()
         {
             TestedMethodAdapter(SIMPLE_STRING, STRING_ARRAY_WITH_EMPTY, 0, 0, (StringComparison)(-1));
         }
@@ -102,6 +102,29 @@ namespace NUnitTests.NLib.StringExtensionsTests
             TestedMethodAdapter(SIMPLE_STRING, EMPTY_STRING_ARRAY, -1, 0, (StringComparison)(-1));
         }
 
+        [Theory]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void When_startIndex_is_maximum_integer_value_does_not_throw_OverflowException()
+        {
+            TestedMethodAdapter(SIMPLE_STRING, SIMPLE_STRING_ARRAY, int.MaxValue, 0, (StringComparison)(-1));
+        }
+
+        [Theory]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void When_count_is_maximum_integer_value_does_not_throw_OverflowException()
+        {
+            TestedMethodAdapter(SIMPLE_STRING, SIMPLE_STRING_ARRAY, 0, int.MaxValue, (StringComparison)(-1));
+        }
+
+        [Test, Sequential]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void When_startIndex_plus_count_is_greater_than_maximum_integer_value_does_not_throw_OverflowException(
+            [Values(1, int.MaxValue)] int startIndex,
+            [Values(int.MaxValue, 1)] int count)
+        {
+            TestedMethodAdapter(SIMPLE_STRING, SIMPLE_STRING_ARRAY, startIndex, count, (StringComparison)(-1));
+        }
+
         [Test]
         public void When_an_exact_match_exists_returns_correct_value(
             [Values(SOURCE_STRING)] string source,
@@ -132,7 +155,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
         }
 
         [Test]
-        public void When_the_first_and_a_nonfirst_char_of_match_differ_by_case_returns_NPOS(
+        public void When_the_first_and_a_nonfirst_char_of_match_differs_by_case_returns_NPOS(
             [Values(SOURCE_STRING)] string source,
             [ValueSource(typeof(Helper), "AnyOf_Source_BothCharsCapitalized")] VerboseStringArray anyOf)
         {
@@ -156,15 +179,6 @@ namespace NUnitTests.NLib.StringExtensionsTests
             var testedMethodAdapter = new TestedMethodAdapter(TestedMethodAdapter);
             var comparisonTypePerformed = Helper.GetComparisonTypePerformed(testedMethodAdapter, (StringComparison)(-1));
             Assert.AreEqual(StringComparison.CurrentCulture, comparisonTypePerformed);
-        }
-
-        [Test, Sequential]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void When_startIndex_plus_count_is_greater_than_maximum_integer_value_does_not_throw_OverflowException(
-            [Values(1, int.MaxValue)] int startIndex,
-            [Values(int.MaxValue, 1)] int count)
-        {
-            TestedMethodAdapter(SIMPLE_STRING, SIMPLE_STRING_ARRAY, startIndex, count, (StringComparison)(-1));
         }
     }
 }
