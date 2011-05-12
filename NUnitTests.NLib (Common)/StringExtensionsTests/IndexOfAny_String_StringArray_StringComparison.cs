@@ -1,8 +1,4 @@
-﻿//#define OVERLOAD_HAS_STARTINDEX_PARAM
-//#define OVERLOAD_HAS_COUNT_PARAM
-#define OVERLOAD_HAS_COMPARISONTYPE_PARAM
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using NUnit.Framework;
@@ -18,9 +14,8 @@ namespace NUnitTests.NLib.StringExtensionsTests
         //--- Constants ---
         const string LENGTH_4_STRING = "oxox";
         const string SIMPLE_STRING = LENGTH_4_STRING;
-        const string SOURCE_STRING = "xoooooxxo";
-        const int START_INDEX = 1;
-        const int FOUND_POS = 6;
+        const string SOURCE_STRING = "oooooxx";
+        const int FOUND_POS = 5;
 
         //--- Readonly Fields ---
         static readonly string[] EMPTY_STRING_ARRAY = new string[0];
@@ -68,13 +63,13 @@ namespace NUnitTests.NLib.StringExtensionsTests
 
         [Theory]
         [ExpectedException(typeof(ArgumentException))]
-        public void When_anyOf_contains_an_empty_string_returns_zero(StringComparison comparisonType)
+        public void When_anyOf_contains_an_empty_string_returns_throws_ArgumentException(StringComparison comparisonType)
         {
             TestedMethodAdapter(SIMPLE_STRING, STRING_ARRAY_WITH_EMPTY, 0, 0, comparisonType);
         }
 
         [Theory]
-        public void When_source_string_is_empty_returns_NPOS_regardless_of_range_params(StringComparison comparisonType)
+        public void When_source_string_is_empty_returns_NPOS(StringComparison comparisonType)
         {
             int result = TestedMethodAdapter(string.Empty, EMPTY_STRING_ARRAY, -4, -2, comparisonType);
             Assert.AreEqual(StringHelper.NPOS, result);
@@ -93,40 +88,40 @@ namespace NUnitTests.NLib.StringExtensionsTests
             [ValueSource(typeof(Helper), "AnyOf_Source_Normal")] VerboseStringArray anyOf,
             [ValueSource(typeof(Helper), "StringComparisonSource")] StringComparison comparisonType)
         {
-            int result = TestedMethodAdapter(source, anyOf, START_INDEX, -1, comparisonType);
+            int result = TestedMethodAdapter(source, anyOf, -1, -1, comparisonType);
             Assert.AreEqual(FOUND_POS, result);
         }
 
         [Test]
-        public void When_the_first_char_of_match_differs_by_case_returns_according_to_comparison_type(
+        public void When_the_first_char_of_match_differs_by_case_returns_according_to_comparisonType(
             [Values(SOURCE_STRING)] string source,
             [ValueSource(typeof(Helper), "AnyOf_Source_FirstCharCapitalized")] VerboseStringArray anyOf,
             [ValueSource(typeof(Helper), "StringComparisonSource")] StringComparison comparisonType)
         {
             int expectedResult = Helper.IsCaseSensitive(comparisonType) ? StringHelper.NPOS : FOUND_POS;
-            int result = TestedMethodAdapter(source, anyOf, START_INDEX, -1, comparisonType);
+            int result = TestedMethodAdapter(source, anyOf, -1, -1, comparisonType);
             Assert.AreEqual(expectedResult, result);  // Default comparison type should be CurrentCulture
         }
 
         [Test]
-        public void When_a_nonfirst_char_of_match_differs_by_case_returns_according_to_comparison_type(
+        public void When_a_nonfirst_char_of_match_differs_by_case_returns_according_to_comparisonType(
             [Values(SOURCE_STRING)] string source,
             [ValueSource(typeof(Helper), "AnyOf_Source_SecondCharCapitalized")] VerboseStringArray anyOf,
             [ValueSource(typeof(Helper), "StringComparisonSource")] StringComparison comparisonType)
         {
             int expectedResult = Helper.IsCaseSensitive(comparisonType) ? StringHelper.NPOS : FOUND_POS;
-            int result = TestedMethodAdapter(source, anyOf, START_INDEX, -1, comparisonType);
+            int result = TestedMethodAdapter(source, anyOf, -1, -1, comparisonType);
             Assert.AreEqual(expectedResult, result);  // Default comparison type should be CurrentCulture
         }
 
         [Test]
-        public void When_the_first_and_a_nonfirst_char_of_match_differs_by_case_returns_according_to_comparison_type(
+        public void When_the_first_and_a_nonfirst_char_of_match_differs_by_case_returns_according_to_comparisonType(
             [Values(SOURCE_STRING)] string source,
             [ValueSource(typeof(Helper), "AnyOf_Source_BothCharsCapitalized")] VerboseStringArray anyOf,
             [ValueSource(typeof(Helper), "StringComparisonSource")] StringComparison comparisonType)
         {
             int expectedResult = Helper.IsCaseSensitive(comparisonType) ? StringHelper.NPOS : FOUND_POS;
-            int result = TestedMethodAdapter(source, anyOf, START_INDEX, -1, comparisonType);
+            int result = TestedMethodAdapter(source, anyOf, -1, -1, comparisonType);
             Assert.AreEqual(expectedResult, result);  // Default comparison type should be CurrentCulture
         }
 
@@ -136,7 +131,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
             [ValueSource(typeof(Helper), "AnyOf_Source_NotFound")] VerboseStringArray anyOf,
             [ValueSource(typeof(Helper), "StringComparisonSource")] StringComparison comparisonType)
         {
-            int result = TestedMethodAdapter(source, anyOf, START_INDEX, -1, comparisonType);
+            int result = TestedMethodAdapter(source, anyOf, -1, -1, comparisonType);
             Assert.AreEqual(StringHelper.NPOS, result);
         }
 

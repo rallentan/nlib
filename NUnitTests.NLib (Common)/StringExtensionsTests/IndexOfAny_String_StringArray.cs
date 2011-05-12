@@ -62,7 +62,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
 
         [Theory]
         [ExpectedException(typeof(ArgumentException))]
-        public void When_anyOf_contains_an_empty_string_returns_zero()
+        public void When_anyOf_contains_an_empty_string_returns_throws_ArgumentException()
         {
             TestedMethodAdapter(SIMPLE_STRING, STRING_ARRAY_WITH_EMPTY, -1, -1, (StringComparison)(-1));
         }

@@ -26,7 +26,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
 
         //--- Public Methods ---
 
-        static int TestedMethodAdapter(string source, char[] anyOf, int startIndex, int count, bool unused2)
+        static int TestedMethodAdapter(string source, char[] anyOf, int startIndex, int count)
         {
             return StringExtensions.LastIndexOfNotAny(source, anyOf, startIndex, count);
         }
@@ -37,13 +37,13 @@ namespace NUnitTests.NLib.StringExtensionsTests
         [ExpectedException(typeof(ArgumentNullException))]
         public void When_sourceString_is_null_throws_ArgumentNullException()
         {
-            TestedMethodAdapter(null, EMPTY_CHAR_ARRAY, 0, 0, false);
+            TestedMethodAdapter(null, EMPTY_CHAR_ARRAY, 0, 0);
         }
 
         [Theory]
-        public void When_source_string_is_empty_returns_NPOS_regardless_of_range_params(bool ignoreCase)
+        public void When_source_string_is_empty_returns_NPOS_regardless_of_range_params()
         {
-            int result = TestedMethodAdapter(string.Empty, EMPTY_CHAR_ARRAY, -4, -2, ignoreCase);
+            int result = TestedMethodAdapter(string.Empty, EMPTY_CHAR_ARRAY, -4, -2);
             Assert.AreEqual(StringHelper.NPOS, result);
         }
 
@@ -51,27 +51,20 @@ namespace NUnitTests.NLib.StringExtensionsTests
         [ExpectedException(typeof(ArgumentNullException))]
         public void When_anyOf_is_null_throws_ArgumentNullException()
         {
-            TestedMethodAdapter(string.Empty, NULL_CHAR_ARRAY, 0, 0, false);
+            TestedMethodAdapter(string.Empty, NULL_CHAR_ARRAY, 0, 0);
         }
 
         [Theory]
-        public void When_anyOf_is_empty_and_count_is_nonzero_returns_startIndex(bool ignoreCase)
+        public void When_anyOf_is_empty_and_count_is_nonzero_returns_startIndex()
         {
-            int result = TestedMethodAdapter(SIMPLE_STRING, EMPTY_CHAR_ARRAY, 0, 1, ignoreCase);
+            int result = TestedMethodAdapter(SIMPLE_STRING, EMPTY_CHAR_ARRAY, 0, 1);
             Assert.AreEqual(0, result);
         }
 
         [Theory]
-        public void When_anyOf_is_empty_and_count_is_zero_returns_NPOS(bool ignoreCase)
+        public void When_anyOf_is_empty_and_count_is_zero_returns_NPOS()
         {
-            int result = TestedMethodAdapter(SIMPLE_STRING, EMPTY_CHAR_ARRAY, 0, 0, ignoreCase);
-            Assert.AreEqual(StringHelper.NPOS, result);
-        }
-
-        [Theory]
-        public void When_source_string_is_empty_returns_NPOS_regardless_of_range_params()
-        {
-            int result = TestedMethodAdapter(string.Empty, EMPTY_CHAR_ARRAY, -4, -2, false);
+            int result = TestedMethodAdapter(SIMPLE_STRING, EMPTY_CHAR_ARRAY, 0, 0);
             Assert.AreEqual(StringHelper.NPOS, result);
         }
 
@@ -79,28 +72,42 @@ namespace NUnitTests.NLib.StringExtensionsTests
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void When_count_is_negative_throws_ArgumentOutOfRangeException()
         {
-            TestedMethodAdapter(SIMPLE_STRING, EMPTY_CHAR_ARRAY, 1, -1, false);
+            TestedMethodAdapter(SIMPLE_STRING, EMPTY_CHAR_ARRAY, 1, -1);
         }
 
         [Theory]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void When_startIndex_minus_count_specifies_position_not_in_sourceString_throws_ArgumentOutOfRangeException()
         {
-            TestedMethodAdapter(LENGTH_4_STRING, EMPTY_CHAR_ARRAY, 0, 2, false);
+            TestedMethodAdapter(LENGTH_4_STRING, EMPTY_CHAR_ARRAY, 0, 2);
         }
 
         [Theory]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void When_startIndex_is_negative_throws_ArgumentOutOfRangeException()
         {
-            TestedMethodAdapter(SIMPLE_STRING, EMPTY_CHAR_ARRAY, -1, 0, false);
+            TestedMethodAdapter(SIMPLE_STRING, EMPTY_CHAR_ARRAY, -1, 0);
         }
 
         [Theory]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void When_startIndex_is_greater_than_or_equal_to_length_of_source_throws_ArgumentOutOfRangeException()
         {
-            TestedMethodAdapter(LENGTH_4_STRING, EMPTY_CHAR_ARRAY, 4, 0, false);
+            TestedMethodAdapter(LENGTH_4_STRING, EMPTY_CHAR_ARRAY, 4, 0);
+        }
+
+        [Theory]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void When_startIndex_is_maximum_integer_value_does_not_throw_OverflowException()
+        {
+            TestedMethodAdapter(SIMPLE_STRING, SIMPLE_CHAR_ARRAY, int.MaxValue, 0);
+        }
+
+        [Theory]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void When_count_is_maximum_integer_value_does_not_throw_OverflowException()
+        {
+            TestedMethodAdapter(SIMPLE_STRING, SIMPLE_CHAR_ARRAY, 0, int.MaxValue);
         }
 
         [Test]
@@ -108,17 +115,17 @@ namespace NUnitTests.NLib.StringExtensionsTests
             [Values(SOURCE_STRING)] string source,
             [ValueSource(typeof(Helper), "AnyOfCharSource_Normal")] char[] anyOf)
         {
-            int result = TestedMethodAdapter(source, anyOf, START_INDEX, COUNT, false);
+            int result = TestedMethodAdapter(source, anyOf, START_INDEX, COUNT);
             Assert.AreEqual(FOUND_POS, result);
         }
 
         [Test]
-        public void When_a_match_differs_by_case_returns_startIndex(
+        public void When_a_candidate_match_differs_returns_index_of_candidate(
             [Values(SOURCE_STRING)] string source,
             [ValueSource(typeof(Helper), "AnyOfCharSource_Capital")] char[] anyOf)
         {
             int expectedResult = START_INDEX;
-            int result = TestedMethodAdapter(source, anyOf, START_INDEX, COUNT, false);
+            int result = TestedMethodAdapter(source, anyOf, START_INDEX, COUNT);
             Assert.AreEqual(expectedResult, result);  // Default comparison type should be CurrentCulture
         }
 
@@ -127,17 +134,8 @@ namespace NUnitTests.NLib.StringExtensionsTests
             [Values(SOURCE_STRING_NOT_FOUND)] string source,
             [ValueSource(typeof(Helper), "AnyOfCharSource_Normal")] char[] anyOf)
         {
-            int result = TestedMethodAdapter(source, anyOf, START_INDEX, COUNT, false);
+            int result = TestedMethodAdapter(source, anyOf, START_INDEX, COUNT);
             Assert.AreEqual(StringHelper.NPOS, result);
-        }
-
-        [Test, Sequential]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void When_startIndex_plus_count_is_greater_than_maximum_integer_value_does_not_throw_OverflowException(
-            [Values(1, int.MaxValue)] int startIndex,
-            [Values(int.MaxValue, 1)] int count)
-        {
-            TestedMethodAdapter(SIMPLE_STRING, SIMPLE_CHAR_ARRAY, startIndex, count, false);
         }
     }
 }

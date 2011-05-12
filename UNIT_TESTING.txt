@@ -1,5 +1,12 @@
-Use the following settings when running the unit tests in NUnit:
+RUNNING THE TESTS
+
+Running the unit tests in NUnit seem to work best with the following NUnit settings:
 
 [Test Loader -> Assembly Isolation]
 Default Process Model:  Run tests directly in the NUnit process
 Default Domain Usage:  Use a separate AppDomain per assembly
+
+
+TROUBLESHOOTING
+
+If some of the nodes don't show results after running the tests, or you some tests returning incorrect results, it may be due to one or more assemblies being registered in the GAC.  Currently, when a strongly-named assembly of the same version is registered in the GAC, it is loaded by the CLR instead of the assembly intended to be tested.  This behavior may be alterable, but an appropriate solution has not been thoroughly investigated.
