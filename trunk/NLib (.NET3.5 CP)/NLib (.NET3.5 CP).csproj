@@ -151,9 +151,6 @@
     <Compile Include="..\NLib %28Common%29\Int64Extensions.cs">
       <Link>Int64Extensions.cs</Link>
     </Compile>
-    <Compile Include="..\NLib %28Common%29\NewLineSequence.cs">
-      <Link>NewLineSequence.cs</Link>
-    </Compile>
     <Compile Include="..\NLib %28Common%29\OperationQueueThread.cs">
       <Link>OperationQueueThread.cs</Link>
     </Compile>
