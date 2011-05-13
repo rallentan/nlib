@@ -2,7 +2,7 @@
 
 namespace NLib
 {
-    internal class ExceptionHelper
+    internal static class ExceptionHelper
     {
         //--- Argument Name Constants ---
         public const string ARGNAME_SOURCE = "source";
