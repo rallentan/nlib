@@ -224,7 +224,7 @@ namespace NLib
         /// </summary>
         public static int GetLineCount(this string source)
         {
-            return GetLineCount(source, DEFAULT_NEWLINE_SEQUENCE);
+            return GetLineCount(source, Environment.NewLine);
         }
         
         /// <summary>
@@ -253,7 +253,7 @@ namespace NLib
         /// </summary>
         public static int LineNumberOfIndex(this string source, int index)
         {
-            return LineNumberOfIndex(source, index, DEFAULT_NEWLINE_SEQUENCE);
+            return LineNumberOfIndex(source, index, Environment.NewLine);
         }
         
         /// <summary>
