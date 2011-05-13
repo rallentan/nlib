@@ -20,7 +20,7 @@ namespace NLib
         /// <returns>
         ///     Returns a <see cref="Boolean"/> value.
         /// </returns>
-        public static bool NextBool(this Random source)
+        public static bool NextBoolean(this Random source)
         {
             bool result = false;
             int next = source.Next(2);

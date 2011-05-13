@@ -65,7 +65,6 @@ namespace NLib
         public void Dispose()
         {
             this.Dispose(true);
-
             GC.SuppressFinalize(this);
         }
         
@@ -179,13 +178,13 @@ namespace NLib
 
         public bool SkipWhileAnyOf(char[] anyOf) { return SkipToCore(_s.IndexOfNotAny(anyOf, _pos, _ignoreCase)); }
 
-        public bool StartsWith(char c) { return CharExtensions.Equals((char)this[0], c, _ignoreCase); }
+        public bool StartsWith(char value) { return CharExtensions.Equals((char)this[0], value, _ignoreCase); }
 
-        public bool StartsWith(string s) { return string.Compare(_s, _pos, s, 0, s.Length, _comparisonType) == 0; }
+        public bool StartsWith(string value) { return string.Compare(_s, _pos, value, 0, value.Length, _comparisonType) == 0; }
         
         //--- Protected Methods ---
         
-        protected void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (disposing)
             {

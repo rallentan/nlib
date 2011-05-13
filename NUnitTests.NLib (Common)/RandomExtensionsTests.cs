@@ -34,7 +34,7 @@ namespace NUnitTests.NLib
 
             for (int i = 0; i < ITERATIONS; i++)
             {
-                if (random.NextBool())
+                if (random.NextBoolean())
                     trueCount++;
             }
 

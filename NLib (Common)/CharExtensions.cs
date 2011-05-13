@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Globalization;
+using System.Collections.ObjectModel;
 
 namespace NLib
 {
@@ -11,89 +12,118 @@ namespace NLib
     /// </summary>
     public static class CharExtensions
     {
+        //--- Static Fields ---
+        static ReadOnlyCollection<char> _whitespaceLatin1;
+        static ReadOnlyCollection<char> _nlbWhitespaceLatin1;
+
         //--- Public Static Methods ---
         
-        public static bool Equals(this char charA, char charB, bool ignoreCase)
+        public static bool Equals(this char valueA, char valueB, bool ignoreCase)
         {
             if (ignoreCase)
-                return char.ToUpperInvariant(charA) == char.ToUpperInvariant(charB);
+                return char.ToUpperInvariant(valueA) == char.ToUpperInvariant(valueB);
             else
-                return charA == charB;
+                return valueA == valueB;
         }
         
-        public static bool IsDigit(this char c) { return char.IsDigit(c); }
+        public static bool IsDigit(this char value) { return char.IsDigit(value); }
         
-        public static bool IsHexDigit(this char c)
+        public static bool IsHexDigit(this char value)
         {
-            if (c >= '0' && c <= '9'
-                || c >= 'a' && c <= 'f'
-                || c >= 'A' && c <= 'F')
+            if (value >= '0' && value <= '9'
+                || value >= 'a' && value <= 'f'
+                || value >= 'A' && value <= 'F')
             {
                 return true;
             }
             return false;
         }
         
-        public static bool IsInMap(this char c, bool[] characterMap)
+        public static bool IsInMap(this char value, bool[] characterMap)
         {
-            if (c < characterMap.Length)
-                return characterMap[c];
+            if (value < characterMap.Length)
+                return characterMap[value];
             return false;
         }
         
-        public static bool IsInMap(this int c, bool[] characterMap)
+        public static bool IsInMap(this int value, bool[] characterMap)
         {
-            if (c < characterMap.Length)
-                return characterMap[c];
+            if (value < characterMap.Length)
+                return characterMap[value];
             return false;
         }
         
         /// <summary>
         /// Indicates whether the specified Unicode character is categorized as a non-line-breaking white space.
         /// </summary>
-        /// <param name="c">A Unicode character.</param>
+        /// <param name="value">A Unicode character.</param>
         /// <returns>True if c is non-line-breaking white space; otherwise, false.</returns>
-        public static bool IsNLBWhiteSpaceLatin1(this char c)
+        public static bool IsNonLineBreakingWhiteSpaceLatin1(this char value)
         {
-            if (c == NLBWhiteSpaceLatin1[0]
-                || c == NLBWhiteSpaceLatin1[1]
-                || c == NLBWhiteSpaceLatin1[2]
-                || c == NLBWhiteSpaceLatin1[3])
+            if (value == NonLineBreakingWhiteSpaceLatin1[0]
+                || value == NonLineBreakingWhiteSpaceLatin1[1]
+                || value == NonLineBreakingWhiteSpaceLatin1[2]
+                || value == NonLineBreakingWhiteSpaceLatin1[3])
             {
                 return true;
             }
             return false;
         }
         
-        public static bool IsWhiteSpace(this char c) { return char.IsWhiteSpace(c); }
+        public static bool IsWhiteSpace(this char value) { return char.IsWhiteSpace(value); }
         
-        public static char ToLower(this char c) { return char.ToLower(c, CultureInfo.CurrentCulture); }
+        public static char ToLower(this char value) { return char.ToLower(value, CultureInfo.CurrentCulture); }
 
-        public static char ToLower(this char c, CultureInfo culture) { return char.ToLower(c, culture); }
+        public static char ToLower(this char value, CultureInfo culture) { return char.ToLower(value, culture); }
      
-        public static char ToLowerInvariant(this char c) { return char.ToLowerInvariant(c); }
+        public static char ToLowerInvariant(this char value) { return char.ToLowerInvariant(value); }
         
-        public static char ToUpper(this char c) { return char.ToUpper(c, CultureInfo.CurrentCulture); }
+        public static char ToUpper(this char value) { return char.ToUpper(value, CultureInfo.CurrentCulture); }
 
-        public static char ToUpper(this char c, CultureInfo culture) { return char.ToUpper(c, culture); }
+        public static char ToUpper(this char value, CultureInfo culture) { return char.ToUpper(value, culture); }
     
-        public static char ToUpperInvariant(this char c) { return char.ToUpperInvariant(c); }
+        public static char ToUpperInvariant(this char value) { return char.ToUpperInvariant(value); }
 
         //--- Public Static Properties ---
-        
-        public static char[] WhiteSpaceLatin1
+
+        public static IList<char> WhiteSpaceLatin1
         {
             get
             {
-                return new char[] { ' ', '\t', '\n', '\v', '\f', '\r', '\x00a0', '\x0085' };
+                if (_whitespaceLatin1 == null)
+                {
+                    IList<char> list = new List<char>(8);
+                    list.Add(' ');
+                    list.Add('\t');
+                    list.Add('\n');
+                    list.Add('\v');
+                    list.Add('\f');
+                    list.Add('\r');
+                    list.Add('\x00a0');
+                    list.Add('\x0085');
+                    _whitespaceLatin1 = new ReadOnlyCollection<char>(list);
+                }
+                return _whitespaceLatin1;
             }
         }
         
-        public static char[] NLBWhiteSpaceLatin1
+        /// <summary>
+        /// Gets a collection of non-line-breaking whitespace characters.
+        /// </summary>
+        public static IList<char> NonLineBreakingWhiteSpaceLatin1
         {
             get
             {
-                return new char[] { ' ', '\t', '\x00a0', '\x0085' };
+                if (_nlbWhitespaceLatin1 == null)
+                {
+                    IList<char> list = new List<char>(4);
+                    list.Add(' ');
+                    list.Add('\t');
+                    list.Add('\x00a0');
+                    list.Add('\x0085');
+                    _nlbWhitespaceLatin1 = new ReadOnlyCollection<char>(list);
+                }
+                return _nlbWhitespaceLatin1;
             }
         }
     }

@@ -52,7 +52,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
         public void When_anyOf_is_empty_returns_NPOS(StringComparison comparisonType)
         {
             int result = TestedMethodAdapter(SIMPLE_STRING, EMPTY_STRING_ARRAY, 0, 0, comparisonType);
-            Assert.AreEqual(StringHelper.NPOS, result);
+            Assert.AreEqual(StringHelper.NPos, result);
         }
 
         [Theory]
@@ -73,7 +73,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
         public void When_source_string_is_empty_returns_NPOS_regardless_of_range_params(StringComparison comparisonType)
         {
             int result = TestedMethodAdapter(string.Empty, EMPTY_STRING_ARRAY, -4, -2, comparisonType);
-            Assert.AreEqual(StringHelper.NPOS, result);
+            Assert.AreEqual(StringHelper.NPos, result);
         }
 
         [Theory]
@@ -113,7 +113,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
             [ValueSource(typeof(Helper), "AnyOf_Source_FirstCharCapitalized")] VerboseStringArray anyOf,
             [ValueSource(typeof(Helper), "StringComparisonSource")] StringComparison comparisonType)
         {
-            int expectedResult = Helper.IsCaseSensitive(comparisonType) ? StringHelper.NPOS : FOUND_POS;
+            int expectedResult = Helper.IsCaseSensitive(comparisonType) ? StringHelper.NPos : FOUND_POS;
             int result = TestedMethodAdapter(source, anyOf, START_INDEX, -1, comparisonType);
             Assert.AreEqual(expectedResult, result);  // Default comparison type should be CurrentCulture
         }
@@ -124,7 +124,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
             [ValueSource(typeof(Helper), "AnyOf_Source_SecondCharCapitalized")] VerboseStringArray anyOf,
             [ValueSource(typeof(Helper), "StringComparisonSource")] StringComparison comparisonType)
         {
-            int expectedResult = Helper.IsCaseSensitive(comparisonType) ? StringHelper.NPOS : FOUND_POS;
+            int expectedResult = Helper.IsCaseSensitive(comparisonType) ? StringHelper.NPos : FOUND_POS;
             int result = TestedMethodAdapter(source, anyOf, START_INDEX, -1, comparisonType);
             Assert.AreEqual(expectedResult, result);  // Default comparison type should be CurrentCulture
         }
@@ -135,7 +135,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
             [ValueSource(typeof(Helper), "AnyOf_Source_BothCharsCapitalized")] VerboseStringArray anyOf,
             [ValueSource(typeof(Helper), "StringComparisonSource")] StringComparison comparisonType)
         {
-            int expectedResult = Helper.IsCaseSensitive(comparisonType) ? StringHelper.NPOS : FOUND_POS;
+            int expectedResult = Helper.IsCaseSensitive(comparisonType) ? StringHelper.NPos : FOUND_POS;
             int result = TestedMethodAdapter(source, anyOf, START_INDEX, -1, comparisonType);
             Assert.AreEqual(expectedResult, result);  // Default comparison type should be CurrentCulture
         }
@@ -147,7 +147,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
             [ValueSource(typeof(Helper), "StringComparisonSource")] StringComparison comparisonType)
         {
             int result = TestedMethodAdapter(source, anyOf, START_INDEX, -1, comparisonType);
-            Assert.AreEqual(StringHelper.NPOS, result);
+            Assert.AreEqual(StringHelper.NPos, result);
         }
 
         [Theory]

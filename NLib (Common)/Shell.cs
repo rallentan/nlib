@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Text;
+using System.Collections.Generic;
 
 namespace NLib
 {
-    public class Shell
+    public static class Shell
     {
-        //--- Constructors ---
-
-        protected Shell()
-        {
-        }
-
         //--- Public Static Methods ---
 
         public static int Execute(string commandWithoutArgs)
@@ -75,7 +70,9 @@ namespace NLib
                 return string.Empty;
 
             StringBuilder commandLine = new StringBuilder();
-            char[] commandLineSeparators = CommandLineSeparators;
+
+            char[] commandLineSeparators = new char[CommandLineSeparators.Count];
+            CommandLineSeparators.CopyTo(commandLineSeparators, 0);
             
             CommandLineAppendInternal(commandLine, args[0], commandLineSeparators);
 
@@ -90,7 +87,7 @@ namespace NLib
 
         //--- Public Static Properties ---
 
-        public static char[] CommandLineSeparators
+        public static IList<char> CommandLineSeparators
         {
             get
             {
@@ -100,7 +97,7 @@ namespace NLib
                     case 4:     // Unix/MacOS X in framework v2.0, and Unix in framework v4.0
                     case 6:     // MacOS X in framework v4.0
                     default:
-                        return CharExtensions.WhiteSpaceLatin1;
+                        return CharExtensions.NonLineBreakingWhiteSpaceLatin1;
                 }
             }
         }

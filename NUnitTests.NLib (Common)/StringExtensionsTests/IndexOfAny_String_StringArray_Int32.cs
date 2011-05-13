@@ -49,7 +49,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
         public void When_source_string_is_empty_returns_NPOS_regardless_of_range_params()
         {
             int result = TestedMethodAdapter(string.Empty, EMPTY_STRING_ARRAY, -4, -2, (StringComparison)(-1));
-            Assert.AreEqual(StringHelper.NPOS, result);
+            Assert.AreEqual(StringHelper.NPos, result);
         }
 
         [Theory]
@@ -63,7 +63,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
         public void When_anyOf_is_empty_returns_NPOS()
         {
             int result = TestedMethodAdapter(SIMPLE_STRING, EMPTY_STRING_ARRAY, 0, 0, (StringComparison)(-1));
-            Assert.AreEqual(StringHelper.NPOS, result);
+            Assert.AreEqual(StringHelper.NPos, result);
         }
 
         [Theory]
@@ -108,7 +108,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
             [Values(SOURCE_STRING)] string source,
             [ValueSource(typeof(Helper), "AnyOf_Source_FirstCharCapitalized")] VerboseStringArray anyOf)
         {
-            int expectedResult = StringHelper.NPOS;
+            int expectedResult = StringHelper.NPos;
             int result = TestedMethodAdapter(source, anyOf, START_INDEX, -1, (StringComparison)(-1));
             Assert.AreEqual(expectedResult, result);  // Default comparison type should be CurrentCulture
         }
@@ -118,7 +118,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
             [Values(SOURCE_STRING)] string source,
             [ValueSource(typeof(Helper), "AnyOf_Source_SecondCharCapitalized")] VerboseStringArray anyOf)
         {
-            int expectedResult = StringHelper.NPOS;
+            int expectedResult = StringHelper.NPos;
             int result = TestedMethodAdapter(source, anyOf, START_INDEX, -1, (StringComparison)(-1));
             Assert.AreEqual(expectedResult, result);  // Default comparison type should be CurrentCulture
         }
@@ -128,7 +128,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
             [Values(SOURCE_STRING)] string source,
             [ValueSource(typeof(Helper), "AnyOf_Source_BothCharsCapitalized")] VerboseStringArray anyOf)
         {
-            int expectedResult = StringHelper.NPOS;
+            int expectedResult = StringHelper.NPos;
             int result = TestedMethodAdapter(source, anyOf, START_INDEX, -1, (StringComparison)(-1));
             Assert.AreEqual(expectedResult, result);  // Default comparison type should be CurrentCulture
         }
@@ -139,7 +139,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
             [ValueSource(typeof(Helper), "AnyOf_Source_NotFound")] VerboseStringArray anyOf)
         {
             int result = TestedMethodAdapter(source, anyOf, START_INDEX, -1, (StringComparison)(-1));
-            Assert.AreEqual(StringHelper.NPOS, result);
+            Assert.AreEqual(StringHelper.NPos, result);
         }
 
         [Theory]
