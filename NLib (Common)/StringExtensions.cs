@@ -32,19 +32,6 @@ namespace NLib
     /// </summary>
     public static partial class StringExtensions
     {
-        //--- Constants ---
-        const string ARGNAME_SOURCE = "source";
-        const string ARGNAME_VALUE = "value";
-        const string ARGNAME_ANYOF = "anyOf";
-        const string ARGNAME_STARTINDEX = "startIndex";
-        const string ARGNAME_COUNT = "count";
-        const string ARGNAME_COMPARISONTYPE = "comparisonType";
-        const string EXCMSG_INDEX_OUT_OF_RANGE = "Index was out of range. Must be non-negative and less than the size of the collection.";
-        const string EXCMSG_COUNT_OUT_OF_RANGE = "Count must be positive and count must refer to a location within the string/array/collection.";
-        const string EXCMSG_CANNOT_CONTAIN_NULL_OR_EMPTY = "Parameter cannot contain null or zero-length strings.";
-        const string EXCMSG_MUST_BE_LESS_THAN_INT32_MAXVALUE = "Parameter must be less than Int32.MaxValue.";
-        const string EXCMSG_INVALID_ENUMERATION_VALUE = "Parameter is an invalid enumeration value.";
-       
         //--- Public Static Methods ---
 
         /// <summary>
@@ -93,7 +80,7 @@ namespace NLib
         public static bool Contains(this string source, char value)
         {
             if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
 
             return source.IndexOf(value) != -1;
         }
@@ -142,9 +129,9 @@ namespace NLib
         public static bool Contains(this string source, string value, StringComparison comparisonType)
         {
             if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
             if (value == null)
-                throw new ArgumentNullException(ARGNAME_VALUE);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_VALUE);
 
             return source.IndexOf(value, comparisonType) != -1;
         }
@@ -184,11 +171,11 @@ namespace NLib
         public static string Replace(this string source, string oldValue, string newValue, StringComparison comparisonType)
         {
             if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
             if (oldValue == null)
-                throw new ArgumentNullException("oldValue");
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_OLDVALUE);
             if (oldValue.Length == 0)
-                throw new ArgumentException("oldValue cannot be a zero-length string");
+                throw new ArgumentException(ExceptionHelper.ARGNAME_OLDVALUE, ExceptionHelper.EXCMSG_CANNOT_BE_ZERO_LENGTH_STRING);
             
             int posCurrent = 0;
             int lenPattern = oldValue.Length;
@@ -312,7 +299,7 @@ namespace NLib
         public static int IndexOf(this string source, char value, bool ignoreCase)
         {
             if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
 
             if (ignoreCase)
             {
@@ -327,7 +314,7 @@ namespace NLib
         public static int IndexOf(this string source, char value, int startIndex, bool ignoreCase)
         {
             if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
 
             if (ignoreCase)
             {
@@ -346,7 +333,7 @@ namespace NLib
             else
             {
                 if (source == null)
-                    throw new ArgumentNullException(ARGNAME_SOURCE);
+                    throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
                 return source.IndexOf(value, startIndex, count);
             }
         }
@@ -356,7 +343,7 @@ namespace NLib
         public static int IndexOfAny(this string source, char[] anyOf, bool ignoreCase)
         {
             if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
 
             if (ignoreCase)
             {
@@ -371,7 +358,7 @@ namespace NLib
         public static int IndexOfAny(this string source, char[] anyOf, int startIndex, bool ignoreCase)
         {
             if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
 
             if (ignoreCase)
             {
@@ -390,7 +377,7 @@ namespace NLib
             else
             {
                 if (source == null)
-                    throw new ArgumentNullException(ARGNAME_SOURCE);
+                    throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
                 return source.IndexOfAny(anyOf, startIndex, count);
             }
         }
@@ -427,7 +414,7 @@ namespace NLib
         public static int IndexOfAny(this string source, string[] anyOf)
         {
             if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
 
             return IndexOfAnyCompareType(source, anyOf, 0, source.Length, StringComparison.CurrentCulture);
         }
@@ -471,7 +458,7 @@ namespace NLib
         public static int IndexOfAny(this string source, string[] anyOf, int startIndex)
         {
             if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
 
             return IndexOfAnyCompareType(source, anyOf, startIndex, source.Length - startIndex, StringComparison.CurrentCulture);
         }
@@ -544,7 +531,7 @@ namespace NLib
         public static int IndexOfAny(this string source, string[] anyOf, StringComparison comparisonType)
         {
             if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
 
             if (comparisonType == StringComparison.OrdinalIgnoreCase)
                 return IndexOfAnyIgnoreCase(source, anyOf, 0, source.Length);
@@ -596,7 +583,7 @@ namespace NLib
         public static int IndexOfAny(this string source, string[] anyOf, int startIndex, StringComparison comparisonType)
         {
             if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
 
             if (comparisonType == StringComparison.OrdinalIgnoreCase)
                 return IndexOfAnyIgnoreCase(source, anyOf, startIndex, source.Length - startIndex);
@@ -665,7 +652,7 @@ namespace NLib
         public static int IndexOfNotAny(this string source, char[] anyOf, bool ignoreCase)
         {
             if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
 
             if (ignoreCase)
                 return IndexOfNotAnyIgnoreCase(source, anyOf, 0, source.Length);
@@ -676,7 +663,7 @@ namespace NLib
         public static int IndexOfNotAny(this string source, char[] anyOf, int startIndex, bool ignoreCase)
         {
             if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
 
             if (ignoreCase)
                 return IndexOfNotAnyIgnoreCase(source, anyOf, startIndex, source.Length - startIndex);
@@ -721,7 +708,7 @@ namespace NLib
         public static int IndexOfNotAny(this string source, char[] anyOf)
         {
             if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
 
             return IndexOfNotAnyOrdinal(source, anyOf, 0, source.Length);
         }
@@ -765,7 +752,7 @@ namespace NLib
         public static int IndexOfNotAny(this string source, char[] anyOf, int startIndex)
         {
             if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
 
             return IndexOfNotAnyOrdinal(source, anyOf, startIndex, source.Length - startIndex);
         }
@@ -822,7 +809,7 @@ namespace NLib
         public static int LastIndexOf(this string source, char value, bool ignoreCase)
         {
             if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
 
             if (ignoreCase)
                 return LastIndexOfIgnoreCase(source, value, source.Length - 1, source.Length);
@@ -833,9 +820,9 @@ namespace NLib
         public static int LastIndexOf(this string source, char value, int startIndex, bool ignoreCase)
         {
             if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
             if (startIndex == int.MaxValue)
-                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_MUST_BE_LESS_THAN_INT32_MAXVALUE);
+                throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_STARTINDEX, ExceptionHelper.EXCMSG_MUST_BE_LESS_THAN_INT32_MAXVALUE);
 
             if (ignoreCase)
                 return LastIndexOfIgnoreCase(source, value, startIndex, startIndex + 1);
@@ -846,7 +833,7 @@ namespace NLib
         public static int LastIndexOf(this string source, char value, int startIndex, int count, bool ignoreCase)
         {
             if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
 
             if (ignoreCase)
                 return LastIndexOfIgnoreCase(source, value, startIndex, count);
@@ -860,7 +847,7 @@ namespace NLib
         public static int LastIndexOfAny(this string source, char[] anyOf, bool ignoreCase)
         {
             if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
 
             if (ignoreCase)
                 return LastIndexOfAnyIgnoreCase(source, anyOf, source.Length - 1, source.Length);
@@ -871,9 +858,9 @@ namespace NLib
         public static int LastIndexOfAny(this string source, char[] anyOf, int startIndex, bool ignoreCase)
         {
             if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
             if (startIndex == int.MaxValue)
-                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_MUST_BE_LESS_THAN_INT32_MAXVALUE);
+                throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_STARTINDEX, ExceptionHelper.EXCMSG_MUST_BE_LESS_THAN_INT32_MAXVALUE);
 
             if (ignoreCase)
                 return LastIndexOfAnyIgnoreCase(source, anyOf, startIndex, startIndex + 1);
@@ -884,7 +871,7 @@ namespace NLib
         public static int LastIndexOfAny(this string source, char[] anyOf, int startIndex, int count, bool ignoreCase)
         {
             if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
 
             if (ignoreCase)
                 return LastIndexOfAnyIgnoreCase(source, anyOf, startIndex, count);
@@ -927,7 +914,7 @@ namespace NLib
         public static int LastIndexOfNotAny(this string source, char[] anyOf)
         {
             if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
 
             return LastIndexOfNotAny(source, anyOf, source.Length - 1, source.Length);
         }
@@ -970,7 +957,7 @@ namespace NLib
         public static int LastIndexOfNotAny(this string source, char[] anyOf, int startIndex)
         {
             if (startIndex == Int32.MaxValue)
-                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_MUST_BE_LESS_THAN_INT32_MAXVALUE);
+                throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_STARTINDEX, ExceptionHelper.EXCMSG_MUST_BE_LESS_THAN_INT32_MAXVALUE);
 
             return LastIndexOfNotAny(source, anyOf, startIndex, startIndex + 1);
         }
@@ -1018,9 +1005,9 @@ namespace NLib
         public static unsafe int LastIndexOfNotAny(this string source, char[] anyOf, int startIndex, int count)
         {
             if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
             if (anyOf == null)
-                throw new ArgumentNullException(ARGNAME_ANYOF);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_ANYOF);
 
             int sourceLength = source.Length;
             int anyOfLength = anyOf.Length;
@@ -1028,9 +1015,9 @@ namespace NLib
             if (sourceLength == 0)
                 return StringHelper.NPOS;
             if (startIndex < 0 || startIndex >= source.Length)
-                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_INDEX_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_STARTINDEX, ExceptionHelper.EXCMSG_INDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex - count + 1 < 0)
-                throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_COUNT, ExceptionHelper.EXCMSG_COUNT_OUT_OF_RANGE);
 
             fixed (char* pStrBase = source)
             fixed (char* pAnyOfBase = anyOf)
@@ -1098,7 +1085,7 @@ namespace NLib
         public static int LastIndexOfNotAny(this string source, char[] anyOf, int startIndex, bool ignoreCase)
         {
             if (startIndex == Int32.MaxValue)
-                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_MUST_BE_LESS_THAN_INT32_MAXVALUE);
+                throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_STARTINDEX, ExceptionHelper.EXCMSG_MUST_BE_LESS_THAN_INT32_MAXVALUE);
 
             return LastIndexOfNotAny(source, anyOf, startIndex, startIndex + 1, ignoreCase);
         }
@@ -1109,9 +1096,9 @@ namespace NLib
                 return LastIndexOfNotAny(source, anyOf, startIndex, count);
 
             if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
             if (anyOf == null)
-                throw new ArgumentNullException(ARGNAME_ANYOF);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_ANYOF);
 
             int sourceLength = source.Length;
             int anyOfLength = anyOf.Length;
@@ -1121,9 +1108,9 @@ namespace NLib
             if (sourceLength == 0)
                 return StringHelper.NPOS;
             if (startIndex < 0 || startIndex >= sourceLength)
-                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_INDEX_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_STARTINDEX, ExceptionHelper.EXCMSG_INDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex - count + 1 < 0)
-                throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_COUNT, ExceptionHelper.EXCMSG_COUNT_OUT_OF_RANGE);
 
             for (int i = 0; i < anyOfLength; i++)
             {
@@ -1196,11 +1183,11 @@ namespace NLib
         static unsafe int IndexOfIgnoreCase(string source, char value, int startIndex, int count)
         {
             if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
             if (startIndex < 0 || startIndex > source.Length)
-                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_INDEX_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_STARTINDEX, ExceptionHelper.EXCMSG_INDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex > source.Length - count)
-                throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_COUNT, ExceptionHelper.EXCMSG_COUNT_OUT_OF_RANGE);
 
             value = char.ToUpperInvariant(value);
 
@@ -1237,13 +1224,13 @@ namespace NLib
         static unsafe int IndexOfAnyIgnoreCase(string source, char[] anyOf, int startIndex, int count)
         {
             if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
             if (anyOf == null)
-                throw new ArgumentNullException(ARGNAME_ANYOF);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_ANYOF);
             if (startIndex < 0 || startIndex > source.Length)
-                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_INDEX_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_STARTINDEX, ExceptionHelper.EXCMSG_INDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex + count > source.Length)
-                throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_COUNT, ExceptionHelper.EXCMSG_COUNT_OUT_OF_RANGE);
 
             int anyOfLength = anyOf.Length;
             char[] ca = new char[anyOfLength];
@@ -1305,15 +1292,15 @@ namespace NLib
         static int IndexOfAnyOrdinal(string source, string[] anyOf, int startIndex, int count)
         {
             if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
             if (anyOf == null)
-                throw new ArgumentNullException(ARGNAME_ANYOF);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_ANYOF);
             if (source.Length == 0)
                 return StringHelper.NPOS;
             if (startIndex < 0)
-                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_INDEX_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_STARTINDEX, ExceptionHelper.EXCMSG_INDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex > source.Length - count)
-                throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_COUNT, ExceptionHelper.EXCMSG_COUNT_OUT_OF_RANGE);
 
             int anyOfLength = anyOf.Length;
             char[] ca = new char[anyOfLength];
@@ -1321,7 +1308,7 @@ namespace NLib
             for (int i = 0; i < anyOfLength; i++)
             {
                 if (anyOf[i] == null || anyOf[i].Length == 0)
-                    throw new ArgumentException(EXCMSG_CANNOT_CONTAIN_NULL_OR_EMPTY, ARGNAME_ANYOF);
+                    throw new ArgumentException(ExceptionHelper.EXCMSG_CANNOT_CONTAIN_NULL_OR_EMPTY, ExceptionHelper.ARGNAME_ANYOF);
                 ca[i] = anyOf[i][0];
             }
 
@@ -1347,9 +1334,9 @@ namespace NLib
         static int IndexOfAnyIgnoreCase(string source, string[] anyOf, int startIndex, int count)
         {
             if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
             if (anyOf == null)
-                throw new ArgumentNullException(ARGNAME_ANYOF);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_ANYOF);
             if (source.Length == 0)
                 return StringHelper.NPOS;
 
@@ -1359,7 +1346,7 @@ namespace NLib
             for (int i = 0; i < anyOfLength; i++)
             {
                 if (anyOf[i] == null || anyOf[i].Length == 0)
-                    throw new ArgumentException(EXCMSG_CANNOT_CONTAIN_NULL_OR_EMPTY, ARGNAME_ANYOF);
+                    throw new ArgumentException(ExceptionHelper.EXCMSG_CANNOT_CONTAIN_NULL_OR_EMPTY, ExceptionHelper.ARGNAME_ANYOF);
                 ca[i] = anyOf[i][0];
             }
 
@@ -1385,18 +1372,18 @@ namespace NLib
         static int IndexOfAnyCompareType(string source, string[] anyOf, int startIndex, int count, StringComparison comparisonType)
         {
             if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
             if (anyOf == null)
-                throw new ArgumentNullException(ARGNAME_ANYOF);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_ANYOF);
 
             int sourceLength = source.Length;
             
             if (sourceLength == 0)
                 return StringHelper.NPOS;
             if (startIndex < 0 || startIndex > sourceLength)
-                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_INDEX_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_STARTINDEX, ExceptionHelper.EXCMSG_INDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex > sourceLength - count)
-                throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_COUNT, ExceptionHelper.EXCMSG_COUNT_OUT_OF_RANGE);
 
             int anyOfLength = anyOf.Length;
             int sourceEnd = startIndex + count;
@@ -1410,7 +1397,7 @@ namespace NLib
                 if (anyOfElement == null ||
                     (anyOfElementLengths[i] = anyOfElement.Length) == 0)  // <-- Assignment
                 {
-                    throw new ArgumentException(EXCMSG_CANNOT_CONTAIN_NULL_OR_EMPTY, ARGNAME_ANYOF);
+                    throw new ArgumentException(ExceptionHelper.EXCMSG_CANNOT_CONTAIN_NULL_OR_EMPTY, ExceptionHelper.ARGNAME_ANYOF);
                 }
 
                 if (maxElementLength > anyOfElementLengths[i])
@@ -1443,7 +1430,7 @@ namespace NLib
                     break;
 
                 default:
-                    throw new ArgumentException(EXCMSG_INVALID_ENUMERATION_VALUE, ARGNAME_COMPARISONTYPE);
+                    throw new ArgumentException(ExceptionHelper.EXCMSG_INVALID_ENUMERATION_VALUE, ExceptionHelper.ARGNAME_COMPARISONTYPE);
             }
 
             int sourceStride = 256;  // Must be greater than zero and less than or equal to 1,073,741,823
@@ -1471,15 +1458,15 @@ namespace NLib
         static unsafe int IndexOfNotAnyOrdinal(string source, char[] anyOf, int startIndex, int count)
         {
             if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
             if (anyOf == null)
-                throw new ArgumentNullException(ARGNAME_ANYOF);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_ANYOF);
             if (source.Length == 0)
                 return StringHelper.NPOS;
             if (startIndex < 0)
-                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_INDEX_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_STARTINDEX, ExceptionHelper.EXCMSG_INDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex > source.Length - count)
-                throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_COUNT, ExceptionHelper.EXCMSG_COUNT_OUT_OF_RANGE);
 
             fixed (char* pStrBase = source)
             fixed (char* pAnyOfBase = anyOf)
@@ -1539,15 +1526,15 @@ namespace NLib
         static unsafe int IndexOfNotAnyIgnoreCase(string source, char[] anyOf, int startIndex, int count)
         {
             if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
             if (anyOf == null)
-                throw new ArgumentNullException(ARGNAME_ANYOF);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_ANYOF);
             if (source.Length == 0)
                 return StringHelper.NPOS;
             if (startIndex < 0 || startIndex > source.Length)
-                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_INDEX_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_STARTINDEX, ExceptionHelper.EXCMSG_INDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex > source.Length - count)
-                throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_COUNT, ExceptionHelper.EXCMSG_COUNT_OUT_OF_RANGE);
 
             int anyOfLength = anyOf.Length;
             char[] ca = new char[anyOfLength];
@@ -1618,13 +1605,13 @@ namespace NLib
         static unsafe int LastIndexOfIgnoreCase(string source, char value, int startIndex, int count)
         {
             if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
             if (source.Length == 0)
                 return StringHelper.NPOS;
             if (startIndex < 0 || startIndex >= source.Length)
-                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_INDEX_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_STARTINDEX, ExceptionHelper.EXCMSG_INDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex - count + 1 < 0)
-                throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_COUNT, ExceptionHelper.EXCMSG_COUNT_OUT_OF_RANGE);
 
             value = char.ToUpperInvariant(value);
 
@@ -1661,15 +1648,15 @@ namespace NLib
         static unsafe int LastIndexOfAnyIgnoreCase(string source, char[] anyOf, int startIndex, int count)
         {
             if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
             if (anyOf == null)
-                throw new ArgumentNullException(ARGNAME_ANYOF);
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_ANYOF);
             if (source.Length == 0)
                 return -1;
             if (startIndex < 0 || startIndex >= source.Length)
-                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_INDEX_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_STARTINDEX, ExceptionHelper.EXCMSG_INDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex - count + 1 < 0)
-                throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
+                throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_COUNT, ExceptionHelper.EXCMSG_COUNT_OUT_OF_RANGE);
 
             int anyOfLength = anyOf.Length;
             char[] ca = new char[anyOfLength];
