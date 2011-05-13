@@ -175,25 +175,25 @@ namespace NLib
             if (oldValue == null)
                 throw new ArgumentNullException(ExceptionHelper.ARGNAME_OLDVALUE);
             if (oldValue.Length == 0)
-                throw new ArgumentException(ExceptionHelper.ARGNAME_OLDVALUE, ExceptionHelper.EXCMSG_CANNOT_BE_ZERO_LENGTH_STRING);
+                throw new ArgumentException(ExceptionHelper.EXCMSG_CANNOT_BE_ZERO_LENGTH_STRING, ExceptionHelper.ARGNAME_OLDVALUE);
             
             int posCurrent = 0;
             int lenPattern = oldValue.Length;
             
-            int idxNext = source.IndexOf(oldValue, comparisonType);
-            if (idxNext == -1)
+            int nextIndex = source.IndexOf(oldValue, comparisonType);
+            if (nextIndex == -1)
                 return source;
 
             StringBuilder result = new StringBuilder(source.Length + source.Length);
 
-            while (idxNext >= 0)
+            while (nextIndex >= 0)
             {
-                result.Append(source, posCurrent, idxNext - posCurrent);
+                result.Append(source, posCurrent, nextIndex - posCurrent);
                 result.Append(newValue);
 
-                posCurrent = idxNext + lenPattern;
+                posCurrent = nextIndex + lenPattern;
 
-                idxNext = source.IndexOf(oldValue, posCurrent, comparisonType);
+                nextIndex = source.IndexOf(oldValue, posCurrent, comparisonType);
             }
 
             result.Append(source, posCurrent, source.Length - posCurrent);
