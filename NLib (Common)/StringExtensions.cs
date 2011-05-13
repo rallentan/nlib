@@ -311,7 +311,7 @@ namespace NLib
             {
                 while (line > 0)
                 {
-                    if ((p = source.IndexOf("\r\n", p)) == -1)
+                    if ((p = source.IndexOf("\r\n", p, StringComparison.Ordinal)) == -1)
                         return -1;
                     line--;
                     p += 2;
@@ -324,7 +324,7 @@ namespace NLib
             {
                 while (line > 0)
                 {
-                    if ((p = source.IndexOf("\n", p)) == -1)
+                    if ((p = source.IndexOf('\n', p)) == -1)
                         return -1;
                     line--;
                     p++;
@@ -337,7 +337,7 @@ namespace NLib
             {
                 while (line > 0)
                 {
-                    if ((p = source.IndexOf("\r", p)) == -1)
+                    if ((p = source.IndexOf('\r', p)) == -1)
                         return -1;
                     line--;
                     p++;
@@ -1081,7 +1081,6 @@ namespace NLib
 
             int sourceLength = source.Length;
             int anyOfLength = anyOf.Length;
-            char[] anyOfUpper = new char[anyOfLength];
 
             if (sourceLength == 0)
                 return StringHelper.NPOS;
@@ -1446,15 +1445,17 @@ namespace NLib
                 throw new ArgumentNullException(ARGNAME_SOURCE);
             if (anyOf == null)
                 throw new ArgumentNullException(ARGNAME_ANYOF);
-            if (source.Length == 0)
+
+            int sourceLength = source.Length;
+            
+            if (sourceLength == 0)
                 return StringHelper.NPOS;
-            if (startIndex < 0 || startIndex > source.Length)
+            if (startIndex < 0 || startIndex > sourceLength)
                 throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_INDEX_OUT_OF_RANGE);
-            if (count < 0 || startIndex > source.Length - count)
+            if (count < 0 || startIndex > sourceLength - count)
                 throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
 
             int anyOfLength = anyOf.Length;
-            int sourceLength = source.Length;
             int sourceEnd = startIndex + count;
             string anyOfElement;
             int[] anyOfElementLengths = new int[anyOf.Length];
@@ -1499,7 +1500,7 @@ namespace NLib
                     break;
 
                 default:
-                    throw new ArgumentException(ARGNAME_COMPARISONTYPE, EXCMSG_INVALID_ENUMERATION_VALUE);
+                    throw new ArgumentException(EXCMSG_INVALID_ENUMERATION_VALUE, ARGNAME_COMPARISONTYPE);
             }
 
             int sourceStride = 256;  // Must be greater than zero and less than or equal to 1,073,741,823

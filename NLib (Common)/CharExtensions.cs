@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Globalization;
 
 namespace NLib
 {
@@ -66,12 +67,16 @@ namespace NLib
         
         public static bool IsWhiteSpace(this char c) { return char.IsWhiteSpace(c); }
         
-        public static char ToLower(this char c) { return char.ToLower(c); }
-        
+        public static char ToLower(this char c) { return char.ToLower(c, CultureInfo.CurrentCulture); }
+
+        public static char ToLower(this char c, CultureInfo culture) { return char.ToLower(c, culture); }
+     
         public static char ToLowerInvariant(this char c) { return char.ToLowerInvariant(c); }
         
-        public static char ToUpper(this char c) { return char.ToUpper(c); }
-        
+        public static char ToUpper(this char c) { return char.ToUpper(c, CultureInfo.CurrentCulture); }
+
+        public static char ToUpper(this char c, CultureInfo culture) { return char.ToUpper(c, culture); }
+    
         public static char ToUpperInvariant(this char c) { return char.ToUpperInvariant(c); }
 
         //--- Public Static Properties ---

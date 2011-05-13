@@ -62,7 +62,12 @@ namespace NLib
             return true;
         }
         
-        public void Dispose() { this.Dispose(true); }
+        public void Dispose()
+        {
+            this.Dispose(true);
+
+            GC.SuppressFinalize(this);
+        }
         
         public int GetCurrentLine() { return _s.LineNumberOfIndex(_pos); }
         
@@ -134,11 +139,10 @@ namespace NLib
         public void SetRange(int startIndex, int count)
         {
             if (startIndex < 0)
-                throw new ArgumentOutOfRangeException("startIndex", "Parameter cannot be negative.");
-            if (count < 0)
-                throw new ArgumentOutOfRangeException("count", "Parameter cannot be negative.");
-            if (startIndex + count > _s.Length)
-                throw new ArgumentOutOfRangeException("The sum of startIndex and count cannot exceed the length of the string (s).");
+                throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_STARTINDEX, ExceptionHelper.EXCMSG_INDEX_OUT_OF_RANGE);
+            if (count < 0 || startIndex > _s.Length - count)
+                throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_COUNT, ExceptionHelper.EXCMSG_COUNT_OUT_OF_RANGE);
+
             _count = count;
             _end = startIndex + count;
             _mark = -1;
@@ -153,13 +157,12 @@ namespace NLib
         public void SetSourceString(string s, int startIndex, int count)
         {
             if (s == null)
-                throw new ArgumentNullException("s");
+                throw new ArgumentNullException(ExceptionHelper.ARGNAME_S);
             if (startIndex < 0)
-                throw new ArgumentOutOfRangeException("startIndex", "Parameter cannot be negative.");
-            if (count < 0)
-                throw new ArgumentOutOfRangeException("count", "Parameter cannot be negative.");
-            if (startIndex + count >= s.Length)
-                throw new ArgumentOutOfRangeException("The sum of startIndex and count cannot exceed the length of the string (s).");
+                throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_STARTINDEX, ExceptionHelper.EXCMSG_INDEX_OUT_OF_RANGE);
+            if (count < 0 || startIndex >= s.Length - count)
+                throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_COUNT, ExceptionHelper.EXCMSG_COUNT_OUT_OF_RANGE);
+            
             _count = count;
             _end = startIndex + count;
             _mark = -1;
@@ -199,7 +202,7 @@ namespace NLib
 
         public bool StartsWith(char c) { return CharExtensions.Equals((char)this[0], c, _ignoreCase); }
 
-        public bool StartsWith(string s) { return string.Compare(_s, _pos, s, 0, s.Length, _ignoreCase) == 0; }
+        public bool StartsWith(string s) { return string.Compare(_s, _pos, s, 0, s.Length, _comparisonType) == 0; }
         
         //--- Protected Methods ---
         
@@ -316,7 +319,7 @@ namespace NLib
             set
             {
                 if (value < _startIndex || value > _end)
-                    throw new ArgumentOutOfRangeException("lookAhead", "Parameter must be between the specified startIndex and startIndex + length.");
+                    throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_VALUE, ExceptionHelper.EXCMSG_INDEX_OUT_OF_RANGE);
                 _pos = value;
             }
         }
