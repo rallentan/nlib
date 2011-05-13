@@ -5,6 +5,7 @@ namespace NLib
     internal static class ExceptionHelper
     {
         //--- Argument Name Constants ---
+        public const string ARGNAME_S = "s";
         public const string ARGNAME_SOURCE = "source";
         public const string ARGNAME_VALUE = "value";
         public const string ARGNAME_ANYOF = "anyOf";
