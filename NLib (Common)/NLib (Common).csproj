@@ -106,7 +106,6 @@
     <Compile Include="Net\Serializer.cs" />
     <Compile Include="Net\SslTcpServer.cs" />
     <Compile Include="Net\VarintFormatter.cs" />
-    <Compile Include="NewLineSequence.cs" />
     <Compile Include="Shell.cs" />
     <Compile Include="StringExtensions.cs" />
     <Compile Include="StringHelper.cs" />
