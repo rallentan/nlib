@@ -25,19 +25,19 @@ namespace NLib
 
         //--- Constructors ---
 
-        public StringReader2(string s) : this(s, 0, s.Length, DEFAULT_IGNORECASE) { }
+        public StringReader2(string source) : this(source, 0, source.Length, DEFAULT_IGNORECASE) { }
 
-        public StringReader2(string s, bool ignoreCase) : this(s, 0, s.Length, ignoreCase) { }
+        public StringReader2(string source, bool ignoreCase) : this(source, 0, source.Length, ignoreCase) { }
 
-        public StringReader2(string s, int startIndex) : this(s, startIndex, s.Length - startIndex, DEFAULT_IGNORECASE) { }
+        public StringReader2(string source, int startIndex) : this(source, startIndex, source.Length - startIndex, DEFAULT_IGNORECASE) { }
 
-        public StringReader2(string s, int startIndex, bool ignoreCase) : this(s, startIndex, s.Length - startIndex, ignoreCase) { }
+        public StringReader2(string source, int startIndex, bool ignoreCase) : this(source, startIndex, source.Length - startIndex, ignoreCase) { }
 
-        public StringReader2(string s, int startIndex, int count) : this(s, startIndex, count, DEFAULT_IGNORECASE) { }
+        public StringReader2(string source, int startIndex, int count) : this(source, startIndex, count, DEFAULT_IGNORECASE) { }
 
-        public StringReader2(string s, int startIndex, int count, bool ignoreCase)
+        public StringReader2(string source, int startIndex, int count, bool ignoreCase)
         {
-            _s = s;
+            _s = source;
             IgnoreCase = ignoreCase;
             SetRange(startIndex, count);
         }
