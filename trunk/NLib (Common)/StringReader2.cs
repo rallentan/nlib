@@ -150,27 +150,6 @@ namespace NLib
             _startIndex = startIndex;
         }
         
-        public void SetSourceString(string s) { SetSourceString(s, 0, s.Length); }
-        
-        public void SetSourceString(string s, int startIndex) { SetSourceString(s, startIndex, s.Length - startIndex); }
-        
-        public void SetSourceString(string s, int startIndex, int count)
-        {
-            if (s == null)
-                throw new ArgumentNullException(ExceptionHelper.ARGNAME_S);
-            if (startIndex < 0)
-                throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_STARTINDEX, ExceptionHelper.EXCMSG_INDEX_OUT_OF_RANGE);
-            if (count < 0 || startIndex >= s.Length - count)
-                throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_COUNT, ExceptionHelper.EXCMSG_COUNT_OUT_OF_RANGE);
-            
-            _count = count;
-            _end = startIndex + count;
-            _mark = -1;
-            _pos = startIndex;
-            _s = s;
-            _startIndex = startIndex;
-        }
-        
         public void Skip() { ReadChar(); }
         
         public void Skip(int count)
