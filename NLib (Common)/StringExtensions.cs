@@ -1292,49 +1292,6 @@ namespace NLib
             }
         }
 
-        static unsafe int IndexOfCompareType(string source, char value, int startIndex, int count, StringComparison comparisonType)
-        {
-            if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
-            if (startIndex < 0 || startIndex > source.Length)
-                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_INDEX_OUT_OF_RANGE);
-            if (count < 0 || startIndex + count > source.Length)
-                throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
-            if (!Enum.IsDefined(typeof(StringComparison), comparisonType))
-                throw new ArgumentOutOfRangeException(ARGNAME_COMPARISONTYPE, EXCMSG_INVALID_ENUMERATION_VALUE);
-
-            string charAsString = value.ToString();
-
-            int pos = startIndex;
-            int end = startIndex + count;
-            int endOfFold = end - 9;
-
-            while (pos < endOfFold)
-            {
-                if (string.Compare(charAsString, 0, source, pos++, 1, comparisonType) == 0
-                    || string.Compare(charAsString, 0, source, pos++, 1, comparisonType) == 0
-                    || string.Compare(charAsString, 0, source, pos++, 1, comparisonType) == 0
-                    || string.Compare(charAsString, 0, source, pos++, 1, comparisonType) == 0
-                    || string.Compare(charAsString, 0, source, pos++, 1, comparisonType) == 0
-                    || string.Compare(charAsString, 0, source, pos++, 1, comparisonType) == 0
-                    || string.Compare(charAsString, 0, source, pos++, 1, comparisonType) == 0
-                    || string.Compare(charAsString, 0, source, pos++, 1, comparisonType) == 0
-                    || string.Compare(charAsString, 0, source, pos++, 1, comparisonType) == 0
-                    || string.Compare(charAsString, 0, source, pos++, 1, comparisonType) == 0)
-                {
-                    return pos - 1;
-                }
-            }
-
-            while (pos < end)
-            {
-                if (string.Compare(charAsString, 0, source, pos++, 1, comparisonType) == 0)
-                    return pos - 1;
-            }
-
-            return -1;
-        }
-
         static unsafe int IndexOfAnyIgnoreCase(string source, char[] anyOf, int startIndex, int count)
         {
             if (source == null)
@@ -1401,64 +1358,6 @@ namespace NLib
                 }
                 return -1;
             }
-        }
-        
-        static int IndexOfAnyCompareType(string source, char[] anyOf, int startIndex, int count, StringComparison comparisonType)
-        {
-            if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
-            if (anyOf == null)
-                throw new ArgumentNullException(ARGNAME_ANYOF);
-            if (startIndex < 0 || startIndex > source.Length)
-                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_INDEX_OUT_OF_RANGE);
-            if (count < 0 || startIndex + count > source.Length)
-                throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
-            if (!Enum.IsDefined(typeof(StringComparison), comparisonType))
-                throw new ArgumentOutOfRangeException(ARGNAME_COMPARISONTYPE, EXCMSG_INVALID_ENUMERATION_VALUE);
-
-            int anyOfLength = anyOf.Length;
-            string[] sa = new string[anyOfLength];
-            for (int i = 0; i < anyOfLength; i++)
-                sa[i] = anyOf[i].ToString();
-
-            return IndexOfAnyString1CompareType(source, sa, startIndex, count, comparisonType);
-        }
-        
-        /// <param name=ARGNAME_SOURCE></param>
-        /// <param name=ARGNAME_ANYOF>Array of strings each with a length of exactly one.</param>
-        /// <param name=ARGNAME_STARTINDEX></param>
-        /// <param name=ARGNAME_COUNT></param>
-        /// <param name=ARGNAME_COMPARISONTYPE></param>
-        static int IndexOfAnyString1CompareType(string source, string[] anyOf, int startIndex, int count, StringComparison comparisonType)
-        {
-            int strEnd = startIndex + count;
-            int anyOfLength = anyOf.Length;
-
-            for (int strPos = startIndex; strPos < strEnd; strPos++)
-            {
-                string sc = source[strPos].ToString();
-
-                int anyOfPos = 0;
-                while (anyOfPos + 4 < anyOfLength)
-                {
-                    if (string.Compare(anyOf[anyOfPos++], sc, comparisonType) != 0
-                        && string.Compare(anyOf[anyOfPos++], sc, comparisonType) != 0
-                        && string.Compare(anyOf[anyOfPos++], sc, comparisonType) != 0
-                        && string.Compare(anyOf[anyOfPos++], sc, comparisonType) != 0)
-                    {
-                        continue;
-                    }
-                    return strPos;
-                }
-
-                while (anyOfPos < anyOfLength)
-                {
-                    if (string.Compare(anyOf[anyOfPos++], sc, comparisonType) != 0)
-                        continue;
-                    return strPos;
-                }
-            }
-            return -1;
         }
 
         static int IndexOfAnyOrdinal(string source, string[] anyOf, int startIndex, int count)
@@ -1624,27 +1523,6 @@ namespace NLib
 
             return StringHelper.NPOS;
         }
-
-        static int InternalNonOrdinalCompare(string strA, int indexA, string strB, int count, StringComparison comparisonType)
-        {
-            switch (comparisonType)
-            {
-                case StringComparison.CurrentCulture:
-                    return CultureInfo.CurrentCulture.CompareInfo.IndexOf(strA, strB, indexA, count, CompareOptions.None);
-
-                case StringComparison.CurrentCultureIgnoreCase:
-                    return CultureInfo.CurrentCulture.CompareInfo.IndexOf(strA, strB, indexA, count, CompareOptions.IgnoreCase);
-
-                case StringComparison.InvariantCulture:
-                    return CultureInfo.InvariantCulture.CompareInfo.IndexOf(strA, strB, indexA, count, CompareOptions.None);
-
-                case StringComparison.InvariantCultureIgnoreCase:
-                    return CultureInfo.InvariantCulture.CompareInfo.IndexOf(strA, strB, indexA, count, CompareOptions.IgnoreCase);
-
-                default:
-                    throw new ArgumentException();
-            }
-        }
         
         static unsafe int IndexOfNotAnyOrdinal(string source, char[] anyOf, int startIndex, int count)
         {
@@ -1792,69 +1670,6 @@ namespace NLib
                 return StringHelper.NPOS;
             }
         }
-        
-        static int IndexOfNotAnyCompareType(string source, char[] anyOf, int startIndex, int count, StringComparison comparisonType)
-        {
-            if (anyOf == null)
-                throw new ArgumentNullException(ARGNAME_ANYOF);
-            if (!Enum.IsDefined(typeof(StringComparison), comparisonType))
-                throw new ArgumentOutOfRangeException(ARGNAME_COMPARISONTYPE, EXCMSG_INVALID_ENUMERATION_VALUE);
-
-            int anyOfLength = anyOf.Length;
-            string[] sa = new string[anyOfLength];
-            for (int i = 0; i < anyOfLength; i++)
-                sa[i] = anyOf[i].ToString();
-
-            return IndexOfNotAnyCompareType(source, sa, startIndex, count, comparisonType);
-        }
-        
-        /// <param name=ARGNAME_SOURCE></param>
-        /// <param name=ARGNAME_ANYOF>Array of strings each with a length of exactly one.</param>
-        /// <param name=ARGNAME_STARTINDEX></param>
-        /// <param name=ARGNAME_COUNT></param>
-        /// <param name=ARGNAME_COMPARISONTYPE></param>
-        static int IndexOfNotAnyCompareType(string source, string[] anyOf, int startIndex, int count, StringComparison comparisonType)
-        {
-            if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
-            if (anyOf == null)
-                throw new ArgumentNullException(ARGNAME_ANYOF);
-            if (startIndex < 0 || startIndex > source.Length)
-                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_INDEX_OUT_OF_RANGE);
-            if (count < 0 || startIndex > source.Length - count)
-                throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
-            if (!Enum.IsDefined(typeof(StringComparison), comparisonType))
-                throw new ArgumentOutOfRangeException(ARGNAME_COMPARISONTYPE, EXCMSG_INVALID_ENUMERATION_VALUE);
-
-            int strEnd = startIndex + count;
-            int anyOfLength = anyOf.Length;
-
-            for (int strPos = startIndex; strPos < strEnd; strPos++)
-            {
-                int anyOfPos = 0;
-                while (anyOfPos + 4 < anyOfLength)
-                {
-                    if (string.Compare(anyOf[anyOfPos], 0, source, strPos, anyOf[anyOfPos++].Length, comparisonType) == 0
-                        || string.Compare(anyOf[anyOfPos], 0, source, strPos, anyOf[anyOfPos++].Length, comparisonType) == 0
-                        || string.Compare(anyOf[anyOfPos], 0, source, strPos, anyOf[anyOfPos++].Length, comparisonType) == 0
-                        || string.Compare(anyOf[anyOfPos], 0, source, strPos, anyOf[anyOfPos++].Length, comparisonType) == 0)
-                    {
-                        goto nextChar;
-                    }
-                }
-
-                while (anyOfPos < anyOfLength)
-                {
-                    if (string.Compare(anyOf[anyOfPos], 0, source, strPos, anyOf[anyOfPos++].Length, comparisonType) == 0)
-                        goto nextChar;
-                }
-
-                return strPos;
-
-            nextChar: ;
-            }
-            return -1;
-        }
 
         static unsafe int LastIndexOfIgnoreCase(string source, char value, int startIndex, int count)
         {
@@ -1964,66 +1779,6 @@ namespace NLib
                 }
                 return -1;
             }
-        }
-        
-        static int LastIndexOfAnyCompareType(string source, char[] anyOf, int startIndex, int count, StringComparison comparisonType)
-        {
-            if (source == null)
-                throw new ArgumentNullException(ARGNAME_SOURCE);
-            if (anyOf == null)
-                throw new ArgumentNullException(ARGNAME_ANYOF);
-            if (source.Length == 0)
-                return -1;
-            if (startIndex < 0 || startIndex >= source.Length)
-                throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_INDEX_OUT_OF_RANGE);
-            if (count < 0 || startIndex - count < -1)
-                throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
-            if (!Enum.IsDefined(typeof(StringComparison), comparisonType))
-                throw new ArgumentOutOfRangeException(ARGNAME_COMPARISONTYPE, EXCMSG_INVALID_ENUMERATION_VALUE);
-
-            int anyOfLength = anyOf.Length;
-            string[] sa = new string[anyOfLength];
-            for (int i = 0; i < anyOfLength; i++)
-                sa[i] = anyOf[i].ToString();
-
-            return LastIndexOfAnyString1CompareType(source, sa, startIndex, count, comparisonType);
-        }
-        
-        /// <param name=ARGNAME_SOURCE></param>
-        /// <param name=ARGNAME_ANYOF>Array of strings each with a length of exactly one.</param>
-        /// <param name=ARGNAME_STARTINDEX></param>
-        /// <param name=ARGNAME_COUNT></param>
-        /// <param name=ARGNAME_COMPARISONTYPE></param>
-        static int LastIndexOfAnyString1CompareType(string source, string[] anyOf, int startIndex, int count, StringComparison comparisonType)
-        {
-            int strEnd = startIndex - count;
-            int anyOfLength = anyOf.Length;
-
-            for (int strPos = startIndex; strPos > strEnd; strPos--)
-            {
-                string sc = source[strPos].ToString();
-
-                int anyOfPos = 0;
-                while (anyOfPos + 4 < anyOfLength)
-                {
-                    if (string.Compare(anyOf[anyOfPos++], sc, comparisonType) != 0
-                        && string.Compare(anyOf[anyOfPos++], sc, comparisonType) != 0
-                        && string.Compare(anyOf[anyOfPos++], sc, comparisonType) != 0
-                        && string.Compare(anyOf[anyOfPos++], sc, comparisonType) != 0)
-                    {
-                        continue;
-                    }
-                    return strPos;
-                }
-
-                while (anyOfPos < anyOfLength)
-                {
-                    if (string.Compare(anyOf[anyOfPos++], sc, comparisonType) != 0)
-                        continue;
-                    return strPos;
-                }
-            }
-            return -1;
         }
     }
 }
