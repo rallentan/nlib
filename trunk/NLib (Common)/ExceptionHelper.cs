@@ -14,6 +14,7 @@ namespace NLib
         public const string ARGNAME_COUNT = "count";
         public const string ARGNAME_COMPARISONTYPE = "comparisonType";
         public const string ARGNAME_LINE = "line";
+        public const string ARGNAME_OLDVALUE = "oldValue";
 
         //--- Exception Message Constants ---
         public const string EXCMSG_INDEX_OUT_OF_RANGE = "Index was out of range. Must be non-negative and less than the size of the collection.";
@@ -21,5 +22,6 @@ namespace NLib
         public const string EXCMSG_CANNOT_CONTAIN_NULL_OR_EMPTY = "Parameter cannot contain null or zero-length strings.";
         public const string EXCMSG_MUST_BE_LESS_THAN_INT32_MAXVALUE = "Parameter must be less than Int32.MaxValue.";
         public const string EXCMSG_INVALID_ENUMERATION_VALUE = "Parameter is an invalid enumeration value.";
+        public const string EXCMSG_CANNOT_BE_ZERO_LENGTH_STRING = "Parameter cannot be a zero length strign.";
     }
 }
