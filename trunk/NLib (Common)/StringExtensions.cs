@@ -231,36 +231,21 @@ namespace NLib
         /// Returns the number of lines in a given string using a given newline 
         /// character sequence.
         /// </summary>
-        public static int GetLineCount(this string source, NewLineSequence newLineSeq)
+        public static int GetLineCount(this string source, string newLineSequence)
         {
-            if (source.Length == 0)
-                return 1;
-            int i = LineNumberOfIndex(source, source.Length - 1) + 1;
-            if (newLineSeq == NewLineSequence.Lf)
+            int pos = -1;
+            int lineCount = 0;
+            int newLineSequenceLength = newLineSequence.Length;
+
+            do
             {
-                if (source[source.Length - 1] == '\n')
-                    i++;
+                lineCount++;
+                pos = source.IndexOf(newLineSequence, pos, StringComparison.Ordinal)
+                    + newLineSequenceLength;
             }
-            else if (newLineSeq == NewLineSequence.Cr)
-            {
-                if (source[source.Length - 1] == '\r')
-                    i++;
-            }
-            else if (newLineSeq == NewLineSequence.CrLf)
-            {
-                if (source[source.Length - 2] == '\r' && source[source.Length - 1] == '\n')
-                    i++;
-            }
-            else if (newLineSeq == NewLineSequence.Any)
-            {
-                if (source[source.Length - 2] == '\r' && source[source.Length - 1] == '\n')
-                    i++;
-                else if (source[source.Length - 1] == '\n')
-                    i++;
-                else if (source[source.Length - 1] == '\r')
-                    i++;
-            }
-            return i;
+            while (pos != StringHelper.NPOS);
+
+            return lineCount;
         }
         
         /// <summary>
@@ -274,21 +259,24 @@ namespace NLib
         /// <summary>
         /// Retrieves the zero-based line number from the specified zero-based character position within a specified System.String object.
         /// </summary>
-        public static int LineNumberOfIndex(this string source, int index, NewLineSequence newLineSeq)
+        public static int LineNumberOfIndex(this string source, int index, string newLineSequence)
         {
             if (index < 0 || index > source.Length)
-                throw new ArgumentOutOfRangeException("index", "Index was out of range. Must be non-negative and less than or equal to the size of the collection.");
-            string[] strs;
-            string t = source.Substring(0, index);
-            if (newLineSeq == NewLineSequence.CrLf)
-                strs = t.Split(new string[] { "\r\n" }, StringSplitOptions.None);
-            else if (newLineSeq == NewLineSequence.Lf)
-                strs = t.Split('\n');
-            else if (newLineSeq == NewLineSequence.Cr)
-                strs = t.Split('\r');
-            else
-                strs = t.Split(new string[] { "\r\n", "\n", "\r" }, StringSplitOptions.None);
-            return strs.Length - 1;
+                throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_INDEX, ExceptionHelper.EXCMSG_INDEX_OUT_OF_RANGE);
+
+            int pos = 0;
+            int lineNumber = -1;
+            int newLineSequenceLength = newLineSequence.Length;
+
+            do
+            {
+                lineNumber++;
+                pos = source.IndexOf(newLineSequence, pos, StringComparison.Ordinal)
+                    + newLineSequenceLength;
+            }
+            while (pos < index && pos != StringHelper.NPOS);
+
+            return lineNumber;
         }
         
         /// <summary>
@@ -296,71 +284,30 @@ namespace NLib
         /// </summary>
         public static int FirstIndexOfLine(this string source, int line)
         {
-            return FirstIndexOfLine(source, line, DEFAULT_NEWLINE_SEQUENCE);
+            return FirstIndexOfLine(source, line, Environment.NewLine);
         }
         
         /// <summary>
         /// Retrieves the zero-based index of the first character of a given zero-based line.
         /// </summary>
-        public static int FirstIndexOfLine(this string source, int line, NewLineSequence newLineSeq)
+        public static int FirstIndexOfLine(this string source, int line, string newLineSequence)
         {
-            if (line < 0)
-                throw new ArgumentOutOfRangeException("line", "Line was out of range. Must be non-negative.");
-            int p = 0;
-            if (newLineSeq == NewLineSequence.CrLf)
+            int pos = 0;
+            int lineNumber = 0;
+            int newLineSequenceLength = newLineSequence.Length;
+
+            while (lineNumber != line && pos != StringHelper.NPOS)
             {
-                while (line > 0)
-                {
-                    if ((p = source.IndexOf("\r\n", p, StringComparison.Ordinal)) == -1)
-                        return -1;
-                    line--;
-                    p += 2;
-                    if (p == source.Length)  // Final NewLine sequence is ignored
-                        return -1;
-                }
-                return p;
+                pos = source.IndexOf(newLineSequence, pos, StringComparison.Ordinal)
+                    + newLineSequenceLength;
+
+                lineNumber++;
             }
-            else if (newLineSeq == NewLineSequence.Lf)
-            {
-                while (line > 0)
-                {
-                    if ((p = source.IndexOf('\n', p)) == -1)
-                        return -1;
-                    line--;
-                    p++;
-                    if (p == source.Length)  // Final NewLine sequence is ignored
-                        return -1;
-                }
-                return p;
-            }
-            else if (newLineSeq == NewLineSequence.Cr)
-            {
-                while (line > 0)
-                {
-                    if ((p = source.IndexOf('\r', p)) == -1)
-                        return -1;
-                    line--;
-                    p++;
-                    if (p == source.Length)  // Final NewLine sequence is ignored
-                        return -1;
-                }
-                return p;
-            }
-            else
-            {
-                while (line > 0)
-                {
-                    if ((p = source.IndexOfAny(new char[] { '\n', '\r' }, p)) == -1)
-                        return -1;
-                    line--;
-                    p++;
-                    if (source[p] == '\r' && source[p + 1] == '\n')
-                        p++;
-                    if (p == source.Length)  // Final NewLine sequence is ignored
-                        return -1;
-                }
-                return p;
-            }
+
+            if (pos == StringHelper.NPOS)
+                throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_LINE);
+
+            return lineNumber;
         }
 
 

@@ -9,9 +9,11 @@ namespace NLib
         public const string ARGNAME_SOURCE = "source";
         public const string ARGNAME_VALUE = "value";
         public const string ARGNAME_ANYOF = "anyOf";
+        public const string ARGNAME_INDEX = "index";
         public const string ARGNAME_STARTINDEX = "startIndex";
         public const string ARGNAME_COUNT = "count";
         public const string ARGNAME_COMPARISONTYPE = "comparisonType";
+        public const string ARGNAME_LINE = "line";
 
         //--- Exception Message Constants ---
         public const string EXCMSG_INDEX_OUT_OF_RANGE = "Index was out of range. Must be non-negative and less than the size of the collection.";
