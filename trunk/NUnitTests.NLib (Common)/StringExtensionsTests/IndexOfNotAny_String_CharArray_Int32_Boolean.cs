@@ -43,7 +43,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
         public void When_source_string_is_empty_returns_NPOS_regardless_of_range_params(bool ignoreCase)
         {
             int result = TestedMethodAdapter(string.Empty, EMPTY_CHAR_ARRAY, -4, ignoreCase);
-            Assert.AreEqual(StringHelper.NPOS, result);
+            Assert.AreEqual(StringHelper.NPos, result);
         }
 
         [Theory]
@@ -57,7 +57,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
         public void When_anyOf_is_empty_and_startIndex_is_at_the_end_of_source_returns_NPOS(bool ignoreCase)
         {
             int result = TestedMethodAdapter(LENGTH_4_STRING, EMPTY_CHAR_ARRAY, 4, ignoreCase);
-            Assert.AreEqual(StringHelper.NPOS, result);
+            Assert.AreEqual(StringHelper.NPos, result);
         }
 
         [Theory]
@@ -109,7 +109,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
             [Values(false, true)] bool ignoreCase)
         {
             int result = TestedMethodAdapter(source, anyOf, START_INDEX, ignoreCase);
-            Assert.AreEqual(StringHelper.NPOS, result);
+            Assert.AreEqual(StringHelper.NPos, result);
         }
     }
 }

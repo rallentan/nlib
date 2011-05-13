@@ -34,12 +34,12 @@ namespace NUnitTests.NLib.StringExtensionsTests
                 // Test if method performs an Ordinal search
                 int result = testedMethodAdapter("œ", new string[] { "oe" }, 0, 1, comparisonType);
 
-                if (result == StringHelper.NPOS)
+                if (result == StringHelper.NPos)
                 {
                     result = testedMethodAdapter("a", new string[] { "A" }, 0, 1, comparisonType);
 
                     // Test if method performs a case-sensitive search
-                    if (result == StringHelper.NPOS)
+                    if (result == StringHelper.NPos)
                         comparisonTypePerformed = StringComparison.Ordinal;
                     else
                         comparisonTypePerformed = StringComparison.OrdinalIgnoreCase;
@@ -51,12 +51,12 @@ namespace NUnitTests.NLib.StringExtensionsTests
                     // Test if method uses CurrentCulture or InvariantCulture
                     result = testedMethodAdapter("ll", new string[] { "l" }, 0, 2, comparisonType);
 
-                    if (result == StringHelper.NPOS)
+                    if (result == StringHelper.NPos)
                     {
                         // Test if method performs a case-sensitive search
                         result = testedMethodAdapter("a", new string[] { "A" }, 0, 1, comparisonType);
 
-                        if (result == StringHelper.NPOS)
+                        if (result == StringHelper.NPos)
                             comparisonTypePerformed = StringComparison.CurrentCulture;
                         else
                             comparisonTypePerformed = StringComparison.CurrentCultureIgnoreCase;
@@ -66,7 +66,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
                         // Test if method performs a case-sensitive search
                         result = testedMethodAdapter("a", new string[] { "A" }, 0, 1, comparisonType);
 
-                        if (result == StringHelper.NPOS)
+                        if (result == StringHelper.NPos)
                             comparisonTypePerformed = StringComparison.InvariantCulture;
                         else
                             comparisonTypePerformed = StringComparison.InvariantCultureIgnoreCase;

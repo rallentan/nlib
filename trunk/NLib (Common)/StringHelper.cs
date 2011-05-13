@@ -4,8 +4,8 @@ using System.Text;
 
 namespace NLib
 {
-    public class StringHelper
+    public static class StringHelper
     {
-        public const int NPOS = -1;
+        public const int NPos = -1;
     }
 }

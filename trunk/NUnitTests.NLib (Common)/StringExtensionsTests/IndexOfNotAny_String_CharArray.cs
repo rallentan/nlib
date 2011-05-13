@@ -45,7 +45,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
         public void When_source_string_is_empty_returns_NPOS()
         {
             int result = TestedMethodAdapter(string.Empty, EMPTY_CHAR_ARRAY);
-            Assert.AreEqual(StringHelper.NPOS, result);
+            Assert.AreEqual(StringHelper.NPos, result);
         }
 
         [Theory]
@@ -66,7 +66,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
         public void When_anyOf_is_empty_and_sourceLength_is_zero_returns_NPOS()
         {
             int result = TestedMethodAdapter(string.Empty, EMPTY_CHAR_ARRAY);
-            Assert.AreEqual(StringHelper.NPOS, result);
+            Assert.AreEqual(StringHelper.NPos, result);
         }
 
         [Test]
@@ -94,7 +94,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
             [ValueSource(typeof(Helper), "AnyOfCharSource_Normal")] char[] anyOf)
         {
             int result = TestedMethodAdapter(source, anyOf);
-            Assert.AreEqual(StringHelper.NPOS, result);
+            Assert.AreEqual(StringHelper.NPos, result);
         }
     }
 }

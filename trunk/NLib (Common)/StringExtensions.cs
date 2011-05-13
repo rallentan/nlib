@@ -226,7 +226,7 @@ namespace NLib
                 pos = source.IndexOf(newLineSequence, pos, StringComparison.Ordinal)
                     + newLineSequenceLength;
             }
-            while (pos != StringHelper.NPOS);
+            while (pos != StringHelper.NPos);
 
             return lineCount;
         }
@@ -257,7 +257,7 @@ namespace NLib
                 pos = source.IndexOf(newLineSequence, pos, StringComparison.Ordinal)
                     + newLineSequenceLength;
             }
-            while (pos < index && pos != StringHelper.NPOS);
+            while (pos < index && pos != StringHelper.NPos);
 
             return lineNumber;
         }
@@ -279,7 +279,7 @@ namespace NLib
             int lineNumber = 0;
             int newLineSequenceLength = newLineSequence.Length;
 
-            while (lineNumber != line && pos != StringHelper.NPOS)
+            while (lineNumber != line && pos != StringHelper.NPos)
             {
                 pos = source.IndexOf(newLineSequence, pos, StringComparison.Ordinal)
                     + newLineSequenceLength;
@@ -287,7 +287,7 @@ namespace NLib
                 lineNumber++;
             }
 
-            if (pos == StringHelper.NPOS)
+            if (pos == StringHelper.NPos)
                 throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_LINE);
 
             return lineNumber;
@@ -1013,7 +1013,7 @@ namespace NLib
             int anyOfLength = anyOf.Length;
 
             if (sourceLength == 0)
-                return StringHelper.NPOS;
+                return StringHelper.NPos;
             if (startIndex < 0 || startIndex >= source.Length)
                 throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_STARTINDEX, ExceptionHelper.EXCMSG_INDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex - count + 1 < 0)
@@ -1106,7 +1106,7 @@ namespace NLib
             char sourceChar;
 
             if (sourceLength == 0)
-                return StringHelper.NPOS;
+                return StringHelper.NPos;
             if (startIndex < 0 || startIndex >= sourceLength)
                 throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_STARTINDEX, ExceptionHelper.EXCMSG_INDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex - count + 1 < 0)
@@ -1296,7 +1296,7 @@ namespace NLib
             if (anyOf == null)
                 throw new ArgumentNullException(ExceptionHelper.ARGNAME_ANYOF);
             if (source.Length == 0)
-                return StringHelper.NPOS;
+                return StringHelper.NPos;
             if (startIndex < 0)
                 throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_STARTINDEX, ExceptionHelper.EXCMSG_INDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex > source.Length - count)
@@ -1338,7 +1338,7 @@ namespace NLib
             if (anyOf == null)
                 throw new ArgumentNullException(ExceptionHelper.ARGNAME_ANYOF);
             if (source.Length == 0)
-                return StringHelper.NPOS;
+                return StringHelper.NPos;
 
             int anyOfLength = anyOf.Length;
             char[] ca = new char[anyOfLength];
@@ -1379,7 +1379,7 @@ namespace NLib
             int sourceLength = source.Length;
             
             if (sourceLength == 0)
-                return StringHelper.NPOS;
+                return StringHelper.NPos;
             if (startIndex < 0 || startIndex > sourceLength)
                 throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_STARTINDEX, ExceptionHelper.EXCMSG_INDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex > sourceLength - count)
@@ -1452,7 +1452,7 @@ namespace NLib
                 }
             }
 
-            return StringHelper.NPOS;
+            return StringHelper.NPos;
         }
         
         static unsafe int IndexOfNotAnyOrdinal(string source, char[] anyOf, int startIndex, int count)
@@ -1462,7 +1462,7 @@ namespace NLib
             if (anyOf == null)
                 throw new ArgumentNullException(ExceptionHelper.ARGNAME_ANYOF);
             if (source.Length == 0)
-                return StringHelper.NPOS;
+                return StringHelper.NPos;
             if (startIndex < 0)
                 throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_STARTINDEX, ExceptionHelper.EXCMSG_INDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex > source.Length - count)
@@ -1530,7 +1530,7 @@ namespace NLib
             if (anyOf == null)
                 throw new ArgumentNullException(ExceptionHelper.ARGNAME_ANYOF);
             if (source.Length == 0)
-                return StringHelper.NPOS;
+                return StringHelper.NPos;
             if (startIndex < 0 || startIndex > source.Length)
                 throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_STARTINDEX, ExceptionHelper.EXCMSG_INDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex > source.Length - count)
@@ -1598,7 +1598,7 @@ namespace NLib
                     }
                 }
 
-                return StringHelper.NPOS;
+                return StringHelper.NPos;
             }
         }
 
@@ -1607,7 +1607,7 @@ namespace NLib
             if (source == null)
                 throw new ArgumentNullException(ExceptionHelper.ARGNAME_SOURCE);
             if (source.Length == 0)
-                return StringHelper.NPOS;
+                return StringHelper.NPos;
             if (startIndex < 0 || startIndex >= source.Length)
                 throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_STARTINDEX, ExceptionHelper.EXCMSG_INDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex - count + 1 < 0)

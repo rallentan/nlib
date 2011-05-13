@@ -47,7 +47,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
         public void When_source_string_is_empty_returns_NPOS_regardless_of_range_params()
         {
             int result = TestedMethodAdapter(string.Empty, EMPTY_CHAR_ARRAY, -3);
-            Assert.AreEqual(StringHelper.NPOS, result);
+            Assert.AreEqual(StringHelper.NPos, result);
         }
 
         [Theory]
@@ -61,7 +61,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
         public void When_anyOf_is_empty_and_startIndex_is_at_the_end_of_source_returns_NPOS()
         {
             int result = TestedMethodAdapter(LENGTH_4_STRING, EMPTY_CHAR_ARRAY, 4);
-            Assert.AreEqual(StringHelper.NPOS, result);
+            Assert.AreEqual(StringHelper.NPos, result);
         }
 
         [Theory]
@@ -82,7 +82,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
         public void When_startIndex_is_equal_to_length_of_sourceString_returns_NPOS()
         {
             int result = TestedMethodAdapter(LENGTH_4_STRING, EMPTY_CHAR_ARRAY, 4);
-            Assert.AreEqual(StringHelper.NPOS, result);
+            Assert.AreEqual(StringHelper.NPos, result);
         }
 
         [Theory]
@@ -124,7 +124,7 @@ namespace NUnitTests.NLib.StringExtensionsTests
             [ValueSource(typeof(Helper), "AnyOfCharSource_Normal")] char[] anyOf)
         {
             int result = TestedMethodAdapter(source, anyOf, START_INDEX);
-            Assert.AreEqual(StringHelper.NPOS, result);
+            Assert.AreEqual(StringHelper.NPos, result);
         }
     }
 }
