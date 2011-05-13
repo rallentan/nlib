@@ -32,10 +32,6 @@ namespace NLib
     /// </summary>
     public static partial class StringExtensions
     {
-        //--- Public Constants ---
-
-        public const NewLineSequence DEFAULT_NEWLINE_SEQUENCE = NewLineSequence.Lf;
-
         //--- Constants ---
         const string ARGNAME_SOURCE = "source";
         const string ARGNAME_VALUE = "value";
