@@ -1553,8 +1553,6 @@ namespace NLib
                 throw new ArgumentOutOfRangeException(ARGNAME_STARTINDEX, EXCMSG_INDEX_OUT_OF_RANGE);
             if (count < 0 || startIndex > source.Length - count)
                 throw new ArgumentOutOfRangeException(ARGNAME_COUNT, EXCMSG_COUNT_OUT_OF_RANGE);
-            if (!Enum.IsDefined(typeof(StringComparison), comparisonType))
-                throw new ArgumentOutOfRangeException(ARGNAME_COMPARISONTYPE, EXCMSG_INVALID_ENUMERATION_VALUE);
 
             int anyOfLength = anyOf.Length;
             int sourceLength = source.Length;
@@ -1602,7 +1600,7 @@ namespace NLib
                     break;
 
                 default:
-                    throw new ArgumentException();
+                    throw new ArgumentException(ARGNAME_COMPARISONTYPE, EXCMSG_INVALID_ENUMERATION_VALUE);
             }
 
             int sourceStride = 256;  // Must be greater than zero and less than or equal to 1,073,741,823
