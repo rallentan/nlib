@@ -68,7 +68,7 @@ namespace NLib
             GC.SuppressFinalize(this);
         }
         
-        public int GetCurrentLine() { return _s.LineNumberOfIndex(_pos); }
+        public int GetCurrentLine() { return StringHelper.LineNumberOfIndex(_s, _pos); }
         
         /// <summary>
         /// Retrieves the one-based column number of the character at the current
