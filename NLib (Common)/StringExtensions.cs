@@ -85,16 +85,54 @@ namespace NLib
             return source.IndexOf(value) != -1;
         }
 
+        /// <summary>
+        /// Returns a value indicating whether the specified <see cref="Char"/> occurs within this string,
+        /// ignoring or honoring its case.
+        /// </summary>
+        /// <param name="source">An instance of a <see cref="String"/>.</param>
+        /// <param name="value">The <see cref="Char"/> to seek.</param>
+        /// <param name="ignoreCase">true to ignore case during the comparison; otherwise, false.</param>
+        /// <returns>
+        ///     true if the value parameter occurs within this string; otherwise, false.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        ///     source is null.
+        /// </exception>
         public static bool Contains(this string source, char value, bool ignoreCase)
         {
             return IndexOf(source, value, ignoreCase) != -1;
         }
 
+        /// <summary>
+        /// Returns a value indicating whether any of the specified <see cref="Char"/>
+        /// occur within this string.
+        /// </summary>
+        /// <param name="source">An instance of a <see cref="String"/>.</param>
+        /// <param name="anyOf">An array of <see cref="Char"/>s to seek.</param>
+        /// <returns>
+        ///     true if one of the <see cref="Char"/>s occur within this string; otherwise, false.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        ///     source is null.
+        /// </exception>
         public static bool ContainsAny(this string source, char[] anyOf)
         {
             return source.IndexOfAny(anyOf) != -1;
         }
 
+        /// <summary>
+        /// Returns a value indicating whether any of the specified <see cref="Char"/>
+        /// occur within this string, ignoring or honoring their case.
+        /// </summary>
+        /// <param name="source">An instance of a <see cref="String"/>.</param>
+        /// <param name="anyOf">An array of <see cref="Char"/>s to seek.</param>
+        /// <param name="ignoreCase">true to ignore case during the comparison; otherwise, false.</param>
+        /// <returns>
+        ///     true if one of the <see cref="Char"/>s occur within this string; otherwise, false.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        ///     source is null.
+        /// </exception>
         public static bool ContainsAny(this string source, char[] anyOf, bool ignoreCase)
         {
             return IndexOfAny(source, anyOf, ignoreCase) != -1;
@@ -122,9 +160,9 @@ namespace NLib
         ///     value is null.
         /// </exception>
         /// <remarks>
-        ///     This method behaves identically to <see cref="System.String.Contains"/>, except
+        ///     This method behaves identically to <see cref="String.Contains"/>, except
         ///     the additional parameter comparisonType allows the type of search to be specified
-        ///     using one of the <see cref="System.StringComparison"/> values.
+        ///     using one of the <see cref="StringComparison"/> values.
         /// </remarks>
         public static bool Contains(this string source, string value, StringComparison comparisonType)
         {
@@ -141,7 +179,7 @@ namespace NLib
         ///     another specified System.String. A parameter specifies the type of search to use for the
         ///     specified string.
         /// </summary>
-        /// <param name=ARGNAME_SOURCE>
+        /// <param name="source">
         ///     The string to search.
         /// </param>
         /// <param name="oldValue">
@@ -150,7 +188,7 @@ namespace NLib
         /// <param name="newValue">
         ///     A System.String to replace all occurrences of oldValue.
         /// </param>
-        /// <param name=ARGNAME_COMPARISONTYPE>
+        /// <param name="comparisonType">
         ///     One of the System.StringComparison values.
         /// </param>
         /// <returns>
@@ -164,9 +202,9 @@ namespace NLib
         ///     oldValue is the empty string ("").
         /// </exception>
         /// <remarks>
-        ///     This method behaves identically to <see cref="System.String.Replace(string, string)"/>, except
+        ///     This method behaves identically to <see cref="String.Replace(string, string)"/>, except
         ///     the additional parameter comparisonType allows the type of search to be specified
-        ///     using one of the <see cref="System.StringComparison"/> values.
+        ///     using one of the <see cref="StringComparison"/> values.
         /// </remarks>
         public static string Replace(this string source, string oldValue, string newValue, StringComparison comparisonType)
         {
@@ -199,98 +237,6 @@ namespace NLib
             result.Append(source, posCurrent, source.Length - posCurrent);
 
             return result.ToString();
-        }
-
-        /// <summary>
-        /// Returns the number of lines in a given string using a given newline 
-        /// character sequence.
-        /// </summary>
-        public static int GetLineCount(this string source)
-        {
-            return GetLineCount(source, Environment.NewLine);
-        }
-        
-        /// <summary>
-        /// Returns the number of lines in a given string using a given newline 
-        /// character sequence.
-        /// </summary>
-        public static int GetLineCount(this string source, string newLineSequence)
-        {
-            int pos = -1;
-            int lineCount = 0;
-            int newLineSequenceLength = newLineSequence.Length;
-
-            do
-            {
-                lineCount++;
-                pos = source.IndexOf(newLineSequence, pos, StringComparison.Ordinal)
-                    + newLineSequenceLength;
-            }
-            while (pos != StringHelper.NPos);
-
-            return lineCount;
-        }
-        
-        /// <summary>
-        /// Retrieves the zero-based line number from the specified zero-based character position within a specified System.String object.
-        /// </summary>
-        public static int LineNumberOfIndex(this string source, int index)
-        {
-            return LineNumberOfIndex(source, index, Environment.NewLine);
-        }
-        
-        /// <summary>
-        /// Retrieves the zero-based line number from the specified zero-based character position within a specified System.String object.
-        /// </summary>
-        public static int LineNumberOfIndex(this string source, int index, string newLineSequence)
-        {
-            if (index < 0 || index > source.Length)
-                throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_INDEX, ExceptionHelper.EXCMSG_INDEX_OUT_OF_RANGE);
-
-            int pos = 0;
-            int lineNumber = -1;
-            int newLineSequenceLength = newLineSequence.Length;
-
-            do
-            {
-                lineNumber++;
-                pos = source.IndexOf(newLineSequence, pos, StringComparison.Ordinal)
-                    + newLineSequenceLength;
-            }
-            while (pos < index && pos != StringHelper.NPos);
-
-            return lineNumber;
-        }
-        
-        /// <summary>
-        /// Retrieves the zero-based index of the first character of a given zero-based line.
-        /// </summary>
-        public static int FirstIndexOfLine(this string source, int line)
-        {
-            return FirstIndexOfLine(source, line, Environment.NewLine);
-        }
-        
-        /// <summary>
-        /// Retrieves the zero-based index of the first character of a given zero-based line.
-        /// </summary>
-        public static int FirstIndexOfLine(this string source, int line, string newLineSequence)
-        {
-            int pos = 0;
-            int lineNumber = 0;
-            int newLineSequenceLength = newLineSequence.Length;
-
-            while (lineNumber != line && pos != StringHelper.NPos)
-            {
-                pos = source.IndexOf(newLineSequence, pos, StringComparison.Ordinal)
-                    + newLineSequenceLength;
-
-                lineNumber++;
-            }
-
-            if (pos == StringHelper.NPos)
-                throw new ArgumentOutOfRangeException(ExceptionHelper.ARGNAME_LINE);
-
-            return lineNumber;
         }
 
 
