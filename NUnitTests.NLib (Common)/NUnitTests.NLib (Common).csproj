@@ -84,6 +84,8 @@
   <ItemGroup>
     <Compile Include="ByteExtensionsTests.cs" />
     <Compile Include="GenericDelegatesTests.cs" />
+    <Compile Include="PerformanceTests\Benchmarker.cs" />
+    <Compile Include="PerformanceTests\ByteArrayExtensionsTests.cs" />
     <Compile Include="RandomExtensionsTests.cs" />
     <Compile Include="StringExtensionsTests\BaseClasses\IndexOfAny_StringArray_Bases.cs" />
     <Compile Include="StringExtensionsTests\BaseClasses\IndexOfAny_CharArray_Bases.cs" />
@@ -117,6 +119,7 @@
     <Compile Include="Int16ExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -152,6 +152,9 @@
     <Compile Include="..\NLib %28Common%29\ArrayExtensions.cs">
       <Link>ArrayExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\NLib %28Common%29\ByteArrayExtensions.cs">
+      <Link>ByteArrayExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\NLib %28Common%29\ByteExtensions.cs">
       <Link>ByteExtensions.cs</Link>
     </Compile>
