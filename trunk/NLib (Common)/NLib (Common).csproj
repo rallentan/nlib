@@ -92,7 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArrayExtensions.cs" />
-    <Compile Include="ByteArrayExtensions_DO_NOT_COMMIT.cs" />
+    <Compile Include="ByteArrayExtensions.cs" />
     <Compile Include="ByteExtensions.cs" />
     <Compile Include="CharExtensions.cs" />
     <Compile Include="ExceptionHelper.cs" />

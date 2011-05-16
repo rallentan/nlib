@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -87,6 +89,12 @@
     </Compile>
     <Compile Include="..\NUnitTests.NLib %28Common%29\Int64ExtensionsTests.cs">
       <Link>Int64ExtensionsTests.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\PerformanceTests\Benchmarker.cs">
+      <Link>PerformanceTests\Benchmarker.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\PerformanceTests\ByteArrayExtensionsTests.cs">
+      <Link>PerformanceTests\ByteArrayExtensionsTests.cs</Link>
     </Compile>
     <Compile Include="..\NUnitTests.NLib %28Common%29\RandomExtensionsTests.cs">
       <Link>RandomExtensionsTests.cs</Link>
@@ -177,6 +185,7 @@
       <Name>NLib %28.NET2%29</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
