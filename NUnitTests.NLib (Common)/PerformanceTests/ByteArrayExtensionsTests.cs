@@ -7,10 +7,10 @@ using NLib;
 namespace NUnitTests.NLib.PerformanceTests.ByteArrayExtensionsTests
 {
     [TestFixture]
-    public class CompareToTests
+    public class CompareTo
     {
         [Test]
-        public void CompareTo()
+        public void Current_implementation_is_the_fastest()
         {
             double currentImplSpeed;
             var altImplSpeeds = new List<double>();
@@ -19,13 +19,14 @@ namespace NUnitTests.NLib.PerformanceTests.ByteArrayExtensionsTests
             byte[] bytes1 = new byte[65536];
             var benchmarker = new Benchmarker();
             TimeSpan timeToTest = TimeSpan.FromMilliseconds(1000);
+            int iterations = 225000000;
 
             random.NextBytes(bytes0);
             bytes0.CopyTo(bytes1, 0);
 
-            currentImplSpeed = benchmarker.Benchmark(() => { ByteArrayExtensions.CompareTo(bytes0, bytes1); }, timeToTest);
-            altImplSpeeds.Add(benchmarker.Benchmark(() => { CompareTo_Implementation00(bytes0, bytes1); }, timeToTest));
-            altImplSpeeds.Add(benchmarker.Benchmark(() => { CompareTo_Implementation01(bytes0, bytes1); }, timeToTest));
+            currentImplSpeed = benchmarker.Benchmark(() => { ByteArrayExtensions.CompareTo(bytes0, bytes1); }, iterations);
+            altImplSpeeds.Add(benchmarker.Benchmark(() => { CompareTo_Implementation00(bytes0, bytes1); }, iterations));
+            altImplSpeeds.Add(benchmarker.Benchmark(() => { CompareTo_Implementation01(bytes0, bytes1); }, iterations));
 
             Console.WriteLine("Current Implemen - Average execution time: " + string.Format("{0:.###########}", currentImplSpeed));
             for (int i = 0; i < altImplSpeeds.Count; i++)
@@ -36,10 +37,21 @@ namespace NUnitTests.NLib.PerformanceTests.ByteArrayExtensionsTests
                     string.Format("{0:.###########}", altImplSpeeds[i]));
             }
 
-            foreach (var implSpeed in altImplSpeeds)
+            double tolerance = 0.0000013;
+            double currentImplAdjustedSpeed = currentImplSpeed - tolerance;
+            double difference;
+            double lowestDifference = double.MaxValue;
+
+            for (int i = 0; i < altImplSpeeds.Count; i++)
             {
-                Assert.Less(currentImplSpeed - 0.000001, implSpeed);
+                Assert.LessOrEqual(currentImplAdjustedSpeed, altImplSpeeds[i], "The current implementation is slower than Implementation" + i.ToString("D2"));
+
+                difference = altImplSpeeds[i] - currentImplSpeed;
+                if (difference < lowestDifference)
+                    lowestDifference = difference;
             }
+
+            Assert.LessOrEqual(lowestDifference, tolerance, "The current implementation is faster than all documented implementations. If the current implementation is new, document it here.");
         }
 
         static unsafe bool CompareTo_Implementation00(byte[] arrayA, byte[] arrayB)
