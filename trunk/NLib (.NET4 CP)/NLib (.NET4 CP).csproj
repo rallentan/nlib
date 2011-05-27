@@ -176,6 +176,15 @@
     <Compile Include="..\NLib %28Common%29\CharExtensions.cs">
       <Link>CharExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\NLib %28Common%29\ConsoleOptionExceptions.cs">
+      <Link>ConsoleOptionExceptions.cs</Link>
+    </Compile>
+    <Compile Include="..\NLib %28Common%29\ConsoleOptionParser.cs">
+      <Link>ConsoleOptionParser.cs</Link>
+    </Compile>
+    <Compile Include="..\NLib %28Common%29\ConsoleOptionSchem.cs">
+      <Link>ConsoleOptionSchem.cs</Link>
+    </Compile>
     <Compile Include="..\NLib %28Common%29\EasyThread.cs">
       <Link>EasyThread.cs</Link>
     </Compile>
