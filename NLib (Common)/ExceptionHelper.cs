@@ -23,5 +23,6 @@ namespace NLib
         public const string EXCMSG_MUST_BE_LESS_THAN_INT32_MAXVALUE = "Parameter must be less than Int32.MaxValue.";
         public const string EXCMSG_INVALID_ENUMERATION_VALUE = "Parameter is an invalid enumeration value.";
         public const string EXCMSG_CANNOT_BE_ZERO_LENGTH_STRING = "Parameter cannot be a zero length strign.";
-    }
+        public const string EXCMSG_MUST_BE_NONNEGATIVE = "Parameter must be non-negative.";
+   }
 }

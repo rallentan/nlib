@@ -5,11 +5,11 @@ using System.Text;
 
 namespace NLib
 {
-    class ConsoleOptionException : Exception
+    public class ConsoleOptionException : Exception
     {
     }
 
-    class UnknownOptionException : ConsoleOptionException
+    public class UnknownOptionException : ConsoleOptionException
     {
         //--- Constructors ---
 
@@ -29,7 +29,20 @@ namespace NLib
         }
     }
 
-    class MissingSubOptionException : ConsoleOptionException
+    public class MissingRequiredOptionsException : ConsoleOptionException
+    {
+        //--- Public Properties ---
+
+        public override string Message
+        {
+            get
+            {
+                return "Missing required argument(s).";
+            }
+        }
+    }
+
+    public class MissingSubOptionException : ConsoleOptionException
     {
         //--- Constructors ---
 
@@ -49,7 +62,7 @@ namespace NLib
         }
     }
 
-    class DuplicateOptionException : ConsoleOptionException
+    public class DuplicateOptionException : ConsoleOptionException
     {
         //--- Constructors ---
 
