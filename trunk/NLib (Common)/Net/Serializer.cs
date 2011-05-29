@@ -9,6 +9,8 @@ namespace NLib.Net
 {
     static class Serializer
     {
+        //--- Public Static Methods ---
+
         public static void Serialize(Stream outputStream, object objectToSerialize)
         {
             var encoder = new VarintFormatter(outputStream);
@@ -46,6 +48,8 @@ namespace NLib.Net
                 AutoSerialize(objectToSerialize, encoder);
             }
         }
+
+        //--- Private Static Methods ---
 
         static void AutoSerialize(object objectToSerialize, ISerializationStream encoder)
         {
