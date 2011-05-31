@@ -222,7 +222,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>../../../PostBuildEvents.bat  NET2  "$(ConfigurationName)"  "$(ProjectName)"  "$(TargetName)"  "$(TargetFileName)"
+    <PostBuildEvent>"$(ProjectDir)\..\PostBuildEvents.bat"  NET2  "$(ConfigurationName)"  "$(ProjectName)"  "$(TargetName)"  "$(TargetFileName)"
 </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
