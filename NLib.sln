@@ -27,7 +27,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NUnitTests.NLib.Windows.For
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLib.Windows.Forms (.NET4)", "NLib.Windows.Forms (.NET4)\NLib.Windows.Forms (.NET4).csproj", "{FABAC704-4DA2-42EA-A314-9530D0C6721C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLib.Xna.Framework", "NLib.XNA\NLib.Xna.Framework.csproj", "{51DC70BA-B1BD-4626-8A2A-CC9C92ACCC6B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLib.Xna", "NLib.XNA\NLib.Xna.csproj", "{51DC70BA-B1BD-4626-8A2A-CC9C92ACCC6B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
