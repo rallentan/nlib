@@ -21,11 +21,11 @@ namespace NLib
             {
                 int* pPosA = (int*)pArrayA;
                 int* pPosB = (int*)pArrayB;
-                int end = arrayALength >> 3;
+                int end = arrayALength >> 2;
 
-                for (int i = 0; i < end; i++, pPosA += 4, pPosA += 4)
+                for (int i = 0; i < end; i++, pPosA++, pPosB++)
                 {
-                    if (*pPosA == *pPosB)
+                    if (*pPosA != *pPosB)
                         return false;
                 }
 
