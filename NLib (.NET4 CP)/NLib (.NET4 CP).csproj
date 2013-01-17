@@ -191,6 +191,9 @@
     <Compile Include="..\NLib %28Common%29\Int64Extensions.cs">
       <Link>Int64Extensions.cs</Link>
     </Compile>
+    <Compile Include="..\NLib %28Common%29\InterlockedHelper.cs">
+      <Link>InterlockedHelper.cs</Link>
+    </Compile>
     <Compile Include="..\NLib %28Common%29\Net\ClientConnectionEventArgs.cs">
       <Link>Net\ClientConnectionEventArgs.cs</Link>
     </Compile>
