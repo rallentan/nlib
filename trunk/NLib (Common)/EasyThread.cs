@@ -24,7 +24,7 @@ namespace NLib
         /// <remarks>
         ///     The delegate is called asynchronously, and this method returns immediately.
         ///     If the DisableThreading property is set to true. No thread is created,
-        ///     the delegate is synchronously, and this method returns after the delegate
+        ///     the delegate is called synchronously, and this method returns after the delegate
         ///     returns. This can be useful for debugging when multiple threads interfere
         ///     with the debugging process.
         /// </remarks>
