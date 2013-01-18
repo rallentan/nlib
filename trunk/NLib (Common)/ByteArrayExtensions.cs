@@ -19,14 +19,22 @@ namespace NLib
             fixed (byte* pArrayA = arrayA)
             fixed (byte* pArrayB = arrayB)
             {
-                int* pPosA = (int*)pArrayA;
-                int* pPosB = (int*)pArrayB;
-                int end = arrayALength >> 2;
+                long* pPosA = (long*)pArrayA;
+                long* pPosB = (long*)pArrayB;
+                int end = arrayALength >> 3;
 
-                for (int i = 0; i < end; i++, pPosA++, pPosB++)
+                for (int i = 0; i < end; i++, pPosA += 8, pPosA += 8)
                 {
                     if (*pPosA != *pPosB)
                         return false;
+                }
+
+                if ((end & 4) != 0)
+                {
+                    if (*(int*)pPosA != *(int*)pPosB)
+                        return false;
+                    pPosA += 4;
+                    pPosB += 4;
                 }
 
                 if ((end & 2) != 0)

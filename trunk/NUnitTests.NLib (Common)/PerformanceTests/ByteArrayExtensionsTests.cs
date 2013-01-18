@@ -18,15 +18,15 @@ namespace NUnitTests.NLib.PerformanceTests.ByteArrayExtensionsTests
             byte[] bytes0 = new byte[65536];
             byte[] bytes1 = new byte[65536];
             var benchmarker = new Benchmarker();
-            TimeSpan timeToTest = TimeSpan.FromMilliseconds(1000);
-            int iterations = 225000000;
+            TimeSpan timeToTest = TimeSpan.FromMilliseconds(5000);
+            //int iterations = 225000000;
 
             random.NextBytes(bytes0);
             bytes0.CopyTo(bytes1, 0);
 
-            currentImplSpeed = benchmarker.Benchmark(() => { ByteArrayExtensions.CompareTo(bytes0, bytes1); }, iterations);
-            altImplSpeeds.Add(benchmarker.Benchmark(() => { CompareTo_Implementation00(bytes0, bytes1); }, iterations));
-            altImplSpeeds.Add(benchmarker.Benchmark(() => { CompareTo_Implementation01(bytes0, bytes1); }, iterations));
+            currentImplSpeed = benchmarker.Benchmark(() => { ByteArrayExtensions.CompareTo(bytes0, bytes1); }, timeToTest);
+            altImplSpeeds.Add(benchmarker.Benchmark(() => { CompareTo_Implementation00(bytes0, bytes1); }, timeToTest));
+            altImplSpeeds.Add(benchmarker.Benchmark(() => { CompareTo_Implementation01(bytes0, bytes1); }, timeToTest));
 
             Console.WriteLine("Current Implemen - Average execution time: " + string.Format("{0:.###########}", currentImplSpeed));
             for (int i = 0; i < altImplSpeeds.Count; i++)
@@ -37,7 +37,7 @@ namespace NUnitTests.NLib.PerformanceTests.ByteArrayExtensionsTests
                     string.Format("{0:.###########}", altImplSpeeds[i]));
             }
 
-            double tolerance = 0.0000013;
+            double tolerance = 0.0000040;
             double currentImplAdjustedSpeed = currentImplSpeed - tolerance;
             double difference;
             double lowestDifference = double.MaxValue;
@@ -67,22 +67,14 @@ namespace NUnitTests.NLib.PerformanceTests.ByteArrayExtensionsTests
             fixed (byte* pArrayA = arrayA)
             fixed (byte* pArrayB = arrayB)
             {
-                long* pPosA = (long*)pArrayA;
-                long* pPosB = (long*)pArrayB;
-                int end = arrayALength >> 3;
+                int* pPosA = (int*)pArrayA;
+                int* pPosB = (int*)pArrayB;
+                int end = arrayALength >> 2;
 
-                for (int i = 0; i < end; i++, pPosA += 8, pPosA += 8)
+                for (int i = 0; i < end; i++, pPosA++, pPosB++)
                 {
                     if (*pPosA != *pPosB)
                         return false;
-                }
-
-                if ((end & 4) != 0)
-                {
-                    if (*(int*)pPosA != *(int*)pPosB)
-                        return false;
-                    pPosA += 4;
-                    pPosB += 4;
                 }
 
                 if ((end & 2) != 0)
