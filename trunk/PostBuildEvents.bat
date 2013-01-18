@@ -54,7 +54,7 @@ IF NOT EXIST ..\..\..\Output (
 	MKDIR ..\..\..\Output
 	IF %ERRORLEVEL% NEQ 0 EXIT /B 3
 )
-IF EXIST ..\..\..\Output\%frameworkTarget% (
+IF NOT EXIST ..\..\..\Output\%frameworkTarget% (
 	ECHO MKDIR ..\..\..\Output\%frameworkTarget%
 	MKDIR ..\..\..\Output\%frameworkTarget%
 	IF %ERRORLEVEL% NEQ 0 EXIT /B 4
