@@ -8,5 +8,8 @@
   </Config>
   <Config name="Release" binpathtype="Auto">
     <assembly path="NUnitTests.NLib (.NET2)\bin\Release\NUnitTests.NLib (.NET2).dll" />
+    <assembly path="NUnitTests.NLib (.NET3.5 CP)\bin\Release\NUnitTests.NLib (.NET3.5 CP).dll" />
+    <assembly path="NUnitTests.NLib (.NET4 CP)\bin\Release\NUnitTests.NLib (.NET4 CP).dll" />
+    <assembly path="NUnitTests.NLib.Windows.Forms (.NET4 CP)\bin\Release\NUnitTests.NLib.Windows.Forms (.NET4 CP).dll" />
   </Config>
 </NUnitProject>
