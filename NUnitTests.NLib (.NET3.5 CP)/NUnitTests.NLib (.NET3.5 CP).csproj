@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -93,8 +95,80 @@
     <Compile Include="..\NUnitTests.NLib %28Common%29\Int64ExtensionsTests.cs">
       <Link>Int64ExtensionsTests.cs</Link>
     </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\PerformanceTests\Benchmarker.cs">
+      <Link>PerformanceTests\Benchmarker.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\PerformanceTests\ByteArrayExtensionsTests.cs">
+      <Link>PerformanceTests\ByteArrayExtensionsTests.cs</Link>
+    </Compile>
     <Compile Include="..\NUnitTests.NLib %28Common%29\RandomExtensionsTests.cs">
       <Link>RandomExtensionsTests.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\BaseClasses\IndexOfAny_CharArray_Bases.cs">
+      <Link>StringExtensionsTests\BaseTests\IndexOfAny_CharArray_Bases.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\Helper.cs">
+      <Link>StringExtensionsTests\Helper.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\IndexOfAny_String_StringArray.cs">
+      <Link>StringExtensionsTests\IndexOfAny_String_StringArray.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\IndexOfAny_String_StringArray_Int32.cs">
+      <Link>StringExtensionsTests\IndexOfAny_String_StringArray_Int32.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\IndexOfAny_String_StringArray_Int32_Int32.cs">
+      <Link>StringExtensionsTests\IndexOfAny_String_StringArray_Int32_Int32.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\IndexOfAny_String_StringArray_Int32_Int32_StringComparison.cs">
+      <Link>StringExtensionsTests\IndexOfAny_String_StringArray_Int32_Int32_StringComparison.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\IndexOfAny_String_StringArray_Int32_StringComparison.cs">
+      <Link>StringExtensionsTests\IndexOfAny_String_StringArray_Int32_StringComparison.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\IndexOfAny_String_StringArray_StringComparison.cs">
+      <Link>StringExtensionsTests\IndexOfAny_String_StringArray_StringComparison.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\IndexOfNotAny_String_CharArray.cs">
+      <Link>StringExtensionsTests\IndexOfNotAny_String_CharArray.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\IndexOfNotAny_String_CharArray_Boolean.cs">
+      <Link>StringExtensionsTests\IndexOfNotAny_String_CharArray_Boolean.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\IndexOfNotAny_String_CharArray_Int32.cs">
+      <Link>StringExtensionsTests\IndexOfNotAny_String_CharArray_Int32.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\IndexOfNotAny_String_CharArray_Int32_Boolean.cs">
+      <Link>StringExtensionsTests\IndexOfNotAny_String_CharArray_Int32_Boolean.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\IndexOfNotAny_String_CharArray_Int32_Int32.cs">
+      <Link>StringExtensionsTests\IndexOfNotAny_String_CharArray_Int32_Int32.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\IndexOfNotAny_String_CharArray_Int32_Int32_Boolean.cs">
+      <Link>StringExtensionsTests\IndexOfNotAny_String_CharArray_Int32_Int32_Boolean.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\LastIndexOfNotAny_String_CharArray.cs">
+      <Link>StringExtensionsTests\LastIndexOfNotAny_String_CharArray.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\LastIndexOfNotAny_String_CharArray_Boolean.cs">
+      <Link>StringExtensionsTests\LastIndexOfNotAny_String_CharArray_Boolean.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\LastIndexOfNotAny_String_CharArray_Int32.cs">
+      <Link>StringExtensionsTests\LastIndexOfNotAny_String_CharArray_Int32.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\LastIndexOfNotAny_String_CharArray_Int32_Boolean.cs">
+      <Link>StringExtensionsTests\LastIndexOfNotAny_String_CharArray_Int32_Boolean.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\LastIndexOfNotAny_String_CharArray_Int32_Int32.cs">
+      <Link>StringExtensionsTests\LastIndexOfNotAny_String_CharArray_Int32_Int32.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\LastIndexOfNotAny_String_CharArray_Int32_Int32_Boolean.cs">
+      <Link>StringExtensionsTests\LastIndexOfNotAny_String_CharArray_Int32_Int32_Boolean.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\SelfCheck.cs">
+      <Link>StringExtensionsTests\SelfCheck.cs</Link>
+    </Compile>
+    <Compile Include="..\NUnitTests.NLib %28Common%29\StringExtensionsTests\VerboseStringArray.cs">
+      <Link>StringExtensionsTests\VerboseStringArray.cs</Link>
     </Compile>
     <Compile Include="..\NUnitTests.NLib %28Common%29\UInt16ExtensionsTests.cs">
       <Link>UInt16ExtensionsTests.cs</Link>
