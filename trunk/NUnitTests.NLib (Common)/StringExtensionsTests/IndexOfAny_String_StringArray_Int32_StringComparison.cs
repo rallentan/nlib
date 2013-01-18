@@ -91,8 +91,8 @@ namespace NUnitTests.NLib.StringExtensionsTests
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        public void When_comparisonType_is_invalid_throws_ArgumentOutOfRangeException()
+        [ExpectedException(typeof(ArgumentException))]
+        public void When_comparisonType_is_invalid_throws_ArgumentException()
         {
             TestedMethodAdapter(SIMPLE_STRING, EMPTY_STRING_ARRAY, 0, 0, (StringComparison)(-1));
         }
