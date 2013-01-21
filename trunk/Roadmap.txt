@@ -1,0 +1,14 @@
++--------------+
+| NLib Roadmap |
++--------------+
+
+This file contains a list of changes and features that are expected to be implemented in certain releases.
+
+NLib 0.1
+--------
+ * Improved licensing.
+
+NLib 0.2
+--------
+ * Additional source libraries specifically for the XNA Framework.
+ * More XML documentation.

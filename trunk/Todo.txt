@@ -1,0 +1,21 @@
++-----------------+
+| NLib To-Do List |
++-----------------+
+
+This file contains a list of tasks that must be completed before publishing the indicated release.
+
+NLib 0.1
+--------
+ * Rename EasyThread to SimpleThread.
+ * Commit these new development documents.
+ * Paste the BSL license text to the top of all source files.
+ * Remove the unnecessary NLib.Windows.Forms control classes.
+ * Tag the revision released in the repository.
+
+NLib 0.2
+--------
+ * Commit the NLib.XNA project.
+ * Cleanup the NLib.XNA source code.
+ * Write unit tests for NLib.XNA.
+ * Finish NLib XML documentation.
+ * Rename NLib.dll to NLib.NET2.dll, NLib.NET35.dll, etc.
