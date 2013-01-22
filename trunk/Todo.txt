@@ -8,6 +8,7 @@ NLib 0.1
 --------
  * Rename EasyThread to SimpleThread.
  * Remove the unnecessary NLib.Windows.Forms control classes.
+ * Document how to use the library in a file to be committed to the repository.
  * Tag the revision released in the repository.
 
 NLib 0.2
