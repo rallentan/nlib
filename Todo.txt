@@ -7,7 +7,6 @@ This file contains a list of tasks that must be completed before publishing the 
 NLib 0.1
 --------
  * Rename EasyThread to SimpleThread.
- * Commit these new development documents.
  * Paste the BSL license text to the top of all source files.
  * Remove the unnecessary NLib.Windows.Forms control classes.
  * Tag the revision released in the repository.
