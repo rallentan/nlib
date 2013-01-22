@@ -1,4 +1,8 @@
-﻿// IMPORTANT:
+﻿// Distributed under the Boost Software License, Version 1.0.
+//    (See accompanying file LICENSE_1_0.txt or copy at
+//          http://www.boost.org/LICENSE_1_0.txt)
+
+// IMPORTANT:
 //  Take care renaming the parameters of the string methods. Many of the methods rely on exception
 //  reporting from the .NET Framework, and the exceptions thrown will reflect the parameter names in
 //  the .NET Framework, thus the exposed parameter names in this API must be identical. This is done
@@ -19,6 +23,7 @@
 //  Sort functions by parameter info tooltip overload order
 //  Replace terms "this instance" and perhaps "this string" in metadata documentation with more accurate terms
 //
+
 using System;
 using System.Collections.Generic;
 using System.Text;
