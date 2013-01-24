@@ -58,7 +58,7 @@ This is a list of featured classes and members provided by NLib.  This is not an
  * IsDigit - Mimicks the Char.IsDigit method, but implements it as an extension method.
  * IsHexDigit - Mimicks the Char.IsHexDigit method, but implements it as an extension method.
  * IsInMap - Quickly checks if a character falls within the specified table of characters.  In some cases, this can provide a performance improvement over checking each character.
- * IsNonLineBreakingWhiteSpaceLatin1 - Determines if a character is any of the white space character that are not used to indicate a new line.  This method is not compliant with all cultures.  Use with consideration.
+ * IsNonLineBreakingWhiteSpaceLatin1 - Determines if a character is a white space character, excluding line-breaking characters.  This method is not compliant with all cultures.  Use with consideration.
  * IsWhiteSpace - Mimicks the Char.IsWhiteSpace method, but implements it as an extension method.
  * ToLower - Mimicks the Char.ToLower method, but implements it as an extension method.
  * ToLowerInvariant - Mimicks the Char.ToLowerInvariant method, but implements it as an extension method.
