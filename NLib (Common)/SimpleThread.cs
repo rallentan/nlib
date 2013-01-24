@@ -14,7 +14,7 @@ namespace NLib
     /// <summary>
     /// Provides a set of methods and properties to simplify thread creation.
     /// </summary>
-    public static class EasyThread
+    public static class SimpleThread
     {
         //--- Public Static Methods ---
 
@@ -78,7 +78,7 @@ namespace NLib
     }
 
     /// <summary>
-    /// Represents a method that the <see cref="EasyThread"/> class will call in a new thread.
+    /// Represents a method that the <see cref="SimpleThread"/> class will call in a new thread.
     /// </summary>
     public delegate void EasyThreadMethod();
 }
