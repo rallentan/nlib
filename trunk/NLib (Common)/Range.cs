@@ -61,10 +61,10 @@ namespace NLib
 
             foreach (var range in ranges)
             {
-                if (range.StartPos < lowBound)
-                    lowBound = range.StartPos;
-                if (range.EndPos > highBound)
-                    highBound = range.EndPos;
+                if (range.StartPosition < lowBound)
+                    lowBound = range.StartPosition;
+                if (range.EndPosition > highBound)
+                    highBound = range.EndPosition;
                 count++;
             }
             if (count == 0)
@@ -97,15 +97,15 @@ namespace NLib
             if (ranges.Length == 0)
                 throw new ArgumentException("One or more ranges must be specified.", "ranges");
 
-            int lowBound = ranges[0].StartPos;
-            int highBound = ranges[0].EndPos;
+            int lowBound = ranges[0].StartPosition;
+            int highBound = ranges[0].EndPosition;
 
             for (int i = 1; i < ranges.Length; i++)
             {
-                if (ranges[i].StartPos < lowBound)
-                    lowBound = ranges[i].StartPos;
-                if (ranges[i].EndPos > highBound)
-                    highBound = ranges[i].EndPos;
+                if (ranges[i].StartPosition < lowBound)
+                    lowBound = ranges[i].StartPosition;
+                if (ranges[i].EndPosition > highBound)
+                    highBound = ranges[i].EndPosition;
             }
 
             return new Range(lowBound, highBound - lowBound);
@@ -222,7 +222,7 @@ namespace NLib
         /// <summary>
         /// Gets or sets the starting position of the <see cref="Range"/>.
         /// </summary>
-        public int StartPos
+        public int StartPosition
         {
             get
             {
@@ -257,9 +257,9 @@ namespace NLib
         /// <summary>
         /// Gets the sum of the starting position and length of the <see cref="Range"/>.
         /// </summary>
-        public int EndPos
+        public int EndPosition
         {
-            get { return StartPos + Length; }
+            get { return StartPosition + Length; }
         }
     }
 }
