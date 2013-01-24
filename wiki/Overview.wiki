@@ -1,5 +1,3 @@
-#Overview of the NLib API
-
 = Introduction =
 
 This is a list of featured classes and members provided by NLib.  This is not an exhaustive list.  For more details on the NLib API, see the the NLib.chm file.
