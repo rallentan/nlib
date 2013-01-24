@@ -11,7 +11,7 @@ using System.IO;
 namespace NLib
 {
     [DebuggerDisplay("[0]: {(char)this[0]} [1]: {(char)this[1]} [2]: {(char)this[2]} [3]: {(char)this[3]}")]
-    public class StringReader2 : IDisposable
+    public class StringParser : IDisposable
     {
         //--- Constants ---
         const bool DEFAULT_IGNORECASE = true;
@@ -29,17 +29,17 @@ namespace NLib
 
         //--- Constructors ---
 
-        public StringReader2(string source) : this(source, 0, source.Length, DEFAULT_IGNORECASE) { }
+        public StringParser(string source) : this(source, 0, source.Length, DEFAULT_IGNORECASE) { }
 
-        public StringReader2(string source, bool ignoreCase) : this(source, 0, source.Length, ignoreCase) { }
+        public StringParser(string source, bool ignoreCase) : this(source, 0, source.Length, ignoreCase) { }
 
-        public StringReader2(string source, int startIndex) : this(source, startIndex, source.Length - startIndex, DEFAULT_IGNORECASE) { }
+        public StringParser(string source, int startIndex) : this(source, startIndex, source.Length - startIndex, DEFAULT_IGNORECASE) { }
 
-        public StringReader2(string source, int startIndex, bool ignoreCase) : this(source, startIndex, source.Length - startIndex, ignoreCase) { }
+        public StringParser(string source, int startIndex, bool ignoreCase) : this(source, startIndex, source.Length - startIndex, ignoreCase) { }
 
-        public StringReader2(string source, int startIndex, int count) : this(source, startIndex, count, DEFAULT_IGNORECASE) { }
+        public StringParser(string source, int startIndex, int count) : this(source, startIndex, count, DEFAULT_IGNORECASE) { }
 
-        public StringReader2(string source, int startIndex, int count, bool ignoreCase)
+        public StringParser(string source, int startIndex, int count, bool ignoreCase)
         {
             _s = source;
             IgnoreCase = ignoreCase;
