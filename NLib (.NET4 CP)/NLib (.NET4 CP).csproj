@@ -233,8 +233,8 @@
     <Compile Include="..\NLib %28Common%29\StringHelper.cs">
       <Link>StringHelper.cs</Link>
     </Compile>
-    <Compile Include="..\NLib %28Common%29\StringReader2.cs">
-      <Link>StringReader2.cs</Link>
+    <Compile Include="..\NLib %28Common%29\StringParser.cs">
+      <Link>StringParser.cs</Link>
     </Compile>
     <Compile Include="..\NLib %28Common%29\UInt16Extensions.cs">
       <Link>UInt16Extensions.cs</Link>
