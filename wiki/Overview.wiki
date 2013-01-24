@@ -79,7 +79,7 @@ This is a list of featured classes and members provided by NLib.  This is not an
  * Func<...> - Provides the full set of generic Func delegates for older versions of .NET.
 
 ==== InterlockedHelper ====
- * Increment/Decrement - Similar to Interlocked.Increment/Decrement, but receives a UInt32 as a parameter, instead of an Int32.  This is useful when you would rather an exception be thrown as a warning when you try to decrement below zero.  This is useful to create a simple semaphore.
+ * Increment/Decrement - Similar to Interlocked.Increment/Decrement, but receives a UInt32 as a parameter, instead of an Int32.
 
 ==== OperationQueueThread ====
  * EnqueueOperation - Adds a method to the queue to be called when all prior operations in the queue are completed or otherwise removed.
