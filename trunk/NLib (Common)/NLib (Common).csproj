@@ -115,7 +115,7 @@
     <Compile Include="UInt16Extensions.cs" />
     <Compile Include="UInt32Extensions.cs" />
     <Compile Include="Int16Extensions.cs" />
-    <Compile Include="EasyThread.cs" />
+    <Compile Include="SimpleThread.cs" />
     <Compile Include="ExtensionAttribute.cs" />
     <Compile Include="Int32Extensions.cs" />
     <Compile Include="OperationQueueThread.cs" />

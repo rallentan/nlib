@@ -52,7 +52,7 @@ namespace NLib.Net
                 }
 
                 TcpClient client = listener.AcceptTcpClient();
-                EasyThread.BeginInvoke(new EasyThreadMethod(
+                SimpleThread.BeginInvoke(new EasyThreadMethod(
                 () =>
                 {
                     var e = new ClientConnectionEventArgs(client);
