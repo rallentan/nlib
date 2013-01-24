@@ -69,8 +69,8 @@ IF %ERRORLEVEL% NEQ 0 EXIT /B 5
 IF "%configurationName:Build Documentation=%" NEQ "%configurationName%" (
 	ECHO.
 	ECHO --- Generating Documentation ---
-	ECHO %SystemRoot%\Microsoft.NET\Framework\v3.5\MSBuild.exe "..\..\%projectName%.shfbproj"
-	%SystemRoot%\Microsoft.NET\Framework\v3.5\MSBuild.exe "..\..\%projectName%.shfbproj"
+	ECHO %SystemRoot%\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe /p:CleanIntermediates=True /p:Configuration=Release "..\..\%projectName%.shfbproj"
+	%SystemRoot%\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe /p:CleanIntermediates=True /p:Configuration=Release "..\..\%projectName%.shfbproj"
 	IF %ERRORLEVEL% NEQ 0 EXIT /B 6
 
 	ECHO.
