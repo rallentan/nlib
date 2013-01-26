@@ -26,8 +26,8 @@ namespace NLib
         /// Returns a value indicating whether this instance and a specified System.Char
         /// object represent the same value.
         /// </summary>
-        /// <param name="valueA">The source System.Char.</param>
-        /// <param name="valueB">A System.Char object to compare to this instance.</param>
+        /// <param name="source">The source System.Char.</param>
+        /// <param name="value">A System.Char object to compare to this instance.</param>
         /// <param name="ignoreCase">
         /// A System.Boolean indicating a case-sensitive or insensitive comparison. (true
         /// indicates a case-insensitive comparison.)
@@ -35,12 +35,12 @@ namespace NLib
         /// <returns>
         /// True if the object is equal to this instance; otherwise, false.
         /// </returns>
-        public static bool Equals(this char valueA, char valueB, bool ignoreCase)
+        public static bool Equals(this char source, char value, bool ignoreCase)
         {
             if (ignoreCase)
-                return char.ToUpperInvariant(valueA) == char.ToUpperInvariant(valueB);
+                return char.ToUpperInvariant(source) == char.ToUpperInvariant(value);
             else
-                return valueA == valueB;
+                return source == value;
         }
         
         /// <summary>

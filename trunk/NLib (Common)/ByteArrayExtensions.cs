@@ -18,21 +18,21 @@ namespace NLib
         ///     Compares the elements in this instance with the specified byte
         ///     array and indicates whether they are equal.
         /// </summary>
-        /// <param name="arrayA">The source array.</param>
-        /// <param name="arrayB">The array to compare to.</param>
+        /// <param name="source">The source array.</param>
+        /// <param name="array">The array to compare to.</param>
         /// <returns>True if the arrays are equal; false otherwise.</returns>
-        public static unsafe bool CompareTo(this byte[] arrayA, byte[] arrayB)
+        public static unsafe bool CompareTo(this byte[] source, byte[] array)
         {
-            if (arrayA == null && arrayB == null)
+            if (source == null && array == null)
                 return true;
 
-            int arrayALength = arrayA.Length;
+            int arrayALength = source.Length;
 
-            if (arrayA == null || arrayB == null || arrayALength != arrayB.Length)
+            if (source == null || array == null || arrayALength != array.Length)
                 return false;
 
-            fixed (byte* pArrayA = arrayA)
-            fixed (byte* pArrayB = arrayB)
+            fixed (byte* pArrayA = source)
+            fixed (byte* pArrayB = array)
             {
                 long* pPosA = (long*)pArrayA;
                 long* pPosB = (long*)pArrayB;
