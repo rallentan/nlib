@@ -54,15 +54,17 @@ namespace NLib.Windows.Forms
         /// <param name="parentSide">The edge of the container to move to. A horizontal
         /// facing edge can be combined with a vertical facing edge using the OR '|'
         /// operator.</param>
-        /// <remarks>The distance
+        /// <remarks><p>
+        /// The distance
         /// between the control and its parent is determined by the Margin of the control
         /// and the Padding of its container. If the Padding of the container is set to 0 for
-        /// all edges, then the Padding is considered to be 9 for all edges, instead.
-        ///     [INSERT BREAK] When specifying an edge for a control, horizontal
+        /// all edges, then the Padding is considered to be 9 for all edges, instead.</p>
+        /// <p>
+        /// When specifying an edge for a control, horizontal
         /// facing edges can be combined with vertical facing edges using the OR '|'
         /// operator. If a horizontal facing edge is specified for one control, a horizontal
         /// facing edge must be specified for the other control. The same applies for
-        /// vertical facing edge.</remarks>
+        /// vertical facing edge.</p></remarks>
         /// <exception cref="System.ArgumentOutOfRangeException">
         /// Both left and right edges were specified, or both top and bottom edges were
         /// specified.</exception>
@@ -182,11 +184,13 @@ namespace NLib.Windows.Forms
         /// facing edge can be combined with a vertical facing edge using the OR '|'
         /// operator.</param>
         /// <param name="child">The child control to stretch to.</param>
-        /// <remarks>The distance
+        /// <remarks><p>
+        /// The distance
         /// between the container and its child is determined by the Margin of the control
         /// and the Padding of its container. If the Padding of the container is set to 0 for
-        /// all edges, then the Padding is considered to be 9 for all edges, instead.
-        ///      [INSERT BREAK] When specifying an edge for a control, horizontal
+        /// all edges, then the Padding is considered to be 9 for all edges, instead.</p>
+        /// <p>
+        /// When specifying an edge for a control, horizontal
         /// facing edges can be combined with vertical facing edges using the OR '|'
         /// operator. If a horizontal facing edge is specified for one control, a horizontal
         /// facing edge must be specified for the other control. The same applies for
@@ -235,11 +239,13 @@ namespace NLib.Windows.Forms
         /// <param name="parentSide">The edge of the container to stretch to. A horizontal
         /// facing edge can be combined with a vertical facing edge using the OR '|'
         /// operator.</param>
-        /// <remarks>The distance
+        /// <remarks><p>
+        /// The distance
         /// between the control and its parent is determined by the Margin of the control
         /// and the Padding of its container. If the Padding of the container is set to 0 for
-        /// all edges, then the Padding is considered to be 9 for all edges, instead.
-        ///      [INSERT BREAK] When specifying an edge for a control, horizontal
+        /// all edges, then the Padding is considered to be 9 for all edges, instead.</p>
+        /// <p>
+        /// When specifying an edge for a control, horizontal
         /// facing edges can be combined with vertical facing edges using the OR '|'
         /// operator. If a horizontal facing edge is specified for one control, a horizontal
         /// facing edge must be specified for the other control. The same applies for
