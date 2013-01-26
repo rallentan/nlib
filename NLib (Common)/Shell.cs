@@ -39,7 +39,7 @@ namespace NLib
         /// to the process.
         /// </summary>
         /// <param name="command">An application with which to start a process.</param>
-        /// <param name="args">
+        /// <param name="arguments">
         /// Command-line arguments to pass to the application when the process starts.
         /// </param>
         /// <returns>the exit code of the process.</returns>
@@ -47,9 +47,9 @@ namespace NLib
         /// No file name was specified.</exception>
         /// <exception cref="System.ComponentModel.Win32Exception">
         /// There was an error in opening the associated file.</exception>
-        public static int Execute(string command, params string[] args)
+        public static int Execute(string command, params string[] arguments)
         {
-            return Execute(command, ToCommandLine(args));
+            return Execute(command, ToCommandLine(arguments));
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace NLib
         /// to the process.
         /// </summary>
         /// <param name="command">An application with which to start a process.</param>
-        /// <param name="args">
+        /// <param name="arguments">
         /// Command-line arguments to pass to the application when the process starts.
         /// </param>
         /// <returns>the exit code of the process.</returns>
@@ -66,9 +66,9 @@ namespace NLib
         /// No file name was specified.</exception>
         /// <exception cref="System.ComponentModel.Win32Exception">
         /// There was an error in opening the associated file.</exception>
-        public static int Execute(string command, string args)
+        public static int Execute(string command, string arguments)
         {
-            ProcessStartInfo processStartInfo = new ProcessStartInfo(command, args);
+            ProcessStartInfo processStartInfo = new ProcessStartInfo(command, arguments);
             processStartInfo.UseShellExecute = false;
 
             Process process = new Process();
@@ -100,7 +100,7 @@ namespace NLib
         /// to the process.
         /// </summary>
         /// <param name="command">An application with which to start a process.</param>
-        /// <param name="args">
+        /// <param name="arguments">
         /// Command-line arguments to pass to the application when the process starts.
         /// </param>
         /// <returns>the standard output of the process.</returns>
@@ -108,9 +108,9 @@ namespace NLib
         /// No file name was specified.</exception>
         /// <exception cref="System.ComponentModel.Win32Exception">
         /// There was an error in opening the associated file.</exception>
-        public static string ExecuteRedirected(string command, params string[] args)
+        public static string ExecuteRedirected(string command, params string[] arguments)
         {
-            return ExecuteRedirected(command, ToCommandLine(args));
+            return ExecuteRedirected(command, ToCommandLine(arguments));
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace NLib
         /// to the process.
         /// </summary>
         /// <param name="command">An application with which to start a process.</param>
-        /// <param name="args">
+        /// <param name="arguments">
         /// Command-line arguments to pass to the application when the process starts.
         /// </param>
         /// <returns>the standard output of the process.</returns>
@@ -127,9 +127,9 @@ namespace NLib
         /// No file name was specified.</exception>
         /// <exception cref="System.ComponentModel.Win32Exception">
         /// There was an error in opening the associated file.</exception>
-        public static string ExecuteRedirected(string command, string args)
+        public static string ExecuteRedirected(string command, string arguments)
         {
-            ProcessStartInfo processStartInfo = new ProcessStartInfo(command, args);
+            ProcessStartInfo processStartInfo = new ProcessStartInfo(command, arguments);
 
             processStartInfo.RedirectStandardOutput = true;
             processStartInfo.UseShellExecute = false;
@@ -155,7 +155,7 @@ namespace NLib
         /// not already quoted is surrounded in double quotes.</returns>
         /// <exception cref="System.ArgumentNullException">
         /// parameterA or parameterB is null.</exception>
-        public static string Join(string parameterA, string parameterB)
+        public static string Combine(string parameterA, string parameterB)
         {
             return parameterA + ' ' + parameterB;
         }
@@ -163,7 +163,7 @@ namespace NLib
         /// <summary>
         /// Combines two arguments into a single command-line string.
         /// </summary>
-        /// <param name="args">
+        /// <param name="arguments">
         /// The command-line arguments to combine.
         /// </param>
         /// <returns>
@@ -173,9 +173,9 @@ namespace NLib
         /// not already quoted is surrounded in double quotes.</returns>
         /// <exception cref="System.ArgumentNullException">
         /// One of the elements in arguments is null.</exception>
-        public static string ToCommandLine(params string[] args)
+        public static string ToCommandLine(params string[] arguments)
         {
-            int argsLength = args.Length;
+            int argsLength = arguments.Length;
 
             if (argsLength == 0)
                 return string.Empty;
@@ -185,12 +185,12 @@ namespace NLib
             char[] commandLineSeparators = new char[CommandLineSeparators.Count];
             CommandLineSeparators.CopyTo(commandLineSeparators, 0);
             
-            CommandLineAppendInternal(commandLine, args[0], commandLineSeparators);
+            CommandLineAppendInternal(commandLine, arguments[0], commandLineSeparators);
 
             for (int i = 1; i < argsLength; i++)
             {
                 commandLine.Append(' ');
-                CommandLineAppendInternal(commandLine, args[i], commandLineSeparators);
+                CommandLineAppendInternal(commandLine, arguments[i], commandLineSeparators);
             }
 
             return commandLine.ToString();

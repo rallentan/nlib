@@ -34,7 +34,7 @@ namespace NLib
         /// </remarks>
         /// <exception cref="System.ArgumentNullException">
         /// method is null.</exception>
-        public static void BeginInvoke(EasyThreadMethod method)
+        public static void BeginInvoke(SimpleThreadMethod method)
         {
             if (DisableThreading)
                 method();
@@ -63,7 +63,7 @@ namespace NLib
         private static void ThreadCallback(IAsyncResult ar)
         {
             AsyncResult result = (AsyncResult)ar;
-            var caller = (EasyThreadMethod)result.AsyncDelegate;
+            var caller = (SimpleThreadMethod)result.AsyncDelegate;
 
             try
             {
@@ -82,5 +82,5 @@ namespace NLib
     /// <summary>
     /// Represents a method that the <see cref="SimpleThread"/> class will call in a new thread.
     /// </summary>
-    public delegate void EasyThreadMethod();
+    public delegate void SimpleThreadMethod();
 }
