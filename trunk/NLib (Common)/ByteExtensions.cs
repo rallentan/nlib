@@ -10,7 +10,7 @@ namespace NLib
 {
     /// <summary>
     ///     Provides a set of static (Shared in Visual Basic) methods for
-    ///     manipulating <see cref="System.Byte"/> objects.
+    ///     manipulating System.Byte objects.
     /// </summary>
     public static class ByteExtensions
     {
