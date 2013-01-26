@@ -111,11 +111,33 @@ namespace NLib
             return new Range(lowBound, highBound - lowBound);
         }
 
+        /// <summary>
+        /// Compares two NLib.Range objects. The result specifies whether the
+        /// values of the NLib.Range.StartPosition and NLib.Range.Length properties
+        /// of the two System.Drawing.Point objects are equal.
+        /// </summary>
+        /// <param name="range1">An NLib.Range to compare.</param>
+        /// <param name="range2">An NLib.Range to compare.</param>
+        /// <returns>
+        /// True if the NLib.Range.StartPosition and NLib.Range.Length values of range1
+        /// and range2 are equal; otherwise, false.
+        /// </returns>
         public static bool operator ==(Range range1, Range range2)
         {
             return range1.Equals(range2);
         }
 
+        /// <summary>
+        /// Compares two NLib.Range objects. The result specifies whether the
+        /// values of the NLib.Range.StartPosition and NLib.Range.Length properties
+        /// of the two System.Drawing.Point objects are unequal.
+        /// </summary>
+        /// <param name="range1">An NLib.Range to compare.</param>
+        /// <param name="range2">An NLib.Range to compare.</param>
+        /// <returns>
+        /// True if the NLib.Range.StartPosition and NLib.Range.Length values of range1
+        /// and range2 differ; otherwise, false.
+        /// </returns>
         public static bool operator !=(Range range1, Range range2)
         {
             return !range1.Equals(range2);
@@ -207,7 +229,7 @@ namespace NLib
 
         /// <summary>
         ///     Returns the hash code for this instance.
-        /// </summary
+        /// </summary>
         /// <returns>
         ///     A 32-bit signed integer that is the hash code for this instance.
         /// </returns>

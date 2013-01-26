@@ -9,7 +9,8 @@ using System.Text;
 namespace NLib
 {
     /// <summary>
-    /// Provides a set of extension methods for the <see cref="Int64"/> type.
+    ///     Provides a set of static (Shared in Visual Basic) methods for
+    ///     manipulating <see cref="System.Int64"/> objects.
     /// </summary>
     public static class Int64Extensions
     {
@@ -21,13 +22,13 @@ namespace NLib
         //--- Public Static Methods ---
 
         /// <summary>
-        ///     Gets the eight high-order bits of the specified <see cref="Int64"/>.
+        ///     Gets the 32 high-order bits of the specified <see cref="Int64"/>.
         /// </summary>
         /// <param name="value">
         ///     The <see cref="Int64"/> to get the high-order nibble of.
         /// </param>
         /// <returns>
-        ///     An <see cref="Int32"/> containing the high-order nibble of the specified <see cref="Int64"/>.
+        ///     A System.Int32 containing the 32 high-order bits.
         /// </returns>
         public static int HighDWord(this long value)
         {
@@ -35,13 +36,13 @@ namespace NLib
         }
 
         /// <summary>
-        ///     Gets the eight low-order bits of the specified <see cref="Int64"/>.
+        ///     Gets the 32 low-order bits of the specified <see cref="Int64"/>.
         /// </summary>
         /// <param name="value">
-        ///     The <see cref="Int64"/> to get the low-order nibble of.
+        ///     The System.Int64 to get the bits from.
         /// </param>
         /// <returns>
-        ///     An <see cref="Int32"/> containing the low-order nibble of the specified <see cref="Int64"/>.
+        ///     A System.Int32 containing the 32 low-order bits.
         /// </returns>
         public static int LowDWord(this long value)
         {
@@ -53,7 +54,7 @@ namespace NLib
         ///     specifies the number of places to rotate the bits by.
         /// </summary>
         /// <param name="value">
-        ///     The <see cref="Int64"/> to rotate.
+        ///     The System.Int64 to get the bits from.
         /// </param>
         /// <param name="count">
         ///     The number of places to rotate the bits by.

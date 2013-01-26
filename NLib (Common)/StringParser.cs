@@ -10,6 +10,9 @@ using System.IO;
 
 namespace NLib
 {
+    /// <summary>
+    /// Extends and replaces System.IO.StringReader.
+    /// </summary>
     [DebuggerDisplay("[0]: {(char)this[0]} [1]: {(char)this[1]} [2]: {(char)this[2]} [3]: {(char)this[3]}")]
     public class StringParser : IDisposable
     {
@@ -29,16 +32,82 @@ namespace NLib
 
         //--- Constructors ---
 
+        /// <summary>
+        /// Initializes a new instance of the NLib.StringParser class that reads
+        /// from the specified string.
+        /// </summary>
+        /// <param name="source">The string to which the NLib.StringParser should be initialized.</param>
+        /// <exception cref="System.ArgumentNullException">The source parameter is null.</exception>
         public StringParser(string source) : this(source, 0, source.Length, DEFAULT_IGNORECASE) { }
 
+        /// <summary>
+        /// Initializes a new instance of the NLib.StringParser class that reads
+        /// from the specified string. A parameter indicates whether
+        /// operations should be case-sensitive.
+        /// </summary>
+        /// <param name="source">The string to which the NLib.StringParser should be initialized.</param>
+        /// <param name="ignoreCase">
+        /// True to indicate that subsequent operations should be performed
+        /// case-insensitively; false otherwise.</param>
+        /// <exception cref="System.ArgumentNullException">The source parameter is null.</exception>
         public StringParser(string source, bool ignoreCase) : this(source, 0, source.Length, ignoreCase) { }
 
+        /// <summary>
+        /// Initializes a new instance of the NLib.StringParser class that reads
+        /// from the specified string.
+        /// </summary>
+        /// <param name="source">The string to which the NLib.StringParser should be initialized.</param>
+        /// <param name="startIndex">The stream starting position.</param>
+        /// <exception cref="System.ArgumentNullException">The source parameter is null.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// startIndex is less than zero.</exception>
         public StringParser(string source, int startIndex) : this(source, startIndex, source.Length - startIndex, DEFAULT_IGNORECASE) { }
 
+        /// <summary>
+        /// Initializes a new instance of the NLib.StringParser class that reads
+        /// from the specified string. A parameter indicates whether
+        /// operations should be case-sensitive.
+        /// </summary>
+        /// <param name="source">The string to which the NLib.StringParser should be initialized.</param>
+        /// <param name="startIndex">The stream starting position.</param>
+        /// <param name="ignoreCase">
+        /// True to indicate that subsequent operations should be performed
+        /// case-insensitively; false otherwise.</param>
+        /// <exception cref="System.ArgumentNullException">The source parameter is null.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// startIndex is less than zero.</exception>
         public StringParser(string source, int startIndex, bool ignoreCase) : this(source, startIndex, source.Length - startIndex, ignoreCase) { }
 
+        /// <summary>
+        /// Initializes a new instance of the NLib.StringParser class that reads
+        /// from the specified string.
+        /// </summary>
+        /// <param name="source">The string to which the NLib.StringParser should be initialized.</param>
+        /// <param name="startIndex">The stream starting position.</param>
+        /// <param name="count">The maximum number of characters to read.</param>
+        /// <exception cref="System.ArgumentNullException">The source parameter is null.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// startIndex is less than zero, count is less than zero, or
+        /// startIndex + count is greater than the length of the source
+        /// string.</exception>
         public StringParser(string source, int startIndex, int count) : this(source, startIndex, count, DEFAULT_IGNORECASE) { }
 
+        /// <summary>
+        /// Initializes a new instance of the NLib.StringParser class that reads
+        /// from the specified string. A parameter indicates whether
+        /// operations should be case-sensitive.
+        /// </summary>
+        /// <param name="source">The string to which the NLib.StringParser should be initialized.</param>
+        /// <param name="startIndex">The stream starting position.</param>
+        /// <param name="count">The maximum number of characters to read.</param>
+        /// <param name="ignoreCase">
+        /// True to indicate that subsequent operations should be performed
+        /// case-insensitively; false otherwise.</param>
+        /// <exception cref="System.ArgumentNullException">The source parameter is null.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// startIndex is less than zero, count is less than zero, or
+        /// startIndex + count is greater than the length of the source
+        /// string.</exception>
         public StringParser(string source, int startIndex, int count, bool ignoreCase)
         {
             _s = source;
@@ -48,8 +117,18 @@ namespace NLib
 
         //--- Public Methods ---
         
+        /// <summary>
+        /// Closes the NLib.StringParser.
+        /// </summary>
         public void Close() { this.Dispose(true); }
         
+        /// <summary>
+        /// Advances the stream position by one character if and only if the
+        /// specified Unicode character is the next character in the stream.
+        /// </summary>
+        /// <param name="value">
+        /// The character to compare to the next character in the stream.</param>
+        /// <returns>true if the stream position was advanced; false otherwise.</returns>
         public bool Consume(char value)
         {
             if (!StartsWith(value))
@@ -57,7 +136,14 @@ namespace NLib
             _pos++;
             return true;
         }
-        
+
+        /// <summary>
+        /// Advances the stream position by one character if and only if the
+        /// specified string exists at the current position in the stream.
+        /// </summary>
+        /// <param name="value">
+        /// The string to compare.</param>
+        /// <returns>true if the stream position was advanced; false otherwise.</returns>
         public bool Consume(string value)
         {
             if (!StartsWith(value))
@@ -66,25 +152,48 @@ namespace NLib
             return true;
         }
         
+        /// <summary>
+        /// Releases the managed and unmanaged resources used by the NLib.StringParser.
+        /// </summary>
         public void Dispose()
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
         }
         
+        /// <summary>
+        /// Retrieves the zero-based line number of the string at current
+        /// position in the stream.
+        /// </summary>
+        /// <returns>The zero-based line number of the line containing the
+        /// specified index.</returns>
         public int GetCurrentLine() { return StringHelper.LineNumberOfIndex(_s, _pos); }
         
-        /// <summary>
-        /// Retrieves the one-based column number of the character at the current
-        /// position.
-        /// </summary>
         public void SetMarkPosition() { _mark = _pos; }
         
+        /// <summary>
+        /// Returns the next available character but does not consume it.
+        /// </summary>
+        /// <param name="count"></param>
+        /// <returns>
+        /// An integer representing the next character to be read, or -1 if no more characters
+        /// are available or the stream does not support seeking.</returns>
+        /// <exception cref="System.ObjectDisposedException">
+        /// The current reader is closed.</exception>
         public string Peek(int count)
         {
             return _s.Substring(_pos, count);
         }
         
+        /// <summary>
+        /// Reads the next character from the input string and advances the character
+        /// position by one character.
+        /// </summary>
+        /// <returns>
+        /// The next character from the underlying string, or -1 if no more characters
+        /// are available.</returns>
+        /// <exception cref="System.ObjectDisposedException">
+        /// The current reader is closed.</exception>
         public char ReadChar()
         {
             if (EndOfStream)
@@ -92,6 +201,19 @@ namespace NLib
             return _s[_pos++];
         }
         
+        /// <summary>
+        /// Reads a block of characters from the input string and advances the character
+        /// position by count.
+        /// </summary>
+        /// <param name="count">The number of characters to read. If count would
+        /// cause more characters to be read than remain in the input string,
+        /// only the characters remaining in the input string will be returned.</param>
+        /// <returns>
+        /// A string containing the characters read from the input string.</returns>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// count is negative.</exception>
+        /// <exception cref="System.ObjectDisposedException">
+        /// The current reader is closed.</exception>
         public string Read(int count)
         {
             if (_pos + count > _end)
@@ -107,11 +229,39 @@ namespace NLib
                 throw new InvalidOperationException("Mark has not been set.");
             return _s.Substring(_mark, _pos - _mark);
         }
-        
+
+        /// <summary>
+        /// Reads characters from the input string and advances the character
+        /// position until the specified Unicode character is reached.
+        /// </summary>
+        /// <param name="value">The Unicode character to stop reading at.</param>
+        /// <returns>
+        /// A string containing the characters read from the input string.</returns>
+        /// <exception cref="System.ObjectDisposedException">
+        /// The current reader is closed.</exception>
         public string ReadTo(char value) { return ReadToCore(_s.IndexOf(value, _ignoreCase)); }
-        
+
+        /// <summary>
+        /// Reads characters from the input string and advances the character
+        /// position until the specified string is reached.
+        /// </summary>
+        /// <param name="value">The string to stop reading at.</param>
+        /// <returns>
+        /// A string containing the characters read from the input string.</returns>
+        /// <exception cref="System.ObjectDisposedException">
+        /// The current reader is closed.</exception>
         public string ReadTo(string value) { return ReadToCore(_s.IndexOf(value, _pos, _comparisonType)); }
         
+        /// <summary>
+        /// Reads the stream as a string, either in its entirety or from the current
+        /// position to the end of the stream.
+        /// </summary>
+        /// <returns>
+        /// The content from the current position to the end of the underlying string.</returns>
+        /// <exception cref="System.OutOfMemoryException">
+        /// There is insufficient memory to allocate a buffer for the returned string.</exception>
+        /// <exception cref="System.ObjectDisposedException">
+        /// The current reader is closed.</exception>
         public string ReadToEnd()
         {
             string result = _s.Substring(_pos, _end - _pos);
@@ -119,8 +269,28 @@ namespace NLib
             return result;
         }
 
+        /// <summary>
+        /// Reads characters from the input string and advances the character
+        /// position until one of the Unicode characters in the specified
+        /// array is reached.
+        /// </summary>
+        /// <param name="anyOf">An array of Unicode characters, any of which to stop reading at.</param>
+        /// <returns>
+        /// A string containing the characters read from the input string.</returns>
+        /// <exception cref="System.ObjectDisposedException">
+        /// The current reader is closed.</exception>
         public string ReadToAnyOf(params char[] anyOf) { return ReadToCore(_s.IndexOfAny(anyOf, _pos, _ignoreCase)); }
 
+        /// <summary>
+        /// Reads characters from the input string and advances the character
+        /// position until one of the strings in the specified
+        /// array is reached.
+        /// </summary>
+        /// <param name="anyOf">An array of strings, any of which to stop reading at.</param>
+        /// <returns>
+        /// A string containing the characters read from the input string.</returns>
+        /// <exception cref="System.ObjectDisposedException">
+        /// The current reader is closed.</exception>
         public string ReadToAnyOf(params string[] anyOf) { return ReadToCore(_s.IndexOfAny(anyOf, _pos, _comparisonType)); }
         
         //public string ReadWhileAnyOf(params char[] anyOf) { return ReadToCore(_s.IndexOfNotAny(anyOf, _pos, _comparisonType)); }
@@ -136,9 +306,20 @@ namespace NLib
             return _s.LastIndexOf(value, _pos - 1, _comparisonType) != -1;
         }
         
+        /// <summary>
+        /// Sets the region within input string in which to read.
+        /// </summary>
+        /// <param name="startIndex">The new stream starting position.</param>
+        /// <param name="count">The maximum number of characters to read.</param>
         /// <remarks>
-        /// Position is reset to the new start index.
+        /// Each time SetRange is called, Position is reset to startIndex.
         /// </remarks>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// startIndex is less than zero, count is less than zero, or
+        /// startIndex + count is greater than the length of the source
+        /// string.</exception>
+        /// <exception cref="System.ObjectDisposedException">
+        /// The current reader is closed.</exception>
         public void SetRange(int startIndex, int count)
         {
             if (startIndex < 0)
@@ -152,9 +333,18 @@ namespace NLib
             _pos = startIndex;
             _startIndex = startIndex;
         }
-        
+
+        /// <summary>
+        /// Advances the character position by one.
+        /// </summary>
+        /// <exception cref="System.ObjectDisposedException">
+        /// The current reader is closed.</exception>
         public void Skip() { ReadChar(); }
         
+        /// <summary>
+        /// Advances the character position by count.
+        /// </summary>
+        /// <param name="count">The number of characters to skip.</param>
         public void Skip(int count)
         {
             if (_pos + count > _end)
@@ -162,7 +352,12 @@ namespace NLib
             else
                 _pos += count;
         }
-        
+
+        /// <summary>
+        /// Advances the character position to the character following the
+        /// next newline sequence, or to the end of the stream if no newline
+        /// sequences are found.
+        /// </summary>
         public void SkipLine()
         {
             SkipToCore(_s.IndexOf('\n', _pos));
@@ -170,24 +365,98 @@ namespace NLib
                 _pos++;
         }
 
+        /// <summary>
+        /// Advances the character position until the specified Unicode
+        /// character is reached.
+        /// </summary>
+        /// <param name="value">The Unicode character to stop advancing at.</param>
+        /// <returns>
+        /// true if the character was found; otherwise false.</returns>
+        /// <exception cref="System.ObjectDisposedException">
+        /// The current reader is closed.</exception>
         public bool SkipTo(char value) { return SkipToCore(_s.IndexOf(value, _pos, _ignoreCase)); }
 
+        /// <summary>
+        /// Advances the character position until the specified string is reached.
+        /// </summary>
+        /// <param name="value">The string to stop advancing at.</param>
+        /// <returns>
+        /// true if the string was found; otherwise false.</returns>
+        /// <exception cref="System.ObjectDisposedException">
+        /// The current reader is closed.</exception>
         public bool SkipTo(string value) { return SkipToCore(_s.IndexOf(value, _pos, _comparisonType)); }
 
+        /// <summary>
+        /// Advances the character position until one of the Unicode characters in the specified
+        /// array is reached.
+        /// </summary>
+        /// <param name="anyOf">
+        /// An array of Unicode characters, any of which to stop advancing at.</param>
+        /// <returns>
+        /// true if one of the characters were found; otherwise false.</returns>
+        /// <exception cref="System.ObjectDisposedException">
+        /// The current reader is closed.</exception>
         public bool SkipToAnyOf(params char[] anyOf) { return SkipToCore(_s.IndexOfAny(anyOf, _pos, _ignoreCase)); }
 
+        /// <summary>
+        /// Advances the character position until one of the strings in the specified
+        /// array is reached.
+        /// </summary>
+        /// <param name="anyOf">
+        /// An array of strings, any of which to stop advancing at.</param>
+        /// <returns>
+        /// true if one of the strings were found; otherwise false.</returns>
+        /// <exception cref="System.ObjectDisposedException">
+        /// The current reader is closed.</exception>
         public bool SkipToAnyOf(params string[] anyOf) { return SkipToCore(StringExtensions.IndexOfAny(_s, anyOf, _pos, _comparisonType)); }
-        
+
+        /// <summary>
+        /// Advances the character position until the next character in the input
+        /// stream is not the specified Unicode character.
+        /// </summary>
+        /// <param name="value">The Unicode character to advance past.</param>
+        /// <returns>
+        /// true if a character not matching the specified character was found; otherwise false.</returns>
+        /// <exception cref="System.ObjectDisposedException">
+        /// The current reader is closed.</exception>
         public bool SkipWhile(char value) { return SkipToCore(_s.LastIndexOf(value, _pos)); }
 
+        /// <summary>
+        /// Advances the character position until the next character in the input
+        /// stream is not in the specified array of Unicode characters.
+        /// </summary>
+        /// <param name="anyOf">An array of Unicode character to advance past.</param>
+        /// <returns>
+        /// true if a non-matching character was found; false if the end of stream was reached.</returns>
+        /// <exception cref="System.ObjectDisposedException">
+        /// The current reader is closed.</exception>
         public bool SkipWhileAnyOf(char[] anyOf) { return SkipToCore(_s.IndexOfNotAny(anyOf, _pos, _ignoreCase)); }
 
+        /// <summary>
+        /// Compares the specified Unicode character with the next character in the stream
+        /// and returns the result.
+        /// </summary>
+        /// <param name="value">The Unicode character to compare to.</param>
+        /// <returns>true if the characters are equal; false otherwise.</returns>
         public bool StartsWith(char value) { return CharExtensions.Equals((char)this[0], value, _ignoreCase); }
 
+        /// <summary>
+        /// Compares the specified string with the next characters in the stream
+        /// and returns the result.
+        /// </summary>
+        /// <param name="value">The string to compare to.</param>
+        /// <returns>true if the strings are equal; false otherwise.</returns>
         public bool StartsWith(string value) { return string.Compare(_s, _pos, value, 0, value.Length, _comparisonType) == 0; }
         
         //--- Protected Methods ---
         
+        /// <summary>
+        /// Releases the unmanaged resources used by the NLib.StringParser and optionally
+        /// releases the managed resources.
+        /// </summary>
+        /// <param name="disposing">
+        /// true to release both managed and unmanaged resources; false to release only
+        /// unmanaged resources.</param>
         protected virtual void Dispose(bool disposing)
         {
             if (disposing)
@@ -235,6 +504,16 @@ namespace NLib
 
         //--- Properties ---
         
+        /// <summary>
+        /// Gets the Unicode character at the specified index relative to the
+        /// current position of the stream.
+        /// </summary>
+        /// <param name="lookAhead">The zero-based index of the character to
+        /// get relative to the current position of the stream.</param>
+        /// <returns>The Unicode character at the specified index.</returns>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// lookAhead refers to a position that is not within the active region
+        /// of the input string.</exception>
         public int this[int lookAhead]
         {
             get
@@ -247,6 +526,11 @@ namespace NLib
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value which determines whether operations performed on the
+        /// input string should be case-sensitive. A value of true indicates that
+        /// operations should be case-insensitive.
+        /// </summary>
         public bool IgnoreCase
         {
             get
@@ -263,8 +547,15 @@ namespace NLib
             }
         }
         
+        /// <summary>
+        /// Gets a value which indicates whether the end of stream has been reached.
+        /// </summary>
         public bool EndOfStream { get { return _pos >= _end; } }
         
+        /// <summary>
+        /// Gets a value which indicates whether the current position is at the
+        /// first character of a line.
+        /// </summary>
         public bool IsFirstColumn
         {
             get
@@ -295,6 +586,14 @@ namespace NLib
             }
         }
         
+        /// <summary>
+        /// Gets or sets the current position in the stream, relative to the
+        /// beginning of the string.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// value is less than zero or the start of the active region of the
+        /// string, -or- value is greater than the length of the string or the
+        /// end of the active region of the string.</exception>
         public int Position
         {
             get { return _pos; }
@@ -306,6 +605,12 @@ namespace NLib
             }
         }
         
+        /// <summary>
+        /// Gets or sets the length of the active range of the stream.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// The new active range would leave the currect Position outside of the
+        /// active range.</exception>
         public int RangeLength
         {
             get { return _count; }
@@ -316,9 +621,15 @@ namespace NLib
                 _count = value;
             }
         }
-        
+
+        /// <summary>
+        /// Gets the start index of the active range of the stream.
+        /// </summary>
         public int RangeStart { get { return _startIndex; } }
         
+        /// <summary>
+        /// Gets the input string.
+        /// </summary>
         public string SourceString { get { return _s; } }
     }
 }

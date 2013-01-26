@@ -33,7 +33,7 @@ namespace NLib
 {
     /// <summary>
     ///     Provides a set of static (Shared in Visual Basic) methods for searching and
-    ///     manipulating System.String objects.
+    ///     manipulating <see cref="System.String"/> objects.
     /// </summary>
     public static partial class StringExtensions
     {
@@ -51,7 +51,7 @@ namespace NLib
         /// <param name="strB">
         ///     A System.String.
         /// </param>
-        /// <param name=ARGNAME_COMPARISONTYPE>
+        /// <param name="comparisonType">
         ///     One of the System.StringComparison values.
         /// </param>
         /// <returns>
@@ -74,8 +74,8 @@ namespace NLib
         /// <summary>
         /// Returns a value indicating whether the specified <see cref="Char"/> occurs within this string.
         /// </summary>
-        /// <param name=ARGNAME_SOURCE>An instance of a <see cref="String"/>.</param>
-        /// <param name=ARGNAME_VALUE>The <see cref="Char"/> to seek.</param>
+        /// <param name="source">An instance of a <see cref="String"/>.</param>
+        /// <param name="value">The <see cref="Char"/> to seek.</param>
         /// <returns>
         ///     true if the value parameter occurs within this string; otherwise, false.
         /// </returns>
@@ -148,13 +148,13 @@ namespace NLib
         ///     within this string. A parameter specifies the type of search to use for the
         ///     specified string.
         /// </summary>
-        /// <param name=ARGNAME_SOURCE>
+        /// <param name="source">
         ///     The string to search.
         /// </param>
-        /// <param name=ARGNAME_VALUE>
+        /// <param name="value">
         ///     The System.String object to seek.
         /// </param>
-        /// <param name=ARGNAME_COMPARISONTYPE>
+        /// <param name="comparisonType">
         ///     One of the System.StringComparison values.
         /// </param>
         /// <returns>
@@ -340,10 +340,10 @@ namespace NLib
         ///     Reports the index of the first occurrence in this instance of any string
         ///     in a specified array of strings.
         /// </summary>
-        /// <param name=ARGNAME_SOURCE>
+        /// <param name="source">
         ///     The string to search.
         /// </param>
-        /// <param name=ARGNAME_ANYOF>
+        /// <param name="anyOf">
         ///     A string array containing one or more strings to seek.
         /// </param>
         /// <returns>
@@ -359,7 +359,7 @@ namespace NLib
         ///     <p>This method performs an ordinal (culture-insensitive) search, where a
         ///         character is considered equivalent to another character only if their
         ///         Unicode scalar value are the same. To perform a culture-sensitive search,
-        ///         use the <see cref="IndexOfNotAny(string, char[], int, int, StringComparison)"/>
+        ///         use the <see cref="IndexOfAny(string,string[],StringComparison)"/>
         ///         method.</p>
         /// </remarks>
         public static int IndexOfAny(this string source, string[] anyOf)
@@ -375,13 +375,13 @@ namespace NLib
         ///     in a specified array of strings. A parameter specifies the starting search
         ///     position in the string.
         /// </summary>
-        /// <param name=ARGNAME_SOURCE>
+        /// <param name="source">
         ///     The string to search.
         /// </param>
-        /// <param name=ARGNAME_ANYOF>
+        /// <param name="anyOf">
         ///     A string array containing one or more strings to seek.
         /// </param>
-        /// <param name=ARGNAME_STARTINDEX>
+        /// <param name="startIndex">
         ///     The search starting position.
         /// </param>
         /// <returns>
@@ -403,7 +403,7 @@ namespace NLib
         ///     <p>This method performs an ordinal (culture-insensitive) search, where a
         ///         character is considered equivalent to another character only if their
         ///         Unicode scalar value are the same. To perform a culture-sensitive search,
-        ///         use the <see cref="IndexOfNotAny(string, char[], int, int, StringComparison)"/>
+        ///         use the <see cref="IndexOfAny(string,string[],int,StringComparison)"/>
         ///         method.</p>
         /// </remarks>
         public static int IndexOfAny(this string source, string[] anyOf, int startIndex)
@@ -420,16 +420,16 @@ namespace NLib
         ///     position in the string, and the number of characters in the current string
         ///     to search.
         /// </summary>
-        /// <param name=ARGNAME_SOURCE>
+        /// <param name="source">
         ///     The string to search.
         /// </param>
-        /// <param name=ARGNAME_ANYOF>
+        /// <param name="anyOf">
         ///     A string array containing one or more strings to seek.
         /// </param>
-        /// <param name=ARGNAME_STARTINDEX>
+        /// <param name="startIndex">
         ///     The search starting position.
         /// </param>
-        /// <param name=ARGNAME_COUNT>
+        /// <param name="count">
         ///     The number of character positions to examine.
         /// </param>
         /// <returns>
@@ -455,13 +455,13 @@ namespace NLib
         ///     in a specified array of strings. A parameter specifies the type of search
         ///     to use.
         /// </summary>
-        /// <param name=ARGNAME_SOURCE>
+        /// <param name="source">
         ///     The string to search.
         /// </param>
-        /// <param name=ARGNAME_ANYOF>
+        /// <param name="anyOf">
         ///     A string array containing one or more strings to seek.
         /// </param>
-        /// <param name=ARGNAME_COMPARISONTYPE>
+        /// <param name="comparisonType">
         ///     One of the System.StringComparison values.
         /// </param>
         /// <returns>
@@ -498,16 +498,16 @@ namespace NLib
         ///     position in the string, and the type of search to use for the specified
         ///     string.
         /// </summary>
-        /// <param name=ARGNAME_SOURCE>
+        /// <param name="source">
         ///     The string to search.
         /// </param>
-        /// <param name=ARGNAME_ANYOF>
+        /// <param name="anyOf">
         ///     A string array containing one or more strings to seek.
         /// </param>
-        /// <param name=ARGNAME_STARTINDEX>
+        /// <param name="startIndex">
         ///     The search starting position.
         /// </param>
-        /// <param name=ARGNAME_COMPARISONTYPE>
+        /// <param name="comparisonType">
         ///     One of the System.StringComparison values.
         /// </param>
         /// <returns>
@@ -550,19 +550,19 @@ namespace NLib
         ///     position in the string, the number of characters in the current string
         ///     to search, and the type of search to use.
         /// </summary>
-        /// <param name=ARGNAME_SOURCE>
+        /// <param name="source">
         ///     The string to search.
         /// </param>
-        /// <param name=ARGNAME_ANYOF>
+        /// <param name="anyOf">
         ///     A string array containing one or more strings to seek.
         /// </param>
-        /// <param name=ARGNAME_STARTINDEX>
+        /// <param name="startIndex">
         ///     The search starting position.
         /// </param>
-        /// <param name=ARGNAME_COUNT>
+        /// <param name="count">
         ///     The number of character positions to examine.
         /// </param>
-        /// <param name=ARGNAME_COMPARISONTYPE>
+        /// <param name="comparisonType">
         ///     One of the System.StringComparison values.
         /// </param>
         /// <returns>
@@ -634,10 +634,10 @@ namespace NLib
         ///     Reports the index of the first occurrence in this instance of any character
         ///     not in a specified array of Unicode characters.
         /// </summary>
-        /// <param name=ARGNAME_SOURCE>
+        /// <param name="source">
         ///     The string to search.
         /// </param>
-        /// <param name=ARGNAME_ANYOF>
+        /// <param name="anyOf">
         ///     A Unicode character array containing one or more character to seek past.
         /// </param>
         /// <returns>
@@ -650,11 +650,6 @@ namespace NLib
         /// </exception>
         /// <remarks>
         ///     <p>Index numbering starts from zero.</p>
-        ///     <p>This method performs an ordinal (culture-insensitive) search, where a
-        ///         character is considered equivalent to another character only if their
-        ///         Unicode scalar value are the same. To perform a culture-sensitive search,
-        ///         use the <see cref="IndexOfNotAny(string, char[], int, int, StringComparison)"/>
-        ///         method.</p>
         /// </remarks>
         public static int IndexOfNotAny(this string source, char[] anyOf)
         {
@@ -669,13 +664,13 @@ namespace NLib
         ///     not in a specified array of Unicode characters. A parameter specifies the
         ///     starting search position in the string.
         /// </summary>
-        /// <param name=ARGNAME_SOURCE>
+        /// <param name="source">
         ///     The string to search.
         /// </param>
-        /// <param name=ARGNAME_ANYOF>
+        /// <param name="anyOf">
         ///     A Unicode character array containing one or more character to seek past.
         /// </param>
-        /// <param name=ARGNAME_STARTINDEX>
+        /// <param name="startIndex">
         ///     The search starting position.
         /// </param>
         /// <returns>
@@ -694,11 +689,6 @@ namespace NLib
         ///     <p>Index numbering starts from zero. The startIndex parameter can range from 0
         ///         to one less than the length of the string instance.</p>
         ///     <p>The search ranges from startIndex to the end of the string.</p>
-        ///     <p>This method performs an ordinal (culture-insensitive) search, where a
-        ///         character is considered equivalent to another character only if their
-        ///         Unicode scalar value are the same. To perform a culture-sensitive search,
-        ///         use the <see cref="IndexOfNotAny(string, char[], int, int, StringComparison)"/>
-        ///         method.</p>
         /// </remarks>
         public static int IndexOfNotAny(this string source, char[] anyOf, int startIndex)
         {
@@ -714,16 +704,16 @@ namespace NLib
         ///     starting search position in the string, the number of characters in the
         ///     current string to search.
         /// </summary>
-        /// <param name=ARGNAME_SOURCE>
+        /// <param name="source">
         ///     The string to search.
         /// </param>
-        /// <param name=ARGNAME_ANYOF>
+        /// <param name="anyOf">
         ///     A Unicode character array containing one or more character to seek past.
         /// </param>
-        /// <param name=ARGNAME_STARTINDEX>
+        /// <param name="startIndex">
         ///     The search starting position.
         /// </param>
-        /// <param name=ARGNAME_COUNT>
+        /// <param name="count">
         ///     The number of character positions to examine.
         /// </param>
         /// <returns>
@@ -743,11 +733,6 @@ namespace NLib
         ///         The character at startIndex + count is not included in the search.</p>
         ///     <p>Index numbering starts from zero. The startIndex parameter can range
         ///         from 0 to one less than the length of the string instance.</p>
-        ///     <p>This method performs an ordinal (culture-insensitive) search, where a
-        ///         character is considered equivalent to another character only if their
-        ///         Unicode scalar value are the same. To perform a culture-sensitive search,
-        ///         use the <see cref="IndexOfNotAny(string, char[], int, int, StringComparison)"/>
-        ///         method.</p>
         /// </remarks>
         public static int IndexOfNotAny(this string source, char[] anyOf, int startIndex, int count)
         {
@@ -838,10 +823,10 @@ namespace NLib
         ///     not in a specified array of Unicode characters. A parameter specifies the
         ///     starting search position in the string.
         /// </summary>
-        /// <param name=ARGNAME_SOURCE>
+        /// <param name="source">
         ///     The string to search.
         /// </param>
-        /// <param name=ARGNAME_ANYOF>
+        /// <param name="anyOf">
         ///     A Unicode character array containing one or more characters to seek past.
         /// </param>
         /// <returns>
@@ -875,13 +860,13 @@ namespace NLib
         ///     not in a specified array of Unicode characters. Parameters specify the starting
         ///     search position in the string.
         /// </summary>
-        /// <param name=ARGNAME_SOURCE>
+        /// <param name="source">
         ///     The string to search.
         /// </param>
-        /// <param name=ARGNAME_ANYOF>
+        /// <param name="anyOf">
         ///     A Unicode character array containing one or more characters to seek past.
         /// </param>
-        /// <param name=ARGNAME_STARTINDEX>
+        /// <param name="startIndex">
         ///     The search starting position.
         /// </param>
         /// <returns>
@@ -919,16 +904,16 @@ namespace NLib
         ///     search position in the string, the number of characters in the current string
         ///     to search.
         /// </summary>
-        /// <param name=ARGNAME_SOURCE>
+        /// <param name="source">
         ///     The string to search.
         /// </param>
-        /// <param name=ARGNAME_ANYOF>
+        /// <param name="anyOf">
         ///     A Unicode character array containing one or more characters to seek past.
         /// </param>
-        /// <param name=ARGNAME_STARTINDEX>
+        /// <param name="startIndex">
         ///     The search starting position.
         /// </param>
-        /// <param name=ARGNAME_COUNT>
+        /// <param name="count">
         ///     The number of character positions to examine.
         /// </param>
         /// <returns>

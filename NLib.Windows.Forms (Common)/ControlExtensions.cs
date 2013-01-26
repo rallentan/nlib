@@ -45,6 +45,27 @@ namespace NLib.Windows.Forms
                 );
         }
 
+        /// <summary>
+        /// Moves the control to an edge or a corner of it's container. The distance
+        /// between the control and its parent is determined by the Margin of the control
+        /// and the Padding of its container.
+        /// </summary>
+        /// <param name="c">The extended System.Windows.Forms.Control instance.</param>
+        /// <param name="parentSide">The edge of the container to move to. A horizontal
+        /// facing edge can be combined with a vertical facing edge using the OR '|'
+        /// operator.</param>
+        /// <remarks>The distance
+        /// between the control and its parent is determined by the Margin of the control
+        /// and the Padding of its container. If the Padding of the container is set to 0 for
+        /// all edges, then the Padding is considered to be 9 for all edges, instead.
+        ///     [INSERT BREAK] When specifying an edge for a control, horizontal
+        /// facing edges can be combined with vertical facing edges using the OR '|'
+        /// operator. If a horizontal facing edge is specified for one control, a horizontal
+        /// facing edge must be specified for the other control. The same applies for
+        /// vertical facing edge.</remarks>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// Both left and right edges were specified, or both top and bottom edges were
+        /// specified.</exception>
         public static void SnapToParent(this Control c, SnapToSides parentSide)
         {
             if (c == null)
@@ -84,7 +105,27 @@ namespace NLib.Windows.Forms
             if (parentSide.HasFlag(SnapToSides.Right))   /**/c.Location = new Point(parentBounds.Right - c.Width - c.Margin.Right - parentPadding.Right, c.Location.Y);
             if (parentSide.HasFlag(SnapToSides.Bottom))  /**/c.Location = new Point(c.Location.X, parentBounds.Bottom - c.Height - c.Margin.Bottom - parentPadding.Bottom);
         }
-        
+
+        /// <summary>
+        /// Moves the control to an edge or a corner of another control. The distance
+        /// between the two controls is determined by their Margins.
+        /// </summary>
+        /// <param name="c">The extended System.Windows.Forms.Control instance.</param>
+        /// <param name="thisSide">The edge of the extended control to move. A horizontal
+        /// facing edge can be combined with a vertical facing edge using the OR '|'
+        /// operator.</param>
+        /// <param name="siblingsSide">The edge of the control to move to. A horizontal
+        /// facing edge can be combined with a vertical facing edge using the OR '|'
+        /// operator.</param>
+        /// <param name="sibling">The sibling control to move to.</param>
+        /// <remarks>When specifying an edge for a control, horizontal
+        /// facing edges can be combined with vertical facing edges using the OR '|'
+        /// operator. If a horizontal facing edge is specified for one control, a horizontal
+        /// facing edge must be specified for the other control. The same applies for
+        /// vertical facing edge.</remarks>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// Both left and right edges were specified, or both top and bottom edges were
+        /// specified for either control.</exception>
         public static void SnapToSibling(this Control c, SnapToSides thisSide, SnapToSides siblingsSide, Control sibling)
         {
             if (c == null)
@@ -130,6 +171,29 @@ namespace NLib.Windows.Forms
             }
         }
 
+        /// <summary>
+        /// Stretches one edge of the container control to an edge or a corner of one
+        /// of its children controls. The distance between the container and its
+        /// child is determined by the Padding of the container and the Margin of its
+        /// child.
+        /// </summary>
+        /// <param name="c">The extended System.Windows.Forms.Control instance.</param>
+        /// <param name="side">The edge of the child to stretch to. A horizontal
+        /// facing edge can be combined with a vertical facing edge using the OR '|'
+        /// operator.</param>
+        /// <param name="child">The child control to stretch to.</param>
+        /// <remarks>The distance
+        /// between the container and its child is determined by the Margin of the control
+        /// and the Padding of its container. If the Padding of the container is set to 0 for
+        /// all edges, then the Padding is considered to be 9 for all edges, instead.
+        ///      [INSERT BREAK] When specifying an edge for a control, horizontal
+        /// facing edges can be combined with vertical facing edges using the OR '|'
+        /// operator. If a horizontal facing edge is specified for one control, a horizontal
+        /// facing edge must be specified for the other control. The same applies for
+        /// vertical facing edge.</remarks>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// Both left and right edges were specified, or both top and bottom edges were
+        /// specified for either control.</exception>
         public static void StretchToChild(this Control c, SnapToSides side, Control child)
         {
             if (c == null)
@@ -162,6 +226,27 @@ namespace NLib.Windows.Forms
             if (side.HasFlag(SnapToSides.Bottom))  /**/c.Size = new Size(c.Width, child.Bottom + child.Margin.Bottom + padding.Bottom);
         }
 
+        /// <summary>
+        /// Stretches one edge of the control to an edge or a corner of its container. The distance
+        /// between the control and its parent is determined by the Margin of the control
+        /// and the Padding of its container.
+        /// </summary>
+        /// <param name="c">The extended System.Windows.Forms.Control instance.</param>
+        /// <param name="parentSide">The edge of the container to stretch to. A horizontal
+        /// facing edge can be combined with a vertical facing edge using the OR '|'
+        /// operator.</param>
+        /// <remarks>The distance
+        /// between the control and its parent is determined by the Margin of the control
+        /// and the Padding of its container. If the Padding of the container is set to 0 for
+        /// all edges, then the Padding is considered to be 9 for all edges, instead.
+        ///      [INSERT BREAK] When specifying an edge for a control, horizontal
+        /// facing edges can be combined with vertical facing edges using the OR '|'
+        /// operator. If a horizontal facing edge is specified for one control, a horizontal
+        /// facing edge must be specified for the other control. The same applies for
+        /// vertical facing edge.</remarks>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// Both left and right edges were specified, or both top and bottom edges were
+        /// specified for either control.</exception>
         public static void StretchToParent(this Control c, SnapToSides parentSide)
         {
             if (c == null)
@@ -236,6 +321,26 @@ namespace NLib.Windows.Forms
             c.SetBounds(newX, newY, newWidth, newHeight);
         }
 
+        /// <summary>
+        /// Stretches one edge of the control to an edge or a corner of another control. The distance
+        /// between the two controls is determined by their Margins.
+        /// </summary>
+        /// <param name="c">The extended System.Windows.Forms.Control instance.</param>
+        /// <param name="thisSide">The edge of the extended control to stretch. A horizontal
+        /// facing edge can be combined with a vertical facing edge using the OR '|'
+        /// operator.</param>
+        /// <param name="siblingsSide">The edge of the control to move to. A horizontal
+        /// facing edge can be combined with a vertical facing edge using the OR '|'
+        /// operator.</param>
+        /// <param name="sibling">The sibling control to stretch to.</param>
+        /// <remarks>When specifying an edge for a control, horizontal
+        /// facing edges can be combined with vertical facing edges using the OR '|'
+        /// operator. If a horizontal facing edge is specified for one control, a horizontal
+        /// facing edge must be specified for the other control. The same applies for
+        /// vertical facing edge.</remarks>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// Both left and right edges were specified, or both top and bottom edges were
+        /// specified for either control.</exception>
         public static void StretchToSibling(this Control c, SnapToSides thisSide, SnapToSides siblingsSide, Control sibling)
         {
             if (c == null)

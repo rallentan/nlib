@@ -32,6 +32,8 @@ namespace NLib
         ///     returns. This can be useful for debugging when multiple threads interfere
         ///     with the debugging process.
         /// </remarks>
+        /// <exception cref="System.ArgumentNullException">
+        /// method is null.</exception>
         public static void BeginInvoke(EasyThreadMethod method)
         {
             if (DisableThreading)

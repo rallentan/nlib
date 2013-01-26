@@ -9,20 +9,63 @@ using System.Collections.Generic;
 
 namespace NLib
 {
+    /// <summary>
+    /// Provides a set of methods to quickly interface with the command shell.
+    /// </summary>
     public static class Shell
     {
         //--- Public Static Methods ---
 
+        /// <summary>
+        /// Executes the specified application file, and waits for that process
+        /// to exit before returning.
+        /// </summary>
+        /// <param name="commandWithoutArgs">
+        /// An application with which to start a process.
+        /// </param>
+        /// <returns>the exit code of the process.</returns>
+        /// <exception cref="System.InvalidOperationException">
+        /// No file name was specified.</exception>
+        /// <exception cref="System.ComponentModel.Win32Exception">
+        /// There was an error in opening the associated file.</exception>
         public static int Execute(string commandWithoutArgs)
         {
             return Execute(commandWithoutArgs, (string)null);
         }
 
+        /// <summary>
+        /// Executes the specified application file, and waits for that process
+        /// to exit before returning. A parameter specifies arguments to pass
+        /// to the process.
+        /// </summary>
+        /// <param name="command">An application with which to start a process.</param>
+        /// <param name="args">
+        /// Command-line arguments to pass to the application when the process starts.
+        /// </param>
+        /// <returns>the exit code of the process.</returns>
+        /// <exception cref="System.InvalidOperationException">
+        /// No file name was specified.</exception>
+        /// <exception cref="System.ComponentModel.Win32Exception">
+        /// There was an error in opening the associated file.</exception>
         public static int Execute(string command, params string[] args)
         {
             return Execute(command, ToCommandLine(args));
         }
 
+        /// <summary>
+        /// Executes the specified application file, and waits for that process
+        /// to exit before returning. A parameter specifies arguments to pass
+        /// to the process.
+        /// </summary>
+        /// <param name="command">An application with which to start a process.</param>
+        /// <param name="args">
+        /// Command-line arguments to pass to the application when the process starts.
+        /// </param>
+        /// <returns>the exit code of the process.</returns>
+        /// <exception cref="System.InvalidOperationException">
+        /// No file name was specified.</exception>
+        /// <exception cref="System.ComponentModel.Win32Exception">
+        /// There was an error in opening the associated file.</exception>
         public static int Execute(string command, string args)
         {
             ProcessStartInfo processStartInfo = new ProcessStartInfo(command, args);
@@ -36,16 +79,54 @@ namespace NLib
             return process.ExitCode;
         }
 
+        /// <summary>
+        /// Executes the specified application file, and waits for that process
+        /// to exit before returning.
+        /// </summary>
+        /// <param name="commandWithoutArgs">An application with which to start a process.</param>
+        /// <returns>the standard output of the process.</returns>
+        /// <exception cref="System.InvalidOperationException">
+        /// No file name was specified.</exception>
+        /// <exception cref="System.ComponentModel.Win32Exception">
+        /// There was an error in opening the associated file.</exception>
         public static string ExecuteRedirected(string commandWithoutArgs)
         {
             return ExecuteRedirected(commandWithoutArgs, (string)null);
         }
 
+        /// <summary>
+        /// Executes the specified application file, and waits for that process
+        /// to exit before returning. A parameter specifies arguments to pass
+        /// to the process.
+        /// </summary>
+        /// <param name="command">An application with which to start a process.</param>
+        /// <param name="args">
+        /// Command-line arguments to pass to the application when the process starts.
+        /// </param>
+        /// <returns>the standard output of the process.</returns>
+        /// <exception cref="System.InvalidOperationException">
+        /// No file name was specified.</exception>
+        /// <exception cref="System.ComponentModel.Win32Exception">
+        /// There was an error in opening the associated file.</exception>
         public static string ExecuteRedirected(string command, params string[] args)
         {
             return ExecuteRedirected(command, ToCommandLine(args));
         }
 
+        /// <summary>
+        /// Executes the specified application file, and waits for that process
+        /// to exit before returning. A parameter specifies arguments to pass
+        /// to the process.
+        /// </summary>
+        /// <param name="command">An application with which to start a process.</param>
+        /// <param name="args">
+        /// Command-line arguments to pass to the application when the process starts.
+        /// </param>
+        /// <returns>the standard output of the process.</returns>
+        /// <exception cref="System.InvalidOperationException">
+        /// No file name was specified.</exception>
+        /// <exception cref="System.ComponentModel.Win32Exception">
+        /// There was an error in opening the associated file.</exception>
         public static string ExecuteRedirected(string command, string args)
         {
             ProcessStartInfo processStartInfo = new ProcessStartInfo(command, args);
@@ -61,11 +142,37 @@ namespace NLib
             return process.StandardOutput.ReadToEnd();
         }
 
+        /// <summary>
+        /// Combines two command-line parameter strings.
+        /// </summary>
+        /// <param name="parameterA">The first command-line parameter.</param>
+        /// <param name="parameterB">
+        /// The second command-line parameter.</param>
+        /// <returns>
+        /// A string containing the combined parameters. If one of the
+        /// specified parameters is a zero-length string, this method returns
+        /// the other parameter. Each parameter containing whitespace which is
+        /// not already quoted is surrounded in double quotes.</returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// parameterA or parameterB is null.</exception>
         public static string Join(string parameterA, string parameterB)
         {
             return parameterA + ' ' + parameterB;
         }
 
+        /// <summary>
+        /// Combines two arguments into a single command-line string.
+        /// </summary>
+        /// <param name="args">
+        /// The command-line arguments to combine.
+        /// </param>
+        /// <returns>
+        /// A string containing the combined parameters. If one of the
+        /// specified parameters is a zero-length string, this method returns
+        /// the other parameter. Each parameter containing whitespace which is
+        /// not already quoted is surrounded in double quotes.</returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// One of the elements in arguments is null.</exception>
         public static string ToCommandLine(params string[] args)
         {
             int argsLength = args.Length;
@@ -91,6 +198,10 @@ namespace NLib
 
         //--- Public Static Properties ---
 
+        /// <summary>
+        /// Gets a list of all Unicode characters that can separate arguments on a command-line
+        /// on the currently running platform.
+        /// </summary>
         public static IList<char> CommandLineSeparators
         {
             get

@@ -9,7 +9,8 @@ using System.Text;
 namespace NLib
 {
     /// <summary>
-    /// Provides a set of extension methods for the <see cref="Int16"/> type.
+    ///     Provides a set of static (Shared in Visual Basic) methods for
+    ///     manipulating <see cref="System.Int16"/> objects.
     /// </summary>
     public static class Int16Extensions
     {
@@ -24,10 +25,10 @@ namespace NLib
         ///     Gets the eight high-order bits of the specified <see cref="Int16"/>.
         /// </summary>
         /// <param name="value">
-        ///     The <see cref="Int16"/> to get the high-order nibble of.
+        ///     The System.Int16 to get the bits from.
         /// </param>
         /// <returns>
-        ///     An <see cref="Byte"/> containing the high-order nibble of the specified <see cref="Int16"/>.
+        ///     A System.Byte containing the 8 high-order bits.
         /// </returns>
         public static byte HighByte(this short value)
         {
@@ -38,10 +39,10 @@ namespace NLib
         ///     Gets the eight low-order bits of the specified <see cref="Int16"/>.
         /// </summary>
         /// <param name="value">
-        ///     The <see cref="Int16"/> to get the low-order nibble of.
+        ///     The System.Int16 to get the bits from.
         /// </param>
         /// <returns>
-        ///     An <see cref="Byte"/> containing the low-order nibble of the specified <see cref="Int16"/>.
+        ///     A System.Byte containing the 8 low-order bits.
         /// </returns>
         public static byte LowByte(this short value)
         {

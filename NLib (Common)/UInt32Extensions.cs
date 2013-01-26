@@ -9,7 +9,8 @@ using System.Text;
 namespace NLib
 {
     /// <summary>
-    /// Provides a set of extension methods for the <see cref="UInt32"/> type.
+    ///     Provides a set of static (Shared in Visual Basic) methods for
+    ///     manipulating <see cref="System.UInt32"/> objects.
     /// </summary>
     [CLSCompliant(false)]
     public static class UInt32Extensions
@@ -17,13 +18,13 @@ namespace NLib
         //--- Public Static Methods ---
 
         /// <summary>
-        ///     Gets the eight high-order bits of the specified <see cref="UInt32"/>.
+        ///     Gets the 16 high-order bits of the specified <see cref="UInt32"/>.
         /// </summary>
         /// <param name="value">
-        ///     The <see cref="UInt32"/> to get the high-order nibble of.
+        ///     The System.UInt32 to get the bits from.
         /// </param>
         /// <returns>
-        ///     An <see cref="UInt16"/> containing the high-order nibble of the specified <see cref="UInt32"/>.
+        ///     A System.UInt16 containing the 16 high-order bits.
         /// </returns>
         public static ushort HighWord(this uint value)
         {
@@ -31,13 +32,13 @@ namespace NLib
         }
 
         /// <summary>
-        ///     Gets the eight low-order bits of the specified <see cref="UInt32"/>.
+        ///     Gets the 16 low-order bits of the specified <see cref="UInt32"/>.
         /// </summary>
         /// <param name="value">
-        ///     The <see cref="UInt32"/> to get the low-order nibble of.
+        ///     The System.UInt32 to get the bits from.
         /// </param>
         /// <returns>
-        ///     An <see cref="UInt16"/> containing the low-order nibble of the specified <see cref="UInt32"/>.
+        ///     A System.UInt16 containing the 16 low-order bits.
         /// </returns>
         public static ushort LowWord(this uint value)
         {
