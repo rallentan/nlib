@@ -8,6 +8,10 @@ using System.Text;
 
 namespace NLib
 {
+    /// <summary>
+    ///     Provides a set of static (Shared in Visual Basic) methods for searching and
+    ///     manipulating <see cref="System.String"/> objects.
+    /// </summary>
     public static class StringHelper
     {
         //--- Public Constants ---
@@ -61,6 +65,9 @@ namespace NLib
         /// </summary>
         /// <param name="source">The <see cref="String"/> to search.</param>
         /// <param name="index">The index to retrieve the line number for.</param>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// index is less than zero, or index is greater than the length of
+        /// the source string.</exception>
         public static int LineNumberOfIndex(string source, int index)
         {
             return LineNumberOfIndex(source, index, Environment.NewLine);
@@ -77,6 +84,11 @@ namespace NLib
         /// A <see cref="String"/> specifying which character sequence is used
         /// to differentiate lines.
         /// </param>
+        /// <returns>The zero-based line number of the line containing the
+        /// specified index.</returns>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// index is less than zero, or index is greater than the length of
+        /// the source string.</exception>
         public static int LineNumberOfIndex(string source, int index, string newLineSequence)
         {
             if (index < 0 || index > source.Length)

@@ -8,8 +8,19 @@ using System.Text;
 
 namespace NLib
 {
+    /// <summary>
+    ///     Provides a set of static (Shared in Visual Basic) methods for searching and
+    ///     manipulating byte arrays.
+    /// </summary>
     public static class ByteArrayExtensions
     {
+        /// <summary>
+        ///     Compares the elements in this instance with the specified byte
+        ///     array and indicates whether they are equal.
+        /// </summary>
+        /// <param name="arrayA">The source array.</param>
+        /// <param name="arrayB">The array to compare to.</param>
+        /// <returns>True if the arrays are equal; false otherwise.</returns>
         public static unsafe bool CompareTo(this byte[] arrayA, byte[] arrayB)
         {
             if (arrayA == null && arrayB == null)

@@ -15,9 +15,13 @@ namespace NLib.Windows.Forms
     [Flags]
     public enum SnapToSides
     {
+        /// <summary>Indicates the left edge of a control.</summary>
         Left = 0x1,
+        /// <summary>Indicates the top edge of a control.</summary>
         Top = 0x2,
+        /// <summary>Indicates the right edge of a control.</summary>
         Right = 0x4,
+        /// <summary>Indicates the bottom edge of a control.</summary>
         Bottom = 0x8,
     }
 }

@@ -9,7 +9,8 @@ using System.Text;
 namespace NLib
 {
     /// <summary>
-    /// Provides a set of extension methods for the <see cref="Random"/> class.
+    ///     Provides a set of static (Shared in Visual Basic) methods for
+    ///     manipulating <see cref="System.Random"/> objects.
     /// </summary>
     public static class RandomExtensions
     {

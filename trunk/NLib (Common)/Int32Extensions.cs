@@ -9,7 +9,8 @@ using System.Text;
 namespace NLib
 {
     /// <summary>
-    /// Provides a set of extension methods for the <see cref="Int32"/> type.
+    ///     Provides a set of static (Shared in Visual Basic) methods for
+    ///     manipulating <see cref="System.Int32"/> objects.
     /// </summary>
     public static class Int32Extensions
     {
@@ -20,34 +21,70 @@ namespace NLib
 
         //--- Public Static Methods ---
 
+        /// <summary>
+        ///     Gets bits 0-7 of the specified System.Int32.
+        /// </summary>
+        /// <param name="value">
+        ///     The System.Int32 to get the bits from.
+        /// </param>
+        /// <returns>
+        ///     A System.Byte containing bits 0-7 of the specified System.Int32.
+        /// </returns>
         public static byte Byte0(this int value)
         {
             return (byte)value;
         }
 
+        /// <summary>
+        ///     Gets bits 8-15 of the specified System.Int32.
+        /// </summary>
+        /// <param name="value">
+        ///     The System.Int32 to get the bits from.
+        /// </param>
+        /// <returns>
+        ///     A System.Byte containing bits 8-15 of the specified System.Int32.
+        /// </returns>
         public static byte Byte1(this int value)
         {
             return (byte)(value >> 8);
         }
 
+        /// <summary>
+        ///     Gets bits 16-23 of the specified System.Int32.
+        /// </summary>
+        /// <param name="value">
+        ///     The System.Int32 to get the bits from.
+        /// </param>
+        /// <returns>
+        ///     A System.Byte containing bits 16-23 of the specified System.Int32.
+        /// </returns>
         public static byte Byte2(this int value)
         {
             return (byte)(value >> 16);
         }
 
+        /// <summary>
+        ///     Gets bits 24-31 of the specified System.Int32.
+        /// </summary>
+        /// <param name="value">
+        ///     The System.Int32 to get the bits from.
+        /// </param>
+        /// <returns>
+        ///     A System.Byte containing bits 24-31 of the specified System.Int32.
+        /// </returns>
         public static byte Byte3(this int value)
         {
             return (byte)(value >> 24);
         }
 
         /// <summary>
-        ///     Gets the eight high-order bits of the specified <see cref="Int32"/>.
+        ///     Gets the 16 high-order bits of the specified <see cref="Int32"/>.
         /// </summary>
         /// <param name="value">
-        ///     The <see cref="Int32"/> to get the high-order nibble of.
+        ///     The System.Int32 to get the bits from.
         /// </param>
         /// <returns>
-        ///     An <see cref="Int16"/> containing the high-order nibble of the specified <see cref="Int32"/>.
+        ///     A System.Int16 containing the 16 high-order bits.
         /// </returns>
         public static short HighWord(this int value)
         {
@@ -55,13 +92,13 @@ namespace NLib
         }
 
         /// <summary>
-        ///     Gets the eight low-order bits of the specified <see cref="Int32"/>.
+        ///     Gets the 16 low-order bits of the specified <see cref="Int32"/>.
         /// </summary>
         /// <param name="value">
-        ///     The <see cref="Int32"/> to get the low-order nibble of.
+        ///     The System.Int32 to get the bits from.
         /// </param>
         /// <returns>
-        ///     An <see cref="Int16"/> containing the low-order nibble of the specified <see cref="Int32"/>.
+        ///     A System.Int16 containing the 16 low-order bits.
         /// </returns>
         public static short LowWord(this int value)
         {

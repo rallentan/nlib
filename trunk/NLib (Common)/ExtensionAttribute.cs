@@ -8,15 +8,17 @@ using System.Text;
 
 namespace System.Runtime.CompilerServices
 {
-    // Summary:
-    //     Indicates that a method is an extension method, or that a class or assembly
-    //     contains extension methods.
+    /// <summary>
+    /// Indicates that a method is an extension method, or that a class or assembly
+    /// contains extension methods.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Class | AttributeTargets.Method)]
     sealed class ExtensionAttribute : Attribute
     {
-        // Summary:
-        //     Initializes a new instance of the System.Runtime.CompilerServices.ExtensionAttribute
-        //     class.
+        /// <summary>
+        /// Initializes a new instance of the System.Runtime.CompilerServices.ExtensionAttribute
+        /// class.
+        /// </summary>
         public ExtensionAttribute() { }
     }
 }

@@ -9,7 +9,8 @@ using System.Text;
 namespace NLib
 {
     /// <summary>
-    /// Provides a set of extension methods for the <see cref="UInt16"/> type.
+    ///     Provides a set of static (Shared in Visual Basic) methods for
+    ///     manipulating <see cref="System.UInt16"/> objects.
     /// </summary>
     [CLSCompliant(false)]
     public static class UInt16Extensions
@@ -20,10 +21,10 @@ namespace NLib
         ///     Gets the eight high-order bits of the specified <see cref="UInt16"/>.
         /// </summary>
         /// <param name="value">
-        ///     The <see cref="UInt16"/> to get the high-order nibble of.
+        ///     The System.UInt16 to get the bits from.
         /// </param>
         /// <returns>
-        ///     An <see cref="Byte"/> containing the high-order nibble of the specified <see cref="UInt16"/>.
+        ///     A System.Byte containing the 8 high-order bits.
         /// </returns>
         public static byte HighByte(this ushort value)
         {
@@ -34,10 +35,10 @@ namespace NLib
         ///     Gets the eight low-order bits of the specified <see cref="UInt16"/>.
         /// </summary>
         /// <param name="value">
-        ///     The <see cref="UInt16"/> to get the low-order nibble of.
+        ///     The System.UInt16 to get the bits from.
         /// </param>
         /// <returns>
-        ///     An <see cref="Byte"/> containing the low-order nibble of the specified <see cref="UInt16"/>.
+        ///     A System.Byte containing the 8 low-order bits.
         /// </returns>
         public static byte LowByte(this ushort value)
         {
