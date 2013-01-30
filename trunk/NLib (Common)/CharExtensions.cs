@@ -274,7 +274,7 @@ namespace NLib
                     list.Add(' ');
                     list.Add('\t');
                     list.Add('\x00a0');
-                    list.Add('\x0085');
+                    //list.Add('\x0085');  // Appears to be line-breaking
                     _nlbWhitespaceLatin1 = new ReadOnlyCollection<char>(list);
                 }
                 return _nlbWhitespaceLatin1;
