@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics;
 using System.Text;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace NLib
 {
@@ -14,6 +15,8 @@ namespace NLib
     /// </summary>
     public static class Shell
     {
+        static ReadOnlyCollection<char> _commandLineSeparators;
+
         //--- Public Static Methods ---
 
         /// <summary>
@@ -157,7 +160,7 @@ namespace NLib
         /// parameterA or parameterB is null.</exception>
         public static string Combine(string parameterA, string parameterB)
         {
-            return parameterA + ' ' + parameterB;
+            return ToCommandLine(parameterA, parameterB);
         }
 
         /// <summary>
@@ -212,7 +215,14 @@ namespace NLib
                     case 4:     // Unix/MacOS X in framework v2.0, and Unix in framework v4.0
                     case 6:     // MacOS X in framework v4.0
                     default:
-                        return CharExtensions.NonLineBreakingWhiteSpaceLatin1;
+                        if (_commandLineSeparators == null)
+                        {
+                            IList<char> list = new List<char>(4);
+                            list.Add(' ');
+                            list.Add('\t');
+                            _commandLineSeparators = new ReadOnlyCollection<char>(list);
+                        }
+                        return _commandLineSeparators;
                 }
             }
         }
