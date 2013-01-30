@@ -152,10 +152,9 @@ namespace NLib
         /// <param name="parameterB">
         /// The second command-line parameter.</param>
         /// <returns>
-        /// A string containing the combined parameters. If one of the
-        /// specified parameters is a zero-length string, this method returns
-        /// the other parameter. Each parameter containing whitespace which is
-        /// not already quoted is surrounded in double quotes.</returns>
+        /// A string containing the combined parameters. Each parameter
+        /// containing whitespace which is not already quoted is surrounded
+        /// in double quotes.</returns>
         /// <exception cref="System.ArgumentNullException">
         /// parameterA or parameterB is null.</exception>
         public static string Combine(string parameterA, string parameterB)
@@ -170,10 +169,9 @@ namespace NLib
         /// The command-line arguments to combine.
         /// </param>
         /// <returns>
-        /// A string containing the combined parameters. If one of the
-        /// specified parameters is a zero-length string, this method returns
-        /// the other parameter. Each parameter containing whitespace which is
-        /// not already quoted is surrounded in double quotes.</returns>
+        /// A string containing the combined parameters. Each parameter
+        /// containing whitespace which is not already quoted is surrounded
+        /// in double quotes.</returns>
         /// <exception cref="System.ArgumentNullException">
         /// One of the elements in arguments is null.</exception>
         public static string ToCommandLine(params string[] arguments)
