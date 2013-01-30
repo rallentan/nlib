@@ -110,6 +110,8 @@ namespace NLib
         /// string.</exception>
         public StringParser(string source, int startIndex, int count, bool ignoreCase)
         {
+            if (source == null)
+                throw new ArgumentNullException("source");
             _s = source;
             IgnoreCase = ignoreCase;
             SetRange(startIndex, count);

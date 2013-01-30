@@ -36,6 +36,8 @@ namespace NLib
         /// method is null.</exception>
         public static void BeginInvoke(SimpleThreadMethod method)
         {
+            if (method == null)
+                throw new ArgumentNullException("method");
             if (DisableThreading)
                 method();
             else
