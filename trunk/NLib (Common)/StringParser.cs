@@ -186,7 +186,7 @@ namespace NLib
         /// The current reader is closed.</exception>
         public int GetCurrentLine() { return StringHelper.LineNumberOfIndex(_s, _pos); }
         
-        public void SetMarkPosition() { _mark = _pos; }
+        //public void SetMarkPosition() { _mark = _pos; }
         
         /// <summary>
         /// Returns the next available character but does not consume it.
@@ -257,15 +257,15 @@ namespace NLib
             return sResult;
         }
         
-        public string ReadFromMark()
-        {
-            if (_disposed)
-                throw new ObjectDisposedException(this.GetType().FullName);
-            if (_mark == -1)
-                throw new InvalidOperationException("Mark has not been set.");
+        //public string ReadFromMark()
+        //{
+        //    if (_disposed)
+        //        throw new ObjectDisposedException(this.GetType().FullName);
+        //    if (_mark == -1)
+        //        throw new InvalidOperationException("Mark has not been set.");
 
-            return _s.Substring(_mark, _pos - _mark);
-        }
+        //    return _s.Substring(_mark, _pos - _mark);
+        //}
 
         /// <summary>
         /// Reads characters from the input string and advances the character
@@ -586,7 +586,7 @@ namespace NLib
         /// <exception cref="System.ArgumentNullException">anyOf is null.</exception>
         /// <exception cref="System.ObjectDisposedException">
         /// The current reader is closed.</exception>
-        public bool SkipWhileAnyOf(char[] anyOf)
+        public bool SkipWhileAnyOf(params char[] anyOf)
         {
             if (_disposed)
                 throw new ObjectDisposedException(this.GetType().FullName);
@@ -779,31 +779,31 @@ namespace NLib
             }
         }
         
-        public int MarkLength
-        {
-            get
-            {
-                if (_disposed)
-                    throw new ObjectDisposedException(this.GetType().FullName);
-                if (_mark == -1)
-                    throw new InvalidOperationException("A position has not been marked.");
+        //public int MarkLength
+        //{
+        //    get
+        //    {
+        //        if (_disposed)
+        //            throw new ObjectDisposedException(this.GetType().FullName);
+        //        if (_mark == -1)
+        //            throw new InvalidOperationException("A position has not been marked.");
 
-                return _pos - _mark;
-            }
-        }
+        //        return _pos - _mark;
+        //    }
+        //}
         
-        public int MarkPosition
-        {
-            get
-            {
-                if (_disposed)
-                    throw new ObjectDisposedException(this.GetType().FullName);
-                if (_mark == -1)
-                    throw new InvalidOperationException("A position has not been marked.");
+        //public int MarkPosition
+        //{
+        //    get
+        //    {
+        //        if (_disposed)
+        //            throw new ObjectDisposedException(this.GetType().FullName);
+        //        if (_mark == -1)
+        //            throw new InvalidOperationException("A position has not been marked.");
 
-                return _mark;
-            }
-        }
+        //        return _mark;
+        //    }
+        //}
         
         /// <summary>
         /// Gets or sets the current position in the stream, relative to the
