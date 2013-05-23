@@ -6,22 +6,7 @@
 //  Take care renaming the parameters of the string methods. Many of the methods rely on exception
 //  reporting from the .NET Framework, and the exceptions thrown will reflect the parameter names in
 //  the .NET Framework, thus the exposed parameter names in this API must be identical. This is done
-//  to provide a lightweight interface. It is expected that this design does not expose the .NET
-//  Framework methods in any way except in the callstack. If there is any unintentional exposing
-//  of the dependency, this design should be altered to remove it.
-//
-// Todo (Essential):
-//  Create metadata documentation
-//  Creating missing overloads for LastIndexOfAny and LastIndexOfNotAny
-//  Create exception reporting for invalid enumerations
-//
-// Todo:
-//  When creating LastIndexOfNotAny(StringComparison), update LastIndexOfNotAny'source documentation remarks with this:  "To perform a culture-sensitive search, use the <see cref="LastIndexOfNotAny(string, char[], int, int, StringComparison)"/> method."
-//  Redirect IndexOf(string, int, int, StringComparison) { IndexOfCompareType() } to the string overload of IndexOf using char.ToUpperInvariant
-//  Remove remaining duplicate strings
-//  Modify validation code for LastIndex[...] methods to match string.LastIndexOf validation
-//  Sort functions by parameter info tooltip overload order
-//  Replace terms "this instance" and perhaps "this string" in metadata documentation with more accurate terms
+//  to provide a lightweight interface.
 //
 
 using System;
