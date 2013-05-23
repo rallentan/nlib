@@ -64,7 +64,7 @@ namespace NLib
         /// <remarks>
         ///     This method behaves identically to <see cref="System.String.CompareTo(string)"/>, except
         ///     the additional parameter comparisonType allows the type of search to be specified
-        ///     using one of the <see cref="System.StringComparison"/> values.
+        ///     using one of the System.StringComparison values.
         /// </remarks>
         public static int CompareTo(this string strA, string strB, StringComparison comparisonType)
         {
@@ -72,10 +72,10 @@ namespace NLib
         }
 
         /// <summary>
-        /// Returns a value indicating whether the specified <see cref="Char"/> occurs within this string.
+        /// Returns a value indicating whether the specified Char occurs within this string.
         /// </summary>
-        /// <param name="source">An instance of a <see cref="String"/>.</param>
-        /// <param name="value">The <see cref="Char"/> to seek.</param>
+        /// <param name="source">An instance of a String.</param>
+        /// <param name="value">The Char to seek.</param>
         /// <returns>
         ///     true if the value parameter occurs within this string; otherwise, false.
         /// </returns>
@@ -91,11 +91,11 @@ namespace NLib
         }
 
         /// <summary>
-        /// Returns a value indicating whether the specified <see cref="Char"/> occurs within this string,
+        /// Returns a value indicating whether the specified Char occurs within this string,
         /// ignoring or honoring its case.
         /// </summary>
-        /// <param name="source">An instance of a <see cref="String"/>.</param>
-        /// <param name="value">The <see cref="Char"/> to seek.</param>
+        /// <param name="source">An instance of a String.</param>
+        /// <param name="value">The Char to seek.</param>
         /// <param name="ignoreCase">true to ignore case during the comparison; otherwise, false.</param>
         /// <returns>
         ///     true if the value parameter occurs within this string; otherwise, false.
@@ -106,41 +106,6 @@ namespace NLib
         public static bool Contains(this string source, char value, bool ignoreCase)
         {
             return IndexOf(source, value, ignoreCase) != -1;
-        }
-
-        /// <summary>
-        /// Returns a value indicating whether any of the specified <see cref="Char"/>
-        /// occur within this string.
-        /// </summary>
-        /// <param name="source">An instance of a <see cref="String"/>.</param>
-        /// <param name="anyOf">An array of <see cref="Char"/>s to seek.</param>
-        /// <returns>
-        ///     true if one of the <see cref="Char"/>s occur within this string; otherwise, false.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        ///     source is null.
-        /// </exception>
-        public static bool ContainsAny(this string source, char[] anyOf)
-        {
-            return source.IndexOfAny(anyOf) != -1;
-        }
-
-        /// <summary>
-        /// Returns a value indicating whether any of the specified <see cref="Char"/>
-        /// occur within this string, ignoring or honoring their case.
-        /// </summary>
-        /// <param name="source">An instance of a <see cref="String"/>.</param>
-        /// <param name="anyOf">An array of <see cref="Char"/>s to seek.</param>
-        /// <param name="ignoreCase">true to ignore case during the comparison; otherwise, false.</param>
-        /// <returns>
-        ///     true if one of the <see cref="Char"/>s occur within this string; otherwise, false.
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        ///     source is null.
-        /// </exception>
-        public static bool ContainsAny(this string source, char[] anyOf, bool ignoreCase)
-        {
-            return IndexOfAny(source, anyOf, ignoreCase) != -1;
         }
 
         /// <summary>
@@ -167,7 +132,7 @@ namespace NLib
         /// <remarks>
         ///     This method behaves identically to <see cref="String.Contains"/>, except
         ///     the additional parameter comparisonType allows the type of search to be specified
-        ///     using one of the <see cref="StringComparison"/> values.
+        ///     using one of the StringComparison values.
         /// </remarks>
         public static bool Contains(this string source, string value, StringComparison comparisonType)
         {
@@ -177,6 +142,41 @@ namespace NLib
                 throw new ArgumentNullException(ExceptionHelper.ARGNAME_VALUE);
 
             return source.IndexOf(value, comparisonType) != -1;
+        }
+
+        /// <summary>
+        /// Returns a value indicating whether any of the specified Chars
+        /// occur within this string.
+        /// </summary>
+        /// <param name="source">An instance of a String.</param>
+        /// <param name="anyOf">An array of Chars to seek.</param>
+        /// <returns>
+        ///     true if one of the Chars occur within this string; otherwise, false.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        ///     source is null.
+        /// </exception>
+        public static bool ContainsAny(this string source, char[] anyOf)
+        {
+            return source.IndexOfAny(anyOf) != -1;
+        }
+
+        /// <summary>
+        /// Returns a value indicating whether any of the specified Chars
+        /// occur within this string, ignoring or honoring their case.
+        /// </summary>
+        /// <param name="source">An instance of a String.</param>
+        /// <param name="anyOf">An array of Chars to seek.</param>
+        /// <param name="ignoreCase">true to ignore case during the comparison; otherwise, false.</param>
+        /// <returns>
+        ///     true if one of the Chars occur within this string; otherwise, false.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        ///     source is null.
+        /// </exception>
+        public static bool ContainsAny(this string source, char[] anyOf, bool ignoreCase)
+        {
+            return IndexOfAny(source, anyOf, ignoreCase) != -1;
         }
 
         /// <summary>
@@ -209,7 +209,7 @@ namespace NLib
         /// <remarks>
         ///     This method behaves identically to <see cref="String.Replace(string, string)"/>, except
         ///     the additional parameter comparisonType allows the type of search to be specified
-        ///     using one of the <see cref="StringComparison"/> values.
+        ///     using one of the StringComparison values.
         /// </remarks>
         public static string Replace(this string source, string oldValue, string newValue, StringComparison comparisonType)
         {

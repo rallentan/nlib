@@ -17,13 +17,13 @@ namespace NLib
         //--- Public Static Methods ---
 
         /// <summary>
-        ///     Returns a <see cref="Boolean"/> value.
+        ///     Returns a pseudo-random Boolean value.
         /// </summary>
         /// <param name="source">
-        ///     An instance a <see cref="Random"/> object.
+        ///     An instance a System.Random object.
         /// </param>
         /// <returns>
-        ///     Returns a <see cref="Boolean"/> value.
+        ///     Returns a Boolean value.
         /// </returns>
         public static bool NextBoolean(this Random source)
         {
