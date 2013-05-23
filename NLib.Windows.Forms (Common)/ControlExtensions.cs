@@ -30,7 +30,7 @@ namespace NLib.Windows.Forms
         /// Gets the rectangle encompassing the control and its margin.
         /// </summary>
         /// <param name="c">The control to get the margin rectangle of.</param>
-        /// <returns>A <see cref="Rectangle"/> representing the margin rectangle of the specified control.</returns>
+        /// <returns>A Rectangle representing the margin rectangle of the specified control.</returns>
         public static Rectangle GetMarginRectangle(this Control c)
         {
             if (c == null)

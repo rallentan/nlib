@@ -40,7 +40,7 @@ namespace NLib
         /// Returns the number of lines in a given string. A parameter specifies
         /// which newline character sequence to use when differentiating lines.
         /// </summary>
-        /// <param name="source">The <see cref="String"/> to get the line count.</param>
+        /// <param name="source">The String to get the line count.</param>
         /// <param name="newLineSequence">
         /// A System.String specifying which character sequence is used
         /// to differentiate lines.
@@ -94,7 +94,7 @@ namespace NLib
         /// <param name="source">The System.String to search.</param>
         /// <param name="index">The index to retrieve the line number for.</param>
         /// <param name="newLineSequence">
-        /// A <see cref="String"/> specifying which character sequence is used
+        /// A String specifying which character sequence is used
         /// to differentiate lines.
         /// </param>
         /// <returns>The zero-based line number of the line containing the

@@ -22,13 +22,13 @@ namespace NLib
         //--- Public Static Methods ---
 
         /// <summary>
-        ///     Gets the four high-order bits of the specified <see cref="Byte"/>.
+        ///     Gets the four high-order bits of the specified Byte.
         /// </summary>
         /// <param name="value">
-        ///     The <see cref="Byte"/> to get the high-order nibble of.
+        ///     The Byte to get the high-order nibble of.
         /// </param>
         /// <returns>
-        ///     An <see cref="Int32"/> containing the high-order nibble of the specified <see cref="Byte"/>.
+        ///     An Int32 containing the high-order nibble of the specified Byte.
         /// </returns>
         public static int HighNibble(this byte value)
         {
@@ -36,13 +36,13 @@ namespace NLib
         }
 
         /// <summary>
-        ///     Gets the four low-order bits of the specified <see cref="Byte"/>.
+        ///     Gets the four low-order bits of the specified Byte.
         /// </summary>
         /// <param name="value">
-        ///     The <see cref="Byte"/> to get the low-order nibble of.
+        ///     The Byte to get the low-order nibble of.
         /// </param>
         /// <returns>
-        ///     An <see cref="Int32"/> containing the low-order nibble of the specified <see cref="Byte"/>.
+        ///     An Int32 containing the low-order nibble of the specified Byte.
         /// </returns>
         public static int LowNibble(this byte value)
         {
@@ -50,17 +50,17 @@ namespace NLib
         }
 
         /// <summary>
-        ///     Rotates the bits of the specified <see cref="Byte"/> right. A parameter
+        ///     Rotates the bits of the specified Byte right. A parameter
         ///     specifies the number of places to rotate the bits by.
         /// </summary>
         /// <param name="value">
-        ///     The <see cref="Byte"/> to rotate.
+        ///     The Byte to rotate.
         /// </param>
         /// <param name="count">
         ///     The number of places to rotate the bits by.
         /// </param>
         /// <returns>
-        ///     A <see cref="Byte"/> containing the rotated bits.
+        ///     A Byte containing the rotated bits.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///     count is greater than the number of bit places in value
@@ -75,17 +75,17 @@ namespace NLib
         }
 
         /// <summary>
-        ///     Rotates the bits of the specified <see cref="Byte"/> left. A parameter
+        ///     Rotates the bits of the specified Byte left. A parameter
         ///     specifies the number of places to rotate the bits by.
         /// </summary>
         /// <param name="value">
-        ///     The <see cref="Byte"/> to rotate.
+        ///     The Byte to rotate.
         /// </param>
         /// <param name="count">
         ///     The number of places to rotate the bits by.
         /// </param>
         /// <returns>
-        ///     A <see cref="Byte"/> containing the rotated bits.
+        ///     A Byte containing the rotated bits.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///     count is greater than the number of bit places in value

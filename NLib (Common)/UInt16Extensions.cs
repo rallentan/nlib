@@ -18,13 +18,13 @@ namespace NLib
         //--- Public Static Methods ---
 
         /// <summary>
-        ///     Gets the eight high-order bits of the specified <see cref="UInt16"/>.
+        ///     Gets the eight high-order bits of the specified UInt16.
         /// </summary>
         /// <param name="value">
-        ///     The System.UInt16 to get the bits from.
+        ///     The UInt16 to get the bits from.
         /// </param>
         /// <returns>
-        ///     A System.Byte containing the 8 high-order bits.
+        ///     A Byte containing the 8 high-order bits.
         /// </returns>
         public static byte HighByte(this ushort value)
         {
@@ -32,13 +32,13 @@ namespace NLib
         }
 
         /// <summary>
-        ///     Gets the eight low-order bits of the specified <see cref="UInt16"/>.
+        ///     Gets the eight low-order bits of the specified UInt16.
         /// </summary>
         /// <param name="value">
-        ///     The System.UInt16 to get the bits from.
+        ///     The UInt16 to get the bits from.
         /// </param>
         /// <returns>
-        ///     A System.Byte containing the 8 low-order bits.
+        ///     A Byte containing the 8 low-order bits.
         /// </returns>
         public static byte LowByte(this ushort value)
         {
@@ -46,17 +46,17 @@ namespace NLib
         }
 
         /// <summary>
-        ///     Rotates the bits of the specified <see cref="UInt16"/> right. A parameter
+        ///     Rotates the bits of the specified UInt16 right. A parameter
         ///     specifies the number of places to rotate the bits by.
         /// </summary>
         /// <param name="value">
-        ///     The <see cref="UInt16"/> to rotate.
+        ///     The UInt16 to rotate.
         /// </param>
         /// <param name="count">
         ///     The number of places to rotate the bits by.
         /// </param>
         /// <returns>
-        ///     A <see cref="UInt16"/> containing the rotated bits.
+        ///     A UInt16 containing the rotated bits.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///     count is greater than the number of bit places in value
@@ -68,17 +68,17 @@ namespace NLib
         }
 
         /// <summary>
-        ///     Rotates the bits of the specified <see cref="UInt16"/> left. A parameter
+        ///     Rotates the bits of the specified UInt16 left. A parameter
         ///     specifies the number of places to rotate the bits by.
         /// </summary>
         /// <param name="value">
-        ///     The <see cref="UInt16"/> to rotate.
+        ///     The UInt16 to rotate.
         /// </param>
         /// <param name="count">
         ///     The number of places to rotate the bits by.
         /// </param>
         /// <returns>
-        ///     A <see cref="UInt16"/> containing the rotated bits.
+        ///     A UInt16 containing the rotated bits.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///     count is greater than the number of bit places in value

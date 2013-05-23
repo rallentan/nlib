@@ -78,7 +78,7 @@ namespace NLib
         }
 
         /// <summary>
-        ///     Gets the 16 high-order bits of the specified <see cref="Int32"/>.
+        ///     Gets the 16 high-order bits of the specified Int32.
         /// </summary>
         /// <param name="value">
         ///     The System.Int32 to get the bits from.
@@ -92,7 +92,7 @@ namespace NLib
         }
 
         /// <summary>
-        ///     Gets the 16 low-order bits of the specified <see cref="Int32"/>.
+        ///     Gets the 16 low-order bits of the specified Int32.
         /// </summary>
         /// <param name="value">
         ///     The System.Int32 to get the bits from.
@@ -106,17 +106,17 @@ namespace NLib
         }
 
         /// <summary>
-        ///     Rotates the bits of the specified <see cref="Int32"/> right. A parameter
+        ///     Rotates the bits of the specified Int32 right. A parameter
         ///     specifies the number of places to rotate the bits by.
         /// </summary>
         /// <param name="value">
-        ///     The <see cref="Int32"/> to rotate.
+        ///     The Int32 to rotate.
         /// </param>
         /// <param name="count">
         ///     The number of places to rotate the bits by.
         /// </param>
         /// <returns>
-        ///     A <see cref="Int32"/> containing the rotated bits.
+        ///     A Int32 containing the rotated bits.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///     count is greater than the number of bit places in value
@@ -131,17 +131,17 @@ namespace NLib
         }
 
         /// <summary>
-        ///     Rotates the bits of the specified <see cref="Int32"/> left. A parameter
+        ///     Rotates the bits of the specified Int32 left. A parameter
         ///     specifies the number of places to rotate the bits by.
         /// </summary>
         /// <param name="value">
-        ///     The <see cref="Int32"/> to rotate.
+        ///     The Int32 to rotate.
         /// </param>
         /// <param name="count">
         ///     The number of places to rotate the bits by.
         /// </param>
         /// <returns>
-        ///     A <see cref="Int32"/> containing the rotated bits.
+        ///     A Int32 containing the rotated bits.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///     count is greater than the number of bit places in value

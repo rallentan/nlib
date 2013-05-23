@@ -370,7 +370,7 @@ namespace NLib
     }
 
     /// <summary>
-    /// Represents a method that the <see cref="OperationQueueThread"/> will call when it has reached the top of the queue.
+    /// Represents a method that an <see cref="OperationQueueThread"/> will call when it has reached the top of the queue.
     /// </summary>
     public delegate void OperationQueueMethod();
 }

@@ -18,7 +18,7 @@ namespace NLib
         //--- Public Static Methods ---
 
         /// <summary>
-        ///     Gets the 16 high-order bits of the specified <see cref="UInt32"/>.
+        ///     Gets the 16 high-order bits of the specified UInt32.
         /// </summary>
         /// <param name="value">
         ///     The System.UInt32 to get the bits from.
@@ -32,7 +32,7 @@ namespace NLib
         }
 
         /// <summary>
-        ///     Gets the 16 low-order bits of the specified <see cref="UInt32"/>.
+        ///     Gets the 16 low-order bits of the specified UInt32.
         /// </summary>
         /// <param name="value">
         ///     The System.UInt32 to get the bits from.
@@ -46,17 +46,17 @@ namespace NLib
         }
 
         /// <summary>
-        ///     Rotates the bits of the specified <see cref="UInt32"/> right. A parameter
+        ///     Rotates the bits of the specified UInt32 right. A parameter
         ///     specifies the number of places to rotate the bits by.
         /// </summary>
         /// <param name="value">
-        ///     The <see cref="UInt32"/> to rotate.
+        ///     The UInt32 to rotate.
         /// </param>
         /// <param name="count">
         ///     The number of places to rotate the bits by.
         /// </param>
         /// <returns>
-        ///     A <see cref="UInt32"/> containing the rotated bits.
+        ///     A UInt32 containing the rotated bits.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///     count is greater than the number of bit places in value
@@ -68,17 +68,17 @@ namespace NLib
         }
 
         /// <summary>
-        ///     Rotates the bits of the specified <see cref="UInt32"/> left. A parameter
+        ///     Rotates the bits of the specified UInt32 left. A parameter
         ///     specifies the number of places to rotate the bits by.
         /// </summary>
         /// <param name="value">
-        ///     The <see cref="UInt32"/> to rotate.
+        ///     The UInt32 to rotate.
         /// </param>
         /// <param name="count">
         ///     The number of places to rotate the bits by.
         /// </param>
         /// <returns>
-        ///     A <see cref="UInt32"/> containing the rotated bits.
+        ///     A UInt32 containing the rotated bits.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
         ///     count is greater than the number of bit places in value
